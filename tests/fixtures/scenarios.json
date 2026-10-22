@@ -1,0 +1,172 @@
+[
+  {
+    "name": "chinese",
+    "input": "檢查報告",
+    "types": [
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "english",
+    "input": "Review deployment plan.",
+    "types": [
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "mixed",
+    "input": "check 測試設定",
+    "types": [
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "multi",
+    "input": "檢查報告，then review payment webhook",
+    "types": [
+      "task",
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "demo",
+    "input": "明天早上九點 review payment webhook，先 check sandbox credentials, but don't deploy to production yet. 然後 draft an English follow-up email to Vincent。",
+    "types": [
+      "calendar",
+      "task",
+      "email_draft"
+    ],
+    "constraints": 1,
+    "unresolved": 0
+  },
+  {
+    "name": "negative",
+    "input": "不要 deploy",
+    "types": [],
+    "constraints": 1,
+    "unresolved": 0
+  },
+  {
+    "name": "negative-production",
+    "input": "Do not deploy to production.",
+    "types": [],
+    "constraints": 1,
+    "unresolved": 0
+  },
+  {
+    "name": "affirmative",
+    "input": "Deploy to staging.",
+    "types": [
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "partial-date",
+    "input": "明天 review payment webhook",
+    "types": [
+      "calendar"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "recipient",
+    "input": "Draft an email to Vincent.",
+    "types": [
+      "email_draft"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "utf16",
+    "input": "🦊 未知要求；檢查報告",
+    "types": [
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 1
+  },
+  {
+    "name": "unknown",
+    "input": "幫我變出一個時光機",
+    "types": [],
+    "constraints": 0,
+    "unresolved": 1
+  },
+  {
+    "name": "reminder",
+    "input": "Please remind me to review the deployment plan.",
+    "types": [
+      "calendar"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "draft-no-send",
+    "input": "Draft an email, but do not send it.",
+    "types": [
+      "email_draft"
+    ],
+    "constraints": 1,
+    "unresolved": 0
+  },
+  {
+    "name": "environments",
+    "input": "Check sandbox, then review production settings.",
+    "types": [
+      "task",
+      "task"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "required",
+    "input": "Must check sandbox",
+    "types": [],
+    "constraints": 1,
+    "unresolved": 0
+  },
+  {
+    "name": "ambiguous",
+    "input": "check sandbox and deploy to production",
+    "types": [],
+    "constraints": 0,
+    "unresolved": 1
+  },
+  {
+    "name": "unsupported-negative",
+    "input": "Never publish my report",
+    "types": [],
+    "constraints": 0,
+    "unresolved": 1
+  },
+  {
+    "name": "missing-time",
+    "input": "Remind me to review deployment plan",
+    "types": [
+      "calendar"
+    ],
+    "constraints": 0,
+    "unresolved": 0
+  },
+  {
+    "name": "blank",
+    "input": "",
+    "types": [],
+    "constraints": 0,
+    "unresolved": 0
+  }
+]
