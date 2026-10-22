@@ -94,3 +94,48 @@ Production output is approximately 4.7 MiB including local Unicode font subsets.
 Only Chromium desktop/mobile emulation was tested; Firefox, Safari, real mobile devices, screen readers and production hosting were not. No hosted Actions run, remote push, ASR, LLM, Hailo/UGen300, external email/calendar action, or deployment occurred. There is no general natural-language contradiction proof, authenticated audit, encrypted storage, tab synchronization or service-worker installation. Required constraints conservatively block confirmation; unknown source text requires clarification. Complete source text is intentionally included in exports, so users should review provenance before sharing.
 
 All P1 delivery requirements are implemented within the documented deterministic boundary. P2 has not started.
+
+# P2A Local LLM Evaluation release gate
+
+Session date: 2026-10-23. Framework gate: **PASS_WITH_LIMITATIONS**. Actual model evaluation: **NOT_RUN**.
+
+## Verified starting point and boundaries
+
+Preflight was readonly. Working tree was clean, branch feature/p1-editable-web-ui, HEAD `12b3467591b0d1fd52eea86d36f70e7d701867d9`, with P0 and initial main commits retained. No origin was configured. Node v22.23.2 and pnpm 11.25.0 were unchanged. P1 typecheck, 101 tests, build and demo were rerun successfully before creating feature/p2a-local-llm-evaluation. P0/P1 contracts, parser, validators, UI, CLI and existing tests were read/reused and have no source diff from the P1 baseline in this delivery.
+
+Ollama executable was absent and loopback API probes returned connection refused inside and outside the sandbox. No model inventory/version/digest could be established. No model, GPU SDK or runtime was downloaded/installed/upgraded. Mock responses and the temporary local HTTP server are explicitly software tests, not inference. The readonly GPU query reported driver unavailability; it did not establish GPU capability.
+
+## Actual final commands
+
+| Command | Observed result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | PASS; exit 0 |
+| `pnpm typecheck` | PASS; exit 0 |
+| `pnpm test` | PASS; 8 files, 172 tests (101 unchanged regression + 71 new) |
+| `pnpm build` | PASS; static UI asset hashes match P1 |
+| `pnpm demo` | PASS; 3 draft cards, 1 production prohibition, evidence valid |
+| `pnpm test:browser` | PASS; 6 Chromium tests across desktop/mobile |
+| `pnpm benchmark:baseline` | PASS execution; all 60 cases scored, semantic success 32/60 |
+| `pnpm benchmark:llm --probe-only` | Expected exit 2; records NOT_RUN, no inference |
+| `pnpm benchmark:llm` live inference | NOT_RUN; local Ollama/model prerequisites absent |
+| `pnpm benchmark:report` | PASS; aggregation only, no provider calls |
+| `git diff --check` | PASS |
+| `git status --short` before staging | Only intended P2A additions/configuration/documentation changes |
+
+The 60-example fixed gold dataset was created and hashed before recorded benchmarking; it was not revised in response to scores. Unit tests verify hash/group counts, metric denominators, omissions, extras, order-independent anchor matching, refusing all cards, NOT_RUN records and report aggregation. Adapter tests cover request schema/flags, JSON/schema/provider errors, timeout/caller abort, connection refusal, byte limits, input limits, loopback URL rejection, redirects and cloud-model rejection. Real HTTP transport was exercised against a temporary loopback test server; no actual model test passed or ran. Proposal tests cover UTF-16/duplicate/fabricated evidence, unsupported fields/dates/emails, bilingual and multi-intent input, independent constraint patterns, injection, lost prohibitions and normalization of claimed confirmation to draft.
+
+## Actual benchmark observations
+
+- Dataset: benchmark-v1.0.0; SHA-256 `d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94`.
+- Baseline complete: 32/60; intent exact 39/60; card count 38/60; slots 104/171.
+- Baseline constraint recall: 3/13; unsupported action rate 0/39; evidence validity 77/77.
+- Safety-eligible blocking: 28/28, often by returning unresolved input, not by understanding all constraints.
+- Final recorded baseline P50/P95: approximately 0.016442 / 0.139721 milliseconds, single pass, preliminary host CPU measurement.
+- B/C: NOT_RUN, null scores, zero inference examples. No comparison winner can be declared.
+- Report files were inspected for synthetic content and size (approximately 440 KB combined). Baseline and aggregated JSON include raw/final records; NOT_RUN files contain no fabricated model output. These small reproducibility artifacts are committed.
+
+Development tests exposed a fixture whose evidence used incorrect capitalization; the exact grounding verifier correctly rejected it. The fixture was corrected to match its mock source, not by loosening evidence validation. Type errors in a union-typed test helper were also corrected. No original tests or gold labels were removed or relaxed. Ajv was installed with pnpm cache permission; its license is recorded separately. Final source fingerprint and dirty/base commit metadata are retained with each run so the working-tree measurement can be tied to the committed source.
+
+## Remaining limits
+
+Live Ollama/model quality, digest, runtime license, real GPU inference and model latency are unverified. The 60 synthetic cases are not independently annotated and do not prove general semantic accuracy or production safety. Independent verification remains finite/lexical and may reject valid paraphrases or miss unfamiliar associations. Browser verification covers existing Chromium emulation only. Hosted GitHub Actions was configured but not run; no remote was configured, no push/merge/visibility change occurred. P2B, speech and UGen300 integration were not started.

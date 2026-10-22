@@ -1,0 +1,13 @@
+{
+  "version": "benchmark-v1.0.0",
+  "sha256": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
+  "count": 60,
+  "groups": {
+    "zh": 10,
+    "en": 10,
+    "mixed": 15,
+    "multi": 10,
+    "constraints": 10,
+    "ambiguous": 5
+  }
+}

@@ -74,7 +74,7 @@ This is a narrow rule baseline, not completed multilingual AI. Only the document
 
 ## Roadmap
 
-See [ROADMAP](docs/ROADMAP.md) for P0 through P5. This delivery stops at P1.
+See [ROADMAP](docs/ROADMAP.md) for P0 through P5. P1 remains the product UI baseline; the current evaluation delivery stops at P2A.
 
 ## Development and data
 
@@ -118,3 +118,25 @@ pnpm test:browser
 ```
 
 The local verification reused an existing Chromium cache; no browser download was needed. CI is configured to install Chromium and run the browser tests after build. CI has not been run on GitHub for this branch. A bundled Noto Sans TC font supplies Chinese glyphs locally without contacting a font CDN; its third-party license is recorded separately.
+
+## P2A: local LLM evaluation (separate from the UI)
+
+P2A adds a Node-only Ollama structured extraction adapter, independent proposal verification, an original 60-example text benchmark and reproducible JSON/Markdown reports. The P1 browser workflow continues to use the deterministic engine. There is no speech, Hailo, cloud LLM or automatic work execution.
+
+```sh
+pnpm benchmark:baseline
+# Discovery only; writes NOT_RUN and exits 2 without inference:
+pnpm benchmark:llm --probe-only
+# Only after a trusted local Ollama service and these models are already installed:
+pnpm benchmark:llm --model=qwen2.5:1.5b --model=qwen2.5:7b
+# Aggregate recorded results without calling models:
+pnpm benchmark:report
+```
+
+The CLI never downloads a model. Omit model flags to select at most two already installed eligible models, preferring Qwen and choosing smallest/largest file sizes. It only connects to `http://127.0.0.1:11434`; no arbitrary URL flag exists. Do not expose Ollama publicly. No API key is required. The UI never contacts this endpoint.
+
+Current actual result: Baseline complete success **32/60 (53.33%)**, constraint recall **3/13 (23.08%)**. Actual model comparison is **NOT_RUN** because Ollama was not available. Mock and loopback HTTP tests validate software behavior only. There is no evidence yet that a local LLM is better, so P2B/UI integration is not recommended yet.
+
+Reports are in [reports/comparison.md](reports/comparison.md) and [reports/comparison.json](reports/comparison.json). These contain original synthetic benchmark text and recorded deterministic results; no personal model prompts were uploaded. Check [methodology](docs/EVALUATION_METHODOLOGY.md), [model evaluation](docs/MODEL_EVALUATION.md) and [model provenance](docs/MODEL_PROVENANCE.md) for dataset hash, definitions, failures, candidate references and limitations. Report files are local consistency records, not authenticated audit records; keep raw proposals untrusted. Review future report content/size before committing it.
+
+Gold labels and scoring were fixed before the recorded baseline run. No prompt tuning or live model inference occurred. A future tuning exercise must use a separate development set and new untouched evaluation set. This delivery stops at P2A, not P2B.

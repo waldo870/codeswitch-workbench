@@ -65,3 +65,15 @@ React renders untrusted text using escaped text nodes. No eval, command executio
 ### Test layers
 
 Unchanged P0 tests check parser/source behavior. P1 state/storage tests exercise schema replay, conflicts and malicious materialized states. React Testing Library tests cover labelled interactions, confirmation, persistence recovery and XSS text rendering. Playwright tests the built bundle in desktop/mobile Chromium with real download parsing and export revalidation, page-error monitoring, horizontal overflow checks and refresh. The browser test server is managed and stopped by Playwright. CI runs install, typecheck, Vitest, CLI, build, Chromium installation and Playwright.
+
+## P2A evaluation boundary (Node CLI only)
+
+P0/P1 source and UI behavior are retained. `src/llm/types.ts` defines an asynchronous provider-neutral ExtractionProvider returning an application-owned source, identity, raw text, schema status, proposal, errors and duration. The proposal reuses P0 card field shapes and adds evidence quotes, an intent type and prerequisite constraints. It is not a confirmed WorkCard contract.
+
+`ollama-adapter.ts` uses Node fetch against literal loopback HTTP only; endpoint credentials, non-root paths, query/fragment, DNS names and non-loopback destinations are refused. Redirects are disabled. Input, streamed response bytes and request duration are bounded. Only version/tags/show/chat paths are supported. Installed model inventory and show metadata are checked before chat; cloud/remote models are rejected. The CLI has no URL option. Neither P1 React nor a persistent backend calls Ollama.
+
+`proposal-schema.ts` provides the JSON Schema sent to Ollama and a separate Ajv validator. Model status/confirmation strings are raw untrusted claims. `proposal-validation.ts` locates exact unique evidence with UTF-16 indices, scans a finite independent set of prohibitions/requirements/prerequisites and checks lexical field support, title consistency and source coverage. It never imports gold labels or asks the LLM to judge itself. An invalid proposal admits no cards. Admitted WorkCards always receive trusted draft status and requiresConfirmation=true; no execution/export integration is provided.
+
+`evaluation/dataset.ts` verifies the fixed benchmark manifest and exact bytes. `runner.ts` evaluates A and compares B/C using the same extraction call; it preserves raw errors before any interception. `scoring.ts` scores all three methods with the same gold labels and explicit denominators. `report.ts` writes JSON/Markdown and aggregates recorded runs without calling a provider. Raw provider errors, final refusals and accepted draft coverage are separately inspectable.
+
+The P2A verifier is intentionally conservative and incomplete. Evidence strings can be true while an association or omission is wrong. Known patterns are not general semantic understanding. The benchmark tests both model predictions and validator limits; schema validity is never reported as semantic accuracy. See EVALUATION_METHODOLOGY.md for metric definitions and trust limits.

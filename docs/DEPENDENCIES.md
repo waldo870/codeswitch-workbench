@@ -1,6 +1,6 @@
 # Third-party dependency licenses
 
-Source licensing remains reserved for the owner. No model is installed. This inventory records locally installed package metadata, not a legal audit. Exact dependency resolution is pinned in pnpm-lock.yaml; optional binaries vary by platform. React and React DOM are runtime dependencies. Noto Sans TC Variable 5.3.1 is a locally served runtime font under OFL-1.1; its full notice is distributed in public/third-party/Noto-Sans-TC-OFL.txt and copied to the build. Other direct dependencies are development/test tools. No font CDN is used.
+Source licensing remains reserved for the owner. No model is installed. This inventory records locally installed package metadata, not a legal audit. Exact dependency resolution is pinned in pnpm-lock.yaml; optional binaries vary by platform. React and React DOM are runtime dependencies. Noto Sans TC Variable 5.3.1 is a locally served runtime font under OFL-1.1; its full notice is distributed in public/third-party/Noto-Sans-TC-OFL.txt and copied to the build. Ajv is a Node-only evaluation schema validator (MIT); other direct dependencies are development/test tools. No font CDN is used.
 
 | Package | Installed version | Declared license |
 | --- | --- | --- |
@@ -41,6 +41,7 @@ Source licensing remains reserved for the owner. No model is installed. This inv
 | @typescript/typescript-linux-x64 | 7.0.2 | Apache-2.0 |
 | @vitest/mocker | 5.0.5 | MIT |
 | @vitest/spy | 5.0.5 | MIT |
+| ajv | 8.20.0 | MIT |
 | ansi-regex | 5.0.1 | MIT |
 | ansi-styles | 5.2.0 | MIT |
 | aria-query | 5.3.0 | Apache-2.0 |
@@ -62,12 +63,15 @@ Source licensing remains reserved for the owner. No model is installed. This inv
 | esbuild | 0.28.2 | MIT |
 | estree-walker | 3.0.3 | MIT |
 | expect-type | 1.4.0 | Apache-2.0 |
+| fast-deep-equal | 3.1.3 | MIT |
+| fast-uri | 3.1.9 | BSD-3-Clause |
 | fdir | 6.5.0 | MIT |
 | html-encoding-sniffer | 7.0.0 | MIT |
 | indent-string | 4.0.0 | MIT |
 | is-potential-custom-element-name | 1.0.1 | MIT |
 | js-tokens | 4.0.0 | MIT |
 | jsdom | 30.1.3 | MIT |
+| json-schema-traverse | 1.0.0 | MIT |
 | lightningcss | 1.33.0 | MPL-2.0 |
 | lightningcss-linux-x64-gnu | 1.33.0 | MPL-2.0 |
 | lru-cache | 11.5.3 | BlueOak-1.0.0 |

@@ -16,3 +16,10 @@ P1 intentionally persists the analyzed original input, parser output, constraint
 Reload validates source and history before restoring. Corrupt data remains untouched until the user explicitly clears it. A quota/access failure is reported without claiming successful storage. Clear Local Data requires confirmation, clears only this app key and removes the in-memory workspace on success. Downloads are user-triggered JSON artifacts; the user controls their retention and sharing. Export retains complete original input as provenance, which may mention unexported tasks or rejected requests; review it before sharing.
 
 There is no authenticated user identity, encryption, synchronized tabs or protection against a person/browser extension with same-origin storage access. Review metadata proves internal consistency only. No claims are made about validating an email address's ownership or recipient identity. Test addresses use the reserved `.test` domain and are never contacted.
+
+
+## P2A evaluation data
+
+The 60 text benchmark examples and gold labels are original synthetic project data, not Common Voice or another speech dataset. Names are fictional; no credentials or real personal contacts are used. Only the source sentence is sent to the explicitly local Ollama daemon when available. Gold labels stay in the evaluator. No model was available in this delivery; no inference request was sent. Software tests use mock responses or a temporary loopback HTTP server, never a remote model.
+
+Reports retain source input, raw model content when actually available, schema errors, evidence/constraint validation, metrics and runtime metadata. Treat future model text as untrusted. Reports can contain sensitive text if the dataset is changed, so review content/size before committing or sharing. The committed P2A reports contain only this synthetic dataset and actual baseline measurements, plus explicit NOT_RUN records.

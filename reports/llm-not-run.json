@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "timestamp": "2026-10-22T18:08:28.459Z",
+  "dataset": {
+    "version": "benchmark-v1.0.0",
+    "hash": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
+    "count": 60
+  },
+  "environment": {
+    "node": "v22.23.2",
+    "platform": "linux",
+    "arch": "x64",
+    "release": "6.18.33.2-microsoft-standard-WSL2",
+    "cpu": "Intel(R) Core(TM) i9-14900K",
+    "logicalCpus": 32,
+    "memoryBytes": 67420995584,
+    "gpu": "Not established by runner; see MODEL_PROVENANCE.md",
+    "gitHead": "12b3467591b0d1fd52eea86d36f70e7d701867d9",
+    "gitDirty": true,
+    "sourceSha256": "b4fdbfde8b860c1e501d59551c06888461b3ef2098346c5c4f5066aa254bbecb",
+    "promptVersion": "p2a-extraction-v1",
+    "promptSha256": "b5bca2f61d16a7a53125664ea07fe025341646d6336a3b7709c7c59dae1a0a5e",
+    "parameters": {
+      "temperature": 0,
+      "seed": 42,
+      "num_predict": 4096,
+      "num_ctx": 8192
+    },
+    "timeoutMs": 60000,
+    "maxResponseBytes": 262144,
+    "repetitions": 1,
+    "warmup": "none; first sample includes model discovery/load if applicable"
+  },
+  "methods": [
+    {
+      "method": "B",
+      "model": "none",
+      "status": "NOT_RUN",
+      "reason": "Local Ollama connection failed.",
+      "cases": [],
+      "summary": null
+    },
+    {
+      "method": "C",
+      "model": "none",
+      "status": "NOT_RUN",
+      "reason": "Local Ollama connection failed.",
+      "cases": [],
+      "summary": null
+    }
+  ],
+  "discovery": {
+    "status": "NOT_RUN",
+    "version": null,
+    "models": [],
+    "reason": "Local Ollama connection failed."
+  }
+}
