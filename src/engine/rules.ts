@@ -48,7 +48,8 @@ export function interpret(text: string): Meaning | null {
   const operation = rest.match(/^(review|check|deploy|檢查|審查|部署)\s*(?:to\s+)?(.+)$/i);
   if (!operation) return null;
   const action = actions[operation[1]!.toLowerCase()]!;
-  const target = targets[operation[2]!.toLowerCase().replace(/^the /, '')];
+  const targetKey = operation[2]!.toLowerCase().replace(/^the /, '');
+  const target = Object.hasOwn(targets, targetKey) ? targets[targetKey] : undefined;
   if (!target || (action === 'deploy' && !['production', 'staging'].includes(target)) || (action !== 'deploy' && ['production', 'staging'].includes(target))) return null;
   return { card: { type: calendar ? 'calendar' : 'task', title: `${cap(action)} ${target}`, fields: calendar ? { action, target, time } : { action, target } } };
 }

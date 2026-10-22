@@ -10,10 +10,17 @@
     "types": [
       "node"
     ],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ]
   },
   "include": [
     "src",
-    "tests"
+    "tests",
+    "playwright.config.ts"
   ]
 }

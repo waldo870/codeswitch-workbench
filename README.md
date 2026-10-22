@@ -11,7 +11,7 @@
 
 ## Product overview
 
-An offline-first multilingual voice-to-workflow assistant concept for individual professionals who mix Traditional Chinese, English and technical terms. P0 implements a runnable text-to-workcards core. It does not perform AI inference or speech recognition.
+An offline-first multilingual voice-to-workflow assistant concept for individual professionals who mix Traditional Chinese, English and technical terms. P0 implements the text-to-workcards core; P1 adds a React browser workspace with editing, human review, local persistence and JSON export. It does not perform AI inference or speech recognition.
 
 ## Problem statement
 
@@ -19,11 +19,11 @@ One spoken request can contain several tasks, a meeting, an email draft and a pr
 
 ## Why multilingual voice-to-workflow?
 
-Professionals often describe local context in Chinese while naming tools and technical actions in English. The intended product preserves that language switching through transcription, intent extraction, verification, editable cards, confirmation and local export. Voice, editing, confirmation and export workflows are future phases; the present CLI prints local JSON only.
+Professionals often describe local context in Chinese while naming tools and technical actions in English. The intended product preserves that language switching through transcription, intent extraction, verification, editable cards, confirmation and local export. P1 implements editing, individual confirmation/rejection and confirmed-only JSON export. Voice remains a future phase. The P0 CLI remains available.
 
 ## Feature scope
 
-P0 provides task, calendar and email_draft contracts, a deterministic extraction adapter, required/prohibited constraints, source evidence, unresolved clauses, independent validation and a CLI. No API keys, network inference, accounts, external tools or hardware are needed at runtime. Every produced card is a draft requiring confirmation; no execution API exists.
+P0 provides task, calendar and email_draft contracts, a deterministic extraction adapter, required/prohibited constraints, source evidence, unresolved clauses, independent validation and a CLI. No API keys, network inference, accounts, external tools or hardware are needed at runtime. Every produced card starts as a draft requiring confirmation. P1 records human edits and review decisions; no execution API exists.
 
 ## Architecture
 
@@ -41,7 +41,10 @@ pnpm install --frozen-lockfile
 pnpm typecheck
 pnpm test
 pnpm demo
+pnpm dev
 ```
+
+Open `http://127.0.0.1:5173` (or the port printed by Vite). For a production bundle, run `pnpm build` then `pnpm preview`. Both servers bind to loopback by default.
 
 Dependency installation needs registry access. After installation, these commands operate locally. Edit `examples/sample-input.txt` to try another supported input. CLI validation failure or file-read failure exits nonzero; unresolved content is reported for review and is not itself a schema failure.
 
@@ -67,11 +70,11 @@ Work cards: 3; Constraints: 1; Validation: PASS
 
 ## Current limitations
 
-This is a narrow rule baseline, not completed multilingual AI. Only the documented verbs, targets, date phrases and clause forms are recognized. Unknown requests and unsupported negations remain unresolved. Shared grammar defects can affect both extraction and validation, so explicit expected fixtures and adversarial tests complement validation. Quotation, conditionals, arbitrary names/addresses, arbitrary dates and general natural language are unsupported. No email body is generated. No confirmation state transition, local artifact export command, UI, speech model or hardware inference is implemented. P0 validation intentionally accepts draft status only, although the contract reserves confirmed/rejected for future workflows.
+This is a narrow rule baseline, not completed multilingual AI. Only the documented verbs, targets, date phrases and clause forms are recognized. Unknown requests and unsupported negations remain unresolved. Shared grammar defects can affect both extraction and validation, so explicit expected fixtures and adversarial tests complement validation. Quotation, conditionals, arbitrary names/addresses, arbitrary dates and general natural language are unsupported. No email body is generated: users must write it themselves. P0 validation intentionally accepts parser drafts only; P1 validates the immutable baseline separately from reviewed cards. Speech, models and hardware integration remain unimplemented.
 
 ## Roadmap
 
-See [ROADMAP](docs/ROADMAP.md) for P0 through P5. This delivery stops at P0.
+See [ROADMAP](docs/ROADMAP.md) for P0 through P5. This delivery stops at P1.
 
 ## Development and data
 
@@ -80,3 +83,38 @@ See [test report](docs/TEST_REPORT.md), [data policy](docs/DATA_POLICY.md) and [
 ## References
 
 The project brief defines the product requirements and hardware target. Local `package.json` and `pnpm-lock.yaml` define the actual tools and versions; installed package metadata supplies dependency license declarations. No external dataset, model or hardware documentation was used to claim tested capabilities.
+
+## P1 browser workflow
+
+1. Open the local UI. The example is prefilled; click **Analyze Text** to create three cards and the production deployment prohibition.
+2. Expand **Original evidence** on a card to see its exact source highlighted, with UTF-16 start/end indices. Evidence never changes when editing.
+3. Click **Edit**. Changes appear as `user-edited` with before/after history. Adjacent keystrokes in the same field form one history entry. Titles must match the structured action/target, or the supported email draft title. The editor shows a suggested title. Unknown instructions cannot be confirmed.
+4. Try changing the task title to `Deploy to production`: confirmation is blocked even if its structured action is still `check`. Changing both action and target to deploy/production is also blocked. Restore `Check sandbox credentials` and the original structured fields.
+5. Click **Confirm** on the task. Only that card becomes confirmed. Editing it again immediately returns it to draft. **Reject** retains source/history but excludes the card from export; editing a rejected card returns it to draft for review.
+6. The email address and body start as unknown. To review the email, supply your own address and body (for a synthetic demo use `vincent@example.test` and `Please review the webhook notes.`), then click Confirm. Name, language, address and body are required; nothing is sent.
+7. Calendar time must be the supported explicit relative time or a valid user-entered `YYYY-MM-DDTHH:mm`. Partial dates block confirmation. Relative times stay relative; local date-time strings carry no inferred timezone.
+8. Refresh to restore the saved workspace. Click **Export confirmed JSON** to download only confirmed cards. Draft/rejected cards are excluded. Open the file to inspect `originalInput`, `constraints`, each card's `current`, `history`, `revision`, `confirmedRevision`, and `executed: false`.
+9. **Clear** changes only the input buffer. **Load Example** replaces that buffer. Reanalysis always asks before replacing an existing workspace. **Clear Local Data** requires a separate confirmation and removes this app's saved workspace.
+
+This sequence is the reproducible UI acceptance walkthrough. Automated Chromium tests exercise desktop (1280×900) and mobile (390×844) layouts, actual downloads, keyboard activation, refresh, recovery and injection handling. They produce ignored screenshots under `test-results/`.
+
+## P1 state, persistence and export
+
+Workspace v1 is saved under `codeswitch-workbench.workspace.v1` in browser localStorage. It contains immutable original input and P0 extraction, current card states, edit/review history and revision-bound confirmations. The input buffer before analysis is not persisted. Data stays on this browser/origin; no analytics, sync or remote text API is included. Do not enter API keys, credentials or other secrets. LocalStorage is unencrypted and accessible to other scripts on the same origin. Use a dedicated local origin.
+
+Loading reconstructs the parser baseline and replays history before accepting stored data. Corrupt or incompatible data is left untouched and the UI offers explicit clearing. Save failures are reported; the current in-memory workspace remains usable but is not claimed to be saved. History is limited to 2,000 entries per card; input to 10,000 UTF-16 code units; each edited value to 5,000; serialized storage to 2,000,000 code units. Multiple tabs are not synchronized; the last successful save wins.
+
+Export schema v1 (`kind: confirmed-workcards`) carries original input, immutable constraints and only confirmed card states with their provenance/history. `validateExport` in `src/web/state/workspace.ts` revalidates the document against its source and replayed decisions. Export is a reviewed local artifact, never proof of tool execution or authenticated identity. Original input may mention excluded cards; this is retained as provenance. No draft/rejected card objects are included. Unknown source segments, unsupported required-constraint verification and failed source validation block confirmation/export. Missing fields on excluded draft cards do not prevent exporting a different valid confirmed card.
+
+Edits use a separate closed-operation validator; arbitrary natural-language contradiction detection is not supported. Confirmation attests review of a local draft, not authorization to send or deploy. History validation detects inconsistent data, but is not a cryptographic audit: anyone controlling localStorage could rewrite a coherent entire workspace. Export import UI, multi-tab conflict resolution, encrypted storage, ICS and Markdown are not implemented. No service worker is installed: use the local server to reload the app; once loaded, its workflow needs no external network API.
+
+## Browser checks
+
+```sh
+pnpm build
+# If Chromium is not already installed in the development environment:
+pnpm exec playwright install chromium
+pnpm test:browser
+```
+
+The local verification reused an existing Chromium cache; no browser download was needed. CI is configured to install Chromium and run the browser tests after build. CI has not been run on GitHub for this branch. A bundled Noto Sans TC font supplies Chinese glyphs locally without contacting a font CDN; its third-party license is recorded separately.
