@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
-  "timestamp": "2026-10-22T18:08:28.459Z",
+  "timestamp": "2026-10-22T18:30:24.347Z",
   "dataset": {
     "version": "benchmark-v1.0.0",
     "hash": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
     "count": 60
   },
   "environment": {
+    "scoringVersion": "p2a1-v2-time-slot-aliases",
     "node": "v22.23.2",
     "platform": "linux",
     "arch": "x64",
@@ -15,9 +16,9 @@
     "logicalCpus": 32,
     "memoryBytes": 67420995584,
     "gpu": "Not established by runner; see MODEL_PROVENANCE.md",
-    "gitHead": "12b3467591b0d1fd52eea86d36f70e7d701867d9",
+    "gitHead": "2166bec62f0cc59b185054136572f617dd7c2f6d",
     "gitDirty": true,
-    "sourceSha256": "b4fdbfde8b860c1e501d59551c06888461b3ef2098346c5c4f5066aa254bbecb",
+    "sourceSha256": "f2f2b0bf6c12dcba4ac9d14dc309fa8ee687d2c336ae464e734de7ad1ef16953",
     "promptVersion": "p2a-extraction-v1",
     "promptSha256": "b5bca2f61d16a7a53125664ea07fe025341646d6336a3b7709c7c59dae1a0a5e",
     "parameters": {

@@ -139,3 +139,47 @@ Development tests exposed a fixture whose evidence used incorrect capitalization
 ## Remaining limits
 
 Live Ollama/model quality, digest, runtime license, real GPU inference and model latency are unverified. The 60 synthetic cases are not independently annotated and do not prove general semantic accuracy or production safety. Independent verification remains finite/lexical and may reject valid paraphrases or miss unfamiliar associations. Browser verification covers existing Chromium emulation only. Hosted GitHub Actions was configured but not run; no remote was configured, no push/merge/visibility change occurred. P2B, speech and UGen300 integration were not started.
+
+# P2A.1 LM Studio runtime release gate
+
+Session date: 2026-10-23. Local software gate: **PASS_WITH_LIMITATIONS**. Live provider smoke and full model benchmark: **NOT_RUN**.
+
+## Preflight and scoring audit
+
+Readonly preflight verified clean working tree, expected branch feature/p2a-local-llm-evaluation and HEAD 2166bec62f0cc59b185054136572f617dd7c2f6d. Origin was absent. Node v22.23.2/pnpm 11.25.0 were retained. Typecheck, original 172 tests, build, demo and six Chromium tests passed before creating feature/p2a1-lmstudio-live-evaluation. Existing scoring/runner/report, dataset, comparison JSON and methodology were reviewed.
+
+Exact dataset SHA-256 remains d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94. Gold and manifest have no diff. Recall 3/13 counts gold constraint tuples in 11 examples; review/blocking 28/28 counts safety-eligible examples, with a 10-example overlap. Review credit can result from unresolved text or missing fields, not recognized constraints. These measures are not interchangeable.
+
+A minimum counterexample test first failed: a target named tomorrow was incorrectly equated with 明天, yielding two correct slots instead of one. Date aliases now apply only to time slots. A positive time-equivalence test and versioned scoring metadata prevent accidental relaxation or mixing old scored runs. Gold labels were not changed. The fixed 60-case baseline remains complete 32/60, intent 39/60, count 38/60, slots 104/171, constraint recall 3/13, unsupported actions 0/39, evidence 77/77, review/blocking 28/28.
+
+## Environment boundary
+
+Neither lms nor ollama was on PATH. Known user-local LM Studio CLI/cache/model paths were absent. No supported CLI status/version/list command could therefore run. `/v1/models` on 127.0.0.1:1234 returned connection refused both inside and outside the sandbox. No Windows/host/LAN/public IP alternative was attempted. No runtime/model/driver/OS or network setting was installed or changed. Frozen pnpm install reused the existing dependency graph with no new dependencies.
+
+The official LM Studio Structured Output document was retrieved and inspected through HTTPS using curl after the web connector returned an expired-token error. This was documentation access, not a model request.
+
+## Actual commands and observations
+
+| Command | Result |
+| --- | --- |
+| pnpm install --frozen-lockfile | PASS, exit 0; no dependency/lockfile change |
+| pnpm typecheck | PASS |
+| pnpm test | PASS: 204 tests in 10 files; all original 172 retained, 32 new tests |
+| pnpm build | PASS; P1 static asset hashes unchanged |
+| pnpm demo | PASS: 3 cards, 1 production prohibition, valid evidence |
+| pnpm test:browser | PASS: 6 desktop/mobile Chromium tests |
+| pnpm benchmark:baseline | PASS execution; 60 cases, fixed semantic scores as above |
+| pnpm benchmark:llm --probe-only | Expected exit 2; Ollama NOT_RUN |
+| pnpm benchmark:llm --provider=lmstudio --probe-only | Expected exit 2; LM Studio NOT_RUN |
+| Live LM Studio smoke/full command | NOT_RUN: required service/model unavailable |
+| pnpm benchmark:report | PASS; existing actual results only, no inference |
+| git diff --check | PASS |
+| git status --short before staging | Only intended P2A.1 code, tests, documents and reports |
+
+New tests cover LM request format and fixed parameters, identity checks, invalid JSON/schema, truncation/refusal/tool calls, HTTP failure, byte limits, timeout/abort, absent model/service, endpoint restrictions, local DNS-name canonicalization, forbidden-operation omission, English confirmation prerequisite, nonconflicting multi-intent, fixed smoke IDs, smoke-to-full gating and NOT_RUN output. Shared transport and decoder retain all Ollama regression tests. Unit smoke fixtures are mock-only and saved only through test callbacks, never committed as live results.
+
+The live report reports smoke=NOT_RUN and fullLiveBenchmark=NOT_RUN, with B/C null summaries and empty cases. Model ID/digest/version/quantization and GPU participation are unknown. There are no actual model errors to rank. The five existing deterministic failures in MODEL_EVALUATION.md remain clearly labelled baseline observations. Local reports contain synthetic benchmark text only and were inspected for size/content before commit. Actual per-example latencies, P50/P95, tuple/case denominators, source fingerprints and timestamps are in the JSON artifacts.
+
+## Delivery boundaries
+
+P1 UI, P0 contracts/engine/CLI, original UI/browser tests and frozen gold/manifest have no diff from P2A. No push, merge, origin or visibility change occurred. A real comparison and P2B decision remain deferred until an owner-provided loopback runtime is available in the same execution environment. See MODEL_PROVENANCE.md for the minimum manual steps. No ASR/Hailo/UGen300 work was started.

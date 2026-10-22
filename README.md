@@ -140,3 +140,17 @@ Current actual result: Baseline complete success **32/60 (53.33%)**, constraint 
 Reports are in [reports/comparison.md](reports/comparison.md) and [reports/comparison.json](reports/comparison.json). These contain original synthetic benchmark text and recorded deterministic results; no personal model prompts were uploaded. Check [methodology](docs/EVALUATION_METHODOLOGY.md), [model evaluation](docs/MODEL_EVALUATION.md) and [model provenance](docs/MODEL_PROVENANCE.md) for dataset hash, definitions, failures, candidate references and limitations. Report files are local consistency records, not authenticated audit records; keep raw proposals untrusted. Review future report content/size before committing it.
 
 Gold labels and scoring were fixed before the recorded baseline run. No prompt tuning or live model inference occurred. A future tuning exercise must use a separate development set and new untouched evaluation set. This delivery stops at P2A, not P2B.
+
+## P2A.1: LM Studio live evaluation
+
+```sh
+pnpm benchmark:baseline
+pnpm benchmark:llm --provider=lmstudio --probe-only
+# Only with an accessible loopback service and a locally available model:
+pnpm benchmark:llm --provider=lmstudio --model=advertised-model-id
+pnpm benchmark:report
+```
+
+LM Studio defaults to `http://127.0.0.1:1234`. The CLI accepts no arbitrary URL and does not install/start a runtime, download a model or alter network bindings. With more than one advertised model, select one explicitly. The fixed eight-case smoke gate precedes the 60-case run; prompt and inference parameters remain fixed. Reports are written to `reports/p2a1-lmstudio.json` and `.md`, with separate smoke/full stages and raw versus verified predictions.
+
+In this execution environment LM Studio CLI/model inventory was absent and loopback probes were refused. **Live smoke and full benchmark are NOT_RUN**; mock tests are not inference. See MODEL_PROVENANCE.md for the minimum same-environment owner setup. The P2A.1 scorer audit fixes time aliases leaking into target/name comparison without changing the dataset hash. Constraint recall 3/13 and review/blocking 28/28 have different denominators and meanings; neither establishes model superiority. P1 UI remains deterministic. This delivery stops at P2A.1.

@@ -23,6 +23,7 @@ export function scanConstraints(input: string): ProposalConstraint[] {
   for (const m of input.matchAll(/不能直接上\s*production/gi)) add('deploy', 'production', 'prohibited', null, m[0]);
   for (const m of input.matchAll(/only prepare a draft(?: email)?/gi)) add('send', '*', 'prohibited', null, m[0]);
   for (const m of input.matchAll(/先檢查再執行/g)) add('execute', '*', 'prerequisite', 'check', m[0]);
+  for (const m of input.matchAll(/unless I confirm,\s*(?:do not|don't) publish/gi)) add('publish', '*', 'prerequisite', 'user confirmation', m[0]);
   for (const m of input.matchAll(/除非我確認，否則不要發布/g)) add('publish', '*', 'prerequisite', 'user confirmation', m[0]);
   for (const m of input.matchAll(/(?:must|必須)\s*(?:check|檢查)\s*(sandbox(?: credentials)?|測試設定)/gi)) add('check', normalize(m[1]!), 'required', null, m[0]);
   for (const m of input.matchAll(/check\s+(sandbox(?: credentials)?)\s+before\s+deploy\s+to\s+(production|staging)/gi)) add('deploy', normalize(m[2]!), 'prerequisite', `check ${normalize(m[1]!)}`, m[0]);

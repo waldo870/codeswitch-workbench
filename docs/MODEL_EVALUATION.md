@@ -33,3 +33,11 @@ These were inspected from actual recorded output. They were not chosen as eviden
 Do **not** integrate an LLM into the P1 UI based on this delivery. Keep deterministic behavior and human review as implemented. First obtain owner approval for an appropriate local runtime/model if needed, run the pinned dataset on one or two installed models, inspect raw constraint omissions and unsupported actions, and compare admitted-draft coverage with semantic accuracy. A model improving counts while losing prohibitions is not an acceptable improvement. Keep live evaluation separate from mock tests.
 
 No universal pass threshold or superiority claim is asserted from 60 synthetic examples. Before a production decision, add independently reviewed untouched examples, repeat runs to characterize variation, examine failure severity and review latency on the actual intended platform. P2B has not started.
+
+## P2A.1 result
+
+LM Studio live model status remains **NOT_RUN**: neither CLI nor loopback service is accessible in this execution environment. Adapter, shared transport/decoder, frozen smoke gate and software tests are implemented. See [P2A.1 report](../reports/p2a1-lmstudio.md) and [raw JSON](../reports/p2a1-lmstudio.json).
+
+The scoring audit separates the 13 constraint tuples (11 examples) from the 28 safety-eligible examples (10 overlapping examples). The latter measures review/blocking, not preservation of restrictions. A target/name date-alias bug was demonstrated by a failing unit test and fixed without editing gold labels. Baseline semantic results remain 32/60 complete, 104/171 slots and 3/13 constraint recall; all latency values are actual local CPU measurements in the generated reports.
+
+There are **no observed live model errors to rank**, so a list of five model failures would be invented. The five previously recorded deterministic failures above remain useful pending comparisons, but are not LM Studio errors. Mock cases exercise invalid JSON, schema mismatch, timeouts, oversized output and unsafe model claims; these are software fixtures only. No evidence currently supports entering P2B or changing the P1 UI. First complete the fixed smoke and 60-case live run on an accessible local runtime.

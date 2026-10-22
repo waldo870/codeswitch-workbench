@@ -62,3 +62,14 @@ it('freezes dataset version/hash, category counts and manually reviewable slots'
   expect(Object.fromEntries(['zh', 'en', 'mixed', 'multi', 'constraints', 'ambiguous'].map(g => [g, d.examples.filter(e => e.group === g).length]))).toEqual({ zh: 10, en: 10, mixed: 15, multi: 10, constraints: 10, ambiguous: 5 });
   expect(d.examples.every(e => e.expectedSlots.length === e.expectedCardCount && e.difficultyTags.length)).toBe(true);
 });
+it('does not apply relative-time aliases to target names', () => {
+  const g = { ...gold, input: 'check tomorrow', expectedSlots: [{ type: 'task', slots: { action: 'check', target: 'tomorrow' } }] };
+  const p = good(); if (p.cards[0]!.type === 'task') p.cards[0]!.fields.target = '明天'; p.cards[0]!.evidence = 'check tomorrow';
+  expect(scoreExample(g, p, false).slotCorrect).toBe(1);
+  expect(scoreExample(g, p, false).unsupportedActions).toBe(1);
+});
+it('retains relative-time equivalence specifically for the time slot', () => {
+  const g = { ...gold, input: '明天早上九點 review 報告', expectedIntentTypes: ['calendar'], expectedSlots: [{ type: 'calendar', slots: { action: 'review', target: '報告', time: 'Tomorrow, 9:00 AM' } }] };
+  const p = { cards: [{ intent: 'calendar' as const, type: 'calendar' as const, title: 'Review 報告', fields: { action: 'review', target: '報告', time: '明天早上九點' }, evidence: g.input }], constraints: [], unresolved: [] };
+  expect(scoreExample(g, p, false).slotCorrect).toBe(3);
+});

@@ -1,3 +1,4 @@
+import { evaluateLMStudio } from './lmstudio-run.js';
 import { pathToFileURL } from 'node:url';
 import { loadDataset } from './dataset.js';
 import { runBaseline, runLocal, summarize } from './runner.js';
@@ -23,6 +24,7 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
     const report = makeReport([{ method: 'A', model: 'p0-rules', status: 'RUN', reason: null, cases, summary: summarize(cases) }]);
     saveReport('baseline', report); console.log(JSON.stringify(report.methods[0]!.summary!.overall, null, 2)); return 0;
   }
+  if (mode === 'llm' && flags.includes('--provider=lmstudio')) return evaluateLMStudio(flags.filter(f => f !== '--provider=lmstudio'));
   if (mode !== 'llm') throw new Error('Usage: baseline | llm [--probe-only] [--model=local-tag] (up to two) | report');
   if (flags.some(f => f !== '--probe-only' && !f.startsWith('--model='))) throw new Error('Unknown flag. Arbitrary endpoints are not accepted by CLI.');
   const probe = await probeOllama();

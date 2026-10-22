@@ -9,3 +9,5 @@
 - **P5: End-to-end validation** — test speech through confirmed local exports, constraint preservation, privacy and recovery on target hardware. Not started.
 
 Each phase requires its own scope and acceptance review. P1 does not imply completion of P2–P5. Optional later export formats include ICS and Markdown; neither is implemented.
+
+- **P2A.1: LM Studio runtime adapter** — shared bounded transport/decoder, explicit local model selection and fixed 8-case smoke gate implemented. Scoring audit fixed time aliases outside time slots without changing gold. LM Studio live smoke and full benchmark remain NOT_RUN because the runtime is not accessible in this environment. P2B decision remains deferred.
