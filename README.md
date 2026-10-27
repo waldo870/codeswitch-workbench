@@ -135,7 +135,7 @@ pnpm benchmark:report
 
 The CLI never downloads a model. Omit model flags to select at most two already installed eligible models, preferring Qwen and choosing smallest/largest file sizes. It only connects to `http://127.0.0.1:11434`; no arbitrary URL flag exists. Do not expose Ollama publicly. No API key is required. The UI never contacts this endpoint.
 
-Current actual result: Baseline complete success **32/60 (53.33%)**, constraint recall **3/13 (23.08%)**. Actual model comparison is **NOT_RUN** because Ollama was not available. Mock and loopback HTTP tests validate software behavior only. There is no evidence yet that a local LLM is better, so P2B/UI integration is not recommended yet.
+Historical P2A result: Baseline complete success **32/60 (53.33%)**, constraint recall **3/13 (23.08%)**. At that stage actual model comparison was **NOT_RUN** because Ollama was not available. Later Gemma measurements are recorded below. Mock and loopback HTTP tests validate software behavior only. There is no evidence yet that a local LLM is better, so P2B/UI integration is not recommended yet.
 
 Reports are in [reports/comparison.md](reports/comparison.md) and [reports/comparison.json](reports/comparison.json). These contain original synthetic benchmark text and recorded deterministic results; no personal model prompts were uploaded. Check [methodology](docs/EVALUATION_METHODOLOGY.md), [model evaluation](docs/MODEL_EVALUATION.md) and [model provenance](docs/MODEL_PROVENANCE.md) for dataset hash, definitions, failures, candidate references and limitations. Report files are local consistency records, not authenticated audit records; keep raw proposals untrusted. Review future report content/size before committing it.
 
@@ -153,7 +153,7 @@ pnpm benchmark:report
 
 LM Studio defaults to `http://127.0.0.1:1234`. The CLI accepts no arbitrary URL and does not install/start a runtime, download a model or alter network bindings. With more than one advertised model, select one explicitly. The fixed eight-case smoke gate precedes the 60-case run; prompt and inference parameters remain fixed. Reports are written to `reports/p2a1-lmstudio.json` and `.md`, with separate smoke/full stages and raw versus verified predictions.
 
-In this execution environment LM Studio CLI/model inventory was absent and loopback probes were refused. **Live smoke and full benchmark are NOT_RUN**; mock tests are not inference. See MODEL_PROVENANCE.md for the minimum same-environment owner setup. The P2A.1 scorer audit fixes time aliases leaking into target/name comparison without changing the dataset hash. Constraint recall 3/13 and review/blocking 28/28 have different denominators and meanings; neither establishes model superiority. P1 UI remains deterministic. This delivery stops at P2A.1.
+In the original P2A.1 execution environment LM Studio CLI/model inventory was absent and loopback probes were refused. **Live smoke and full benchmark are NOT_RUN**; mock tests are not inference. See MODEL_PROVENANCE.md for the minimum same-environment owner setup. The P2A.1 scorer audit fixes time aliases leaking into target/name comparison without changing the dataset hash. Constraint recall 3/13 and review/blocking 28/28 have different denominators and meanings; neither establishes model superiority. P1 UI remains deterministic. That paragraph describes the historical P2A.1 delivery; current P2.5 findings are recorded below.
 
 ## P2A.4 adapter hotfix revalidation
 
@@ -166,3 +166,22 @@ pnpm smoke:lmstudio
 This dedicated command uses the already available gemma-3-4b-it model and exactly the eight fixed smoke cases. It does not download/switch models or run the 60-case benchmark. Provider, Schema, Evidence, Constraints, Semantics and Full results are separate; any full-case failure yields exit 2. JSON alone, missing prohibitions, nonexistent evidence and blanket unresolved do not count as full success.
 
 Read reports/p2a4-smoke.md for this delivery's actual results. Raw diagnostic text stays in the Git-ignored reports/local-diagnostics directory after bounded redaction. Never enter API keys or secrets. Do not commit local raw diagnostics. All existing prompts, schema requirements, gold labels, dataset bytes and P1 UI behavior remain unchanged.
+
+### P2.5 bounded research mode
+
+```sh
+pnpm benchmark:research --model=gemma-3-12b-it
+```
+
+This separate research command requires an already available local LM Studio model. It continues after individual extraction failures, checkpoints actual results, and never admits outputs into the UI. Limits: 60 seconds/case, 65 minutes/run, no retries, fixed 60-case dataset and unchanged prompt. Default `benchmark:llm --provider=lmstudio` remains strict. Provider failures/timeouts are reported separately from conditional semantic accuracy. A completed attempt is not necessarily a completed inference. See `docs/EVALUATION_METHODOLOGY.md` for denominators and product qualification.
+
+### Current P2.5 result and P2.6 decision
+
+Real Gemma 3 12B IT Q8_0 CPU research attempted all 60 fixed cases: **18 valid completed outputs,42 timeouts**. This is not a fully completed 60-inference benchmark. Conditional complete gold outcomes: raw2/18, verified3/18; all successes are appropriate handling of unknown inputs, not successful work-card extraction. Raw constraints1/10 assessable tuples; the remaining3/13 gold tuples were on timed-out inputs. No evidence supports enabling Local LLM in the UI. Deterministic remains the only product mode; P2.6 failed qualification. No GPU, speech or Hailo completion is claimed.
+
+```sh
+# Re-render an existing report without inference:
+pnpm benchmark:research:report p25-gemma-3-12b-it
+```
+
+See [the research report](reports/p25-gemma-3-12b-it.md) and [model decision / scorer caveats](docs/MODEL_EVALUATION.md). Research exit0 means all requests were attempted, not that model quality passed. The earlier NOT_RUN paragraphs are historical. No 60-case Gemma4B comparison was performed; its prior fixed Full Smoke was0/8.

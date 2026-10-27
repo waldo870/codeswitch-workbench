@@ -232,3 +232,27 @@ See reports/p2a4-smoke.json and .md for each stage, validation reason, latency a
 Multi-03 timed out again at 60003.229 ms, before an HTTP envelope. Its diagnostic identifies provider/model/case, transport phase and TIMEOUT. The model was preloaded. Seven numeric LM Studio log-stat records matched completed requests by token counts and sequence: 6.315–6.364 tokens/s, 9.984–10.097 seconds to first token, 35.331–42.937 seconds total inference time. The aborted request emitted no completion statistics. Slow generation is observed, but its exact loading/queueing/generation breakdown remains TIMEOUT_UNRESOLVED. No deadline change or retry concealed it. GPU participation is NOT_VERIFIED.
 
 The owned statistics listener was stopped after the run; the LM Studio server/model remained loaded and IDLE. No raw logger content or unrelated user text was captured into tracked reports. There is not enough model reliability evidence for the formal benchmark or P2B. A separately authorized comparison with another local instruction model on the same frozen smoke is reasonable; no model superiority or automatic model change is implied.
+
+
+## P2.5 model comparison completion (2026-10-28)
+
+Starting branch feature/p2a4-adapter-hotfix, HEAD7a17a96741e08d5b75de9c591f9eabe03e0f1b2d, clean worktree and verified226/226 Vitest +6/6 Chromium. New branch feature/p25-model-comparison. No unknown owner changes, remote operation or merge.
+
+| Actual command | Result |
+| --- | --- |
+| pnpm install --frozen-lockfile | PASS, already up to date; no new dependency |
+| pnpm typecheck | PASS |
+| pnpm test | PASS241/241,13 files; all original226 retained,15 new research tests |
+| pnpm build | PASS |
+| pnpm demo | PASS,3 cards,1 constraint, validation PASS |
+| pnpm test:browser | PASS6/6 desktop/mobile Chromium |
+| pnpm benchmark:baseline | Actual run, complete32/60, constraints3/13 |
+| pnpm benchmark:research --model=gemma-3-12b-it | 60/60 requests attempted;18 schema-valid completions,42 TIMEOUT; model/product gate FAIL |
+| pnpm benchmark:research:report p25-gemma-3-12b-it | PASS; renders existing actual data without inference |
+| git diff --check | PASS |
+
+New mock-only tests cover continued execution after timeout, separate semantic denominators, unchanged proposals with invalid evidence / omitted constraints, failure and total-time limits, unavailable runtime stop, abort/case-ID propagation, invalid CLI endpoint/model flags, report NOT_EVALUABLE states, and truthful in-progress checkpoints. They do not count as inference. Existing strict gate tests still prevent failed smoke from invoking60 cases. No tests, gold labels or safety rules were removed or weakened.
+
+Live parameters stayed fixed: temperature0,seed42,max_tokens4096,60s/case,65min total,60 provider-failure ceiling, no retry. Actual duration3439.012s. Runtime remained CPU AVX2; no GPU inference. A publisher-matching file SHA-256 and successful load establish model-file integrity. Raw B complete2/18 and verified C3/18 are conditional on18 valid outputs; all are unknown-input handling. Operational yields2/60 and3/60 are not semantic-error counts for timeouts. Raw constraint recall1/10, verified0/10;3 gold tuples unassessed due timeout. P50/P95 all attempts60001.55/60002.69ms. See MODEL_EVALUATION.md for every denominator and scorer false positives.
+
+P2.6 UI integration did not pass capability/safety/latency qualification; no Experimental mode or bridge was implemented. Its feature tests are NOT_APPLICABLE, not PASS. P1 browser behavior remains unchanged. No second 60-case4B run, true GPU benchmark, complete 60-inference12B semantic benchmark, hosted Actions, ASR or UGen300 test occurred. No push, merge, model download, driver update or third provider. The original Windows weight file remained intact. Runtime CPU selection was restored after a failed installed-Vulkan hardware survey;12B was left loaded/IDLE at the end of inference.

@@ -18,7 +18,9 @@
     "benchmark:baseline": "tsx src/evaluation/cli.ts baseline",
     "benchmark:llm": "tsx src/evaluation/cli.ts llm",
     "benchmark:report": "tsx src/evaluation/cli.ts report",
-    "smoke:lmstudio": "tsx src/evaluation/smoke-cli.ts"
+    "smoke:lmstudio": "tsx src/evaluation/smoke-cli.ts",
+    "benchmark:research": "tsx src/evaluation/research-cli.ts",
+    "benchmark:research:report": "tsx src/evaluation/research-report-cli.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

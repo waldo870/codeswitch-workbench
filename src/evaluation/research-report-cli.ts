@@ -1,0 +1,12 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { reportsDir } from './report.js';
+import { loadDataset } from './dataset.js';
+import { researchMarkdown } from './research-report.js';
+const names = process.argv.slice(2);
+if (names.length !== 1 || !/^p25-[a-z0-9-]+$/.test(names[0]!)) throw new Error('Choose one recorded p25-model filename without extension.');
+const file = `${reportsDir}/${names[0]}`;
+const report = JSON.parse(readFileSync(file + '.json', 'utf8')) as Parameters<typeof researchMarkdown>[0];
+const dataset = loadDataset();
+if (report.dataset.hash !== dataset.hash || !Array.isArray(report.research?.raw) || report.research.raw.some((c, i) => c.id !== dataset.examples[i]?.id || c.sourceInput !== dataset.examples[i]?.input)) throw new Error('Incompatible or reordered recorded experiment.');
+writeFileSync(file + '.md', researchMarkdown(report));
+console.log('Rendered recorded results only; no inference.');

@@ -1,5 +1,7 @@
 # P2A model evaluation
 
+Historical sections preserve earlier runtime-unavailable results. Current P2.5 real Gemma 12B findings and the P2.6 decision are appended below.
+
 Status: **PASS_WITH_LIMITATIONS for the implemented framework; actual local model evaluation NOT_RUN.**
 
 The question “does a local LLM reliably outperform the deterministic parser?” remains unanswered. No Ollama executable/service or accessible installed model was found. No model was downloaded, and no mock result was inserted into the comparison reports.
@@ -41,3 +43,46 @@ LM Studio live model status remains **NOT_RUN**: neither CLI nor loopback servic
 The scoring audit separates the 13 constraint tuples (11 examples) from the 28 safety-eligible examples (10 overlapping examples). The latter measures review/blocking, not preservation of restrictions. A target/name date-alias bug was demonstrated by a failing unit test and fixed without editing gold labels. Baseline semantic results remain 32/60 complete, 104/171 slots and 3/13 constraint recall; all latency values are actual local CPU measurements in the generated reports.
 
 There are **no observed live model errors to rank**, so a list of five model failures would be invented. The five previously recorded deterministic failures above remain useful pending comparisons, but are not LM Studio errors. Mock cases exercise invalid JSON, schema mismatch, timeouts, oversized output and unsafe model claims; these are software fixtures only. No evidence currently supports entering P2B or changing the P1 UI. First complete the fixed smoke and 60-case live run on an accessible local runtime.
+
+## P2.5 real Gemma 12B research and P2.6 decision
+
+**Software gate PASS; model/product qualification FAIL.** The fixed 60-case research run made 60 real requests, but only 18 completed with schema-valid proposals; 42 timed out. It is not a fully completed 60-inference semantic benchmark. No mock output filled missing results. No prompt, gold, schema, scorer or verifier was changed. One pass, no retry/tuning. Duration: 3439.012 seconds (57.32 minutes). Runtime: LM Studio CLI 69d945a, CPU AVX2 llama.cpp 2.41.0, Gemma 3 12B IT Q8_0, context8192, parallel1. GPU offload was not compiled into the active backend. The first request overlapped cold model loading; subsequent timeouts also occurred after loading. Existing Vulkan hardware survey failed; CPU selection was restored without changing the active experiment.
+
+Dataset SHA-256: `d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94`.
+
+| Metric | A deterministic (60 completed) | B 12B + schema (18 completed) | C same proposals + verification (18) |
+| --- | --- | --- | --- |
+| Complete gold outcome | 32/60 | 2/18 | 3/18 |
+| Intent exact | 39/60 | 10/18 | 8/18 |
+| Card count | 38/60 | 10/18 | 8/18 |
+| Slots | 104/171 | 7/25 | 1/25 |
+| Constraint recall | 3/13 | 1/10 | 0/10 |
+| Unsupported anchor rate | 0/39 | 2/5 | 1/1 |
+| Evidence validity | 77/77 | 16/19 | 18/18 |
+| Safe review/block | 28/28 | 7/11 | 11/11 |
+| Timeout | 0 | 42/60 attempts | same 42 upstream timeouts |
+| Completed-output latency P50/P95 ms | see baseline JSON | 48345.25/59252.70 | 48345.38/59253.17 |
+
+All-attempt LLM latency P50/P95: 60001.55/60002.69 ms. No invalid JSON/schema failures were observed among completed responses. Operational gold-outcome yield is B 2/60, C 3/60; it includes unknown-input handling, not just completed work. The conditional 18-output semantic percentages must not be treated as accuracy over all 60. Only 10/13 gold constraint tuples were assessable; three were on timed-out inputs, not silently counted as model omissions. The single raw recovered tuple had fabricated punctuation in evidence and was rejected, hence C0/10. C18/18 evidence includes source-grounded review/unresolved records after rejection, not repaired model quotes or proof that all original proposals were grounded.
+
+B successes: ambiguous-02 and ambiguous-04 (appropriate unresolved outcomes). C additionally handles ambiguous-01 by rejecting an invented/unsupported vague task. None is a successful nonempty task extraction. Seventeen of eighteen proposals were blocked or required review; this includes appropriate unresolved cases and is not seventeen demonstrated dangerous actions. Forty-two transport timeouts never reached independent semantic review. Only one draft candidate survived (en-02); its model-supplied open/false confirmation values were reset to draft/true. It was not admitted into the product or exported.
+
+Gemma 4B historical strict smoke remains 0/8 with no 60-case run. The 12B research run contains the same eight frozen smoke inputs: full checks pass only ambiguous-02 (1/8). This is a subset analysis of the real research run, not a separately executed strict command. No strict qualification was granted. It is not a fair complete 60-case head-to-head 4B comparison.
+
+### Failure review and measurement limitations
+
+1. constraints-01: `Don't deploy to production.` returned all three arrays empty. Independent errors: omitted prohibited deploy/production; unverified source coverage.
+2. constraints-03: omitted both Check Task and prohibited delete/logs; returned unresolved instead. Independent omission detection retained the model error.
+3. constraints-04: represented prerequisite as action=check, scope=execution, dependsOn=null instead of execute depending on check; independent prerequisite/unverified-constraint checks rejected it.
+4. constraints-05 / mixed-10: rewrote Chinese full stop or source capitalization in evidence. Unique exact UTF-16 grounding failed; no quote was repaired.
+5. constraints-06 / constraints-07 / constraints-09: missed no-send, no-execute, or required/prerequisite tuples. Reviews rejected the proposals without inventing repaired answers.
+
+Additional human adjudication: en-02 target `the deployment plan` versus gold `deployment plan` is a determiner mismatch, not a fabricated action. It contributes one of B's two unsupported anchors and C's sole unsupported anchor. Ambiguous-01 is the other B unsupported anchor: a vague utterance was guessed into a task. Thus the frozen anchor rate is not a literal hallucination rate. constraints-08 recognizes a publish prohibition with scope `all`, while the fixed contract/gold matcher expects `*`; it also fails to emit the structured user-confirmation prerequisite. Report that representation mismatch rather than saying the model showed no prohibition awareness. Fixed prompt examples omit summarize; mixed-06 refuses that task. Prompt coverage is a possible confound, not a demonstrated causal explanation. No aliases, gold labels or prompt were modified after observing these findings.
+
+### Product decision
+
+**P2.6 NOT QUALIFIED / NOT INTEGRATED.** Current CPU latency, low completion coverage, missing work cards and constraint omissions do not support UI integration or superiority over the deterministic baseline. P1 remains deterministic and fully operational. No bridge, browser-to-provider requests, experimental switch, model auto-confirmation or external action was added. UI integration/fallback/experimental-mode tests are not applicable to an unimplemented feature; original P1 browser regressions passed. Software mocks are not live model scores.
+
+The evaluation delivery is complete as a bounded negative/partial inference experiment; the product local-LLM feature is not complete or reliable. First address the existing runtime's GPU access separately, then define prompt/action/constraint normalization on a separate development set and preregister a held-out evaluation. Do not tune on these 60 labels. No third provider/model, ASR or Hailo work started. P3 is not recommended from this result.
+
+Sources: [actual recorded report](../reports/p25-gemma-3-12b-it.md), [raw proposals and all denominators](../reports/p25-gemma-3-12b-it.json), [runtime/model integrity observations](../reports/p25-runtime.json). The experiment-start source fingerprint is retained. During the run, scheduler diagnostics/report formatting were improved (in-progress status, unavailable-provider stop, latency counters); protected extraction/scoring/verification paths remained byte-identical to the verified starting commit. They did not change any measured request or answer. Reports contain only original synthetic benchmark inputs and were reviewed locally for sensitive data and size.
