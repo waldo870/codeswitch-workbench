@@ -1,3 +1,4 @@
+import { assessSmokeCase } from './smoke-assessment.js';
 import { probeLMStudio, LMStudioAdapter, LMSTUDIO_PARAMETERS, type LMStudioProbe } from '../llm/lmstudio-adapter.js';
 import { groundEvidence } from '../llm/proposal-validation.js';
 import type { ExtractionProvider } from '../llm/types.js';
@@ -48,9 +49,11 @@ export async function evaluateLMStudio(flags: string[], dependencies: { probe?: 
   if (probe.status !== 'AVAILABLE' || !model || flags.includes('--probe-only')) return notRun(reason);
   const provider = (dependencies.provider ?? (id => new LMStudioAdapter(id)))(model);
   const smoke = await runSmoke(provider);
-  report.stages = { mockTests: 'Software tests only', smoke: smoke.status, fullLiveBenchmark: 'NOT_RUN', smokeIds: SMOKE_IDS };
-  report.discovery = { inventory: probe, smoke }; // actual raw proposals/verification; not the scored full set
-  if (smoke.status !== 'PASS') return notRun('Fixed smoke failed provider/schema/evidence checks; no prompt tuning or full run.');
+  const fullSmokeCases = smoke.raw.map((raw, i) => assessSmokeCase(dataset.examples.find(e => e.id === raw.id)!, raw, smoke.verified[i]!));
+  const fullSmokePass = fullSmokeCases.every(c => c.fullPass);
+  report.stages = { mockTests: 'Software tests only', providerSmoke: smoke.status, smoke: fullSmokePass ? 'PASS' : 'FAIL', fullLiveBenchmark: 'NOT_RUN', smokeIds: SMOKE_IDS };
+  report.discovery = { inventory: probe, smoke, fullSmokeCases }; // actual raw proposals/verification; not the scored full set
+  if (!fullSmokePass) return notRun('Fixed smoke failed provider/schema/evidence/constraint/semantic checks; no full run.');
   const full = await runLocal(dataset.examples, provider);
   for (const [method, cases] of [['B', full.raw], ['C', full.verified]] as const) methods.push({ provider: 'lmstudio', method, model, status: 'RUN', reason: null, cases, summary: summarize(cases) });
   report.stages = { mockTests: 'Software tests only', smoke: 'PASS', fullLiveBenchmark: 'RUN', smokeIds: SMOKE_IDS };

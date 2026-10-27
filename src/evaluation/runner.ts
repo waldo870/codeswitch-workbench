@@ -5,6 +5,7 @@ import { missingRequired, verifyProposal } from '../llm/proposal-validation.js';
 import type { ExtractionProvider, ExtractionResult, Proposal, ProposalCard } from '../llm/types.js';
 import { aggregate, scoreExample, type GoldExample, type Score } from './scoring.js';
 export interface CaseResult {
+  diagnostics?: ExtractionResult['diagnostics'];
   id: string; group: string; sourceInput: string; durationMs: number; rawValidation: 'valid' | 'invalid'; error: ExtractionResult['error'];
   rawText: string | null; rawProposal: Proposal | null; finalProposal: Proposal | null; rawScore: Score; score: Score;
   verification: { valid: boolean; errors: string[]; executable: false }; admittedDraftCards: unknown[]; identity: ExtractionResult['identity'];
@@ -35,7 +36,7 @@ export async function runLocal(examples: GoldExample[], provider: ExtractionProv
       constraints: review.groundedConstraints.map(c => ({ ...c, evidence: c.evidence.text })),
       unresolved: review.valid ? [] : [{ evidence: gold.input, reason: review.errors.join('; ') }],
     } : null;
-    const base = { id: gold.id, group: gold.group, sourceInput: gold.input, durationMs: result.durationMs, rawValidation: result.rawValidation, error: result.error, rawText: result.rawText, rawProposal: result.proposal, rawScore: schemaScore, identity: result.identity };
+    const base = { ...(result.diagnostics ? { diagnostics: { ...result.diagnostics, caseId: gold.id } } : {}), id: gold.id, group: gold.group, sourceInput: gold.input, durationMs: result.durationMs, rawValidation: result.rawValidation, error: result.error, rawText: result.rawText, rawProposal: result.proposal, rawScore: schemaScore, identity: result.identity };
     raw.push({ ...base, finalProposal: result.proposal, score: schemaScore, verification: { valid: Boolean(result.proposal), errors: result.error ? [result.error.code] : [], executable: false }, admittedDraftCards: [] });
     verified.push({ ...base, durationMs: result.durationMs + verificationDuration, finalProposal, score: scoreExample(gold, finalProposal, !review?.valid || blocked(finalProposal, Boolean(finalProposal))), verification: { valid: review?.valid ?? false, errors: review?.errors ?? [result.error?.code ?? 'provider_error'], executable: false }, admittedDraftCards: review?.draftCards ?? [] });
   }

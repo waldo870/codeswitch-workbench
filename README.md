@@ -154,3 +154,15 @@ pnpm benchmark:report
 LM Studio defaults to `http://127.0.0.1:1234`. The CLI accepts no arbitrary URL and does not install/start a runtime, download a model or alter network bindings. With more than one advertised model, select one explicitly. The fixed eight-case smoke gate precedes the 60-case run; prompt and inference parameters remain fixed. Reports are written to `reports/p2a1-lmstudio.json` and `.md`, with separate smoke/full stages and raw versus verified predictions.
 
 In this execution environment LM Studio CLI/model inventory was absent and loopback probes were refused. **Live smoke and full benchmark are NOT_RUN**; mock tests are not inference. See MODEL_PROVENANCE.md for the minimum same-environment owner setup. The P2A.1 scorer audit fixes time aliases leaking into target/name comparison without changing the dataset hash. Constraint recall 3/13 and review/blocking 28/28 have different denominators and meanings; neither establishes model superiority. P1 UI remains deterministic. This delivery stops at P2A.1.
+
+## P2A.4 adapter hotfix revalidation
+
+The LM Studio adapter now accepts absent/null/empty tool_calls while rejecting actual calls, invalid types, refusals, truncation and identity mismatch. Failure diagnostics retain HTTP status, stage/code and a bounded redacted preview; no failed response becomes a WorkCard.
+
+```sh
+pnpm smoke:lmstudio
+```
+
+This dedicated command uses the already available gemma-3-4b-it model and exactly the eight fixed smoke cases. It does not download/switch models or run the 60-case benchmark. Provider, Schema, Evidence, Constraints, Semantics and Full results are separate; any full-case failure yields exit 2. JSON alone, missing prohibitions, nonexistent evidence and blanket unresolved do not count as full success.
+
+Read reports/p2a4-smoke.md for this delivery's actual results. Raw diagnostic text stays in the Git-ignored reports/local-diagnostics directory after bounded redaction. Never enter API keys or secrets. Do not commit local raw diagnostics. All existing prompts, schema requirements, gold labels, dataset bytes and P1 UI behavior remain unchanged.

@@ -1,6 +1,6 @@
 import type { FailureCode } from './types.js';
 export class ProviderError extends Error { constructor(public code: FailureCode, message: string) { super(message); } }
-export interface TransportOptions { endpoint?: string; fetchImpl?: typeof fetch; timeoutMs?: number; maxResponseBytes?: number }
+export interface TransportOptions { endpoint?: string; fetchImpl?: typeof fetch; timeoutMs?: number; maxResponseBytes?: number; onResponse?: (status: number) => void }
 export function loopbackEndpoint(value: string, allowLocalhost = false): string {
   const url = new URL(value);
   if (url.protocol !== 'http:' || !['127.0.0.1', '[::1]', ...(allowLocalhost ? ['localhost'] : [])].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error('Only loopback HTTP endpoints are allowed.');
@@ -15,6 +15,7 @@ export async function boundedJsonRequest(endpoint: string, path: string, body: u
   const combined = signal ? AbortSignal.any([signal, deadline]) : deadline;
   try {
     const response = await (options.fetchImpl ?? fetch)(endpoint + path, { method: body === undefined ? 'GET' : 'POST', redirect: 'error', headers: { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body), signal: combined });
+    options.onResponse?.(response.status);
     if (!response.ok) { await response.body?.cancel(); throw new ProviderError('HTTP_ERROR', `${label} HTTP ${response.status}`); }
     if (Number(response.headers.get('content-length')) > limit) { await response.body?.cancel(); throw new ProviderError('RESPONSE_TOO_LARGE', 'Response exceeds byte limit.'); }
     if (!response.body) throw new ProviderError('PROVIDER_FORMAT', 'Missing response body.');

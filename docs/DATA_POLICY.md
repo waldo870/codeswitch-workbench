@@ -23,3 +23,9 @@ There is no authenticated user identity, encryption, synchronized tabs or protec
 The 60 text benchmark examples and gold labels are original synthetic project data, not Common Voice or another speech dataset. Names are fictional; no credentials or real personal contacts are used. Only the source sentence is sent to the explicitly local Ollama daemon when available. Gold labels stay in the evaluator. No model was available in this delivery; no inference request was sent. Software tests use mock responses or a temporary loopback HTTP server, never a remote model.
 
 Reports retain source input, raw model content when actually available, schema errors, evidence/constraint validation, metrics and runtime metadata. Treat future model text as untrusted. Reports can contain sensitive text if the dataset is changed, so review content/size before committing or sharing. The committed P2A reports contain only this synthetic dataset and actual baseline measurements, plus explicit NOT_RUN records.
+
+## P2A.4 diagnostics
+
+LM Studio error diagnostics record only identity/case metadata, HTTP status, phase/code, finish reason and numeric usage, plus a bounded preview for failures. The application does not copy Authorization or other request headers. Structured credential keys and recognizable bearer/API-key/password patterns are redacted before previews are bounded. Failed proposals stay null and are never treated as authorized work.
+
+The dedicated hotfix smoke stores raw-text previews locally under reports/local-diagnostics/, which Git ignores. Its committed report contains fixed-case IDs, pass/fail flags, numeric scores, error codes and validation reasons; no raw model body or source utterance is copied into that report. All cases in this run are the frozen original synthetic dataset. Review report content before sharing, and do not supply secrets to the parser/model.

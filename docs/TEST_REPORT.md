@@ -183,3 +183,52 @@ The live report reports smoke=NOT_RUN and fullLiveBenchmark=NOT_RUN, with B/C nu
 ## Delivery boundaries
 
 P1 UI, P0 contracts/engine/CLI, original UI/browser tests and frozen gold/manifest have no diff from P2A. No push, merge, origin or visibility change occurred. A real comparison and P2B decision remain deferred until an owner-provided loopback runtime is available in the same execution environment. See MODEL_PROVENANCE.md for the minimum manual steps. No ASR/Hailo/UGen300 work was started.
+
+# P2A.4 recovery, adapter hotfix and live smoke
+
+Session date: 2026-10-28. Software regression: PASS. Live full smoke: FAIL (0/8). Formal 60-case model benchmark: NOT_RUN.
+
+## Recovery and provenance
+
+Starting HEAD was 5034e978bfab328233b97e223b348118f27e34ca with exactly two modified reports: reports/p2a1-lmstudio.json and .md. Full JSON/Markdown diffs were reviewed. All recorded source strings matched frozen synthetic fixtures, model identity was Gemma, and the seven provider-envelope failures plus one timeout matched the previous diagnosis. Report hashes matched the prior readonly diagnostic session. No credential patterns or unknown source inputs were found.
+
+Only those two paths were staged, staged diff/check were inspected, and they were committed as 011d31c3b2e3e7265cf3d5cd9122b60514d3ae3f (`docs: preserve p2a1 live smoke diagnostics`). The tree was clean before feature/p2a4-adapter-hotfix was created. No broad git add, stash, reset, cleanup, merge or push was used.
+
+## Actual software gates
+
+| Command | Result |
+| --- | --- |
+| pnpm install --frozen-lockfile | PASS; existing dependencies retained |
+| pnpm typecheck | PASS |
+| pnpm test | PASS: 226 tests / 12 files; original 204 retained, 22 new |
+| Adapter-specific Vitest invocation | PASS before live inference; shared Ollama regressions retained |
+| pnpm build | PASS; static UI assets unchanged |
+| pnpm demo | PASS: 3 cards, 1 constraint, validation passed |
+| pnpm test:browser | PASS: 6 Chromium desktop/mobile cases |
+| git diff --check | PASS |
+| pnpm smoke:lmstudio | Executed once; expected exit 2 because full smoke failed |
+
+Tests cover missing/null/empty tool arrays, actual tool calls, invalid types, finish reasons, refusal, truncation and identity mismatch. Diagnostics tests verify phase/status/code, bounded redacted failure previews and proposal=null. Full-gate tests reject schema/evidence-only output, missing prohibitions and blanket refusal while allowing genuinely appropriate unknown-intent abstention. Original tests were not deleted or relaxed. Prompt, schema, independent constraint verifier, fixed smoke IDs, dataset/gold/manifest, P0 engine and P1 UI have no diff from the recovered baseline.
+
+## Actual live revalidation
+
+Model gemma-3-4b-it was already loaded and IDLE, Q8_0, context 8192. lms CLI commit was 69d945a. No model download, reload, switch, driver/runtime change or timeout increase was performed. Parameters stayed temperature=0, seed=42, max_tokens=4096; request timeout remained 60000 ms. The exact eight fixed cases ran once with no retry and no 60-case inference.
+
+| Stage | Pass / all 8 | Interpretation |
+| --- | --- | --- |
+| Provider | 7/8 | All seven completed responses accepted; one timeout |
+| Schema | 7/8 | All seven completed outputs parsed and passed the unchanged schema |
+| Evidence | 5/8 | Two completed cases fabricated evidence; timeout unassessed |
+| Constraints | 0/8 | Seven completed cases failed; timeout unassessed |
+| Fixed-gold semantics | 0/8 | Seven completed cases failed; timeout unassessed |
+| Full | 0/8 | No unsafe full benchmark was unlocked |
+
+All seven completed responses avoided the former empty-tool-array false rejection. They still added a spurious required constraint. The three restriction cases retained 0/4 expected Gold tuples: deploy prohibition, delete prohibition, publish prohibition and user-confirmation prerequisite were absent. Deployment/publish cases fabricated quotations and tasks; the ambiguous request invented a document-check task. The email draft retained its null fields but added an unsupported required constraint. The independent verifier admitted zero draft cards. This is MODEL_QUALITY_FAILURE, not an adapter success claim about semantics.
+
+See reports/p2a4-smoke.json and .md for each stage, validation reason, latency and runtime evidence. These curated reports contain no raw model body/source utterance. Bounded redacted previews stay in ignored reports/local-diagnostics/. Report content/size and credential patterns were reviewed before staging; local raw files were not staged.
+
+## Timeout evidence and limits
+
+Multi-03 timed out again at 60003.229 ms, before an HTTP envelope. Its diagnostic identifies provider/model/case, transport phase and TIMEOUT. The model was preloaded. Seven numeric LM Studio log-stat records matched completed requests by token counts and sequence: 6.315–6.364 tokens/s, 9.984–10.097 seconds to first token, 35.331–42.937 seconds total inference time. The aborted request emitted no completion statistics. Slow generation is observed, but its exact loading/queueing/generation breakdown remains TIMEOUT_UNRESOLVED. No deadline change or retry concealed it. GPU participation is NOT_VERIFIED.
+
+The owned statistics listener was stopped after the run; the LM Studio server/model remained loaded and IDLE. No raw logger content or unrelated user text was captured into tracked reports. There is not enough model reliability evidence for the formal benchmark or P2B. A separately authorized comparison with another local instruction model on the same frozen smoke is reasonable; no model superiority or automatic model change is implied.

@@ -1,0 +1,376 @@
+{
+  "environment": {
+    "scoringVersion": "p2a1-v2-time-slot-aliases",
+    "node": "v22.23.2",
+    "platform": "linux",
+    "arch": "x64",
+    "release": "6.18.33.2-microsoft-standard-WSL2",
+    "cpu": "Intel(R) Core(TM) i9-14900K",
+    "logicalCpus": 32,
+    "memoryBytes": 67420987392,
+    "gpu": "Not established by runner; see MODEL_PROVENANCE.md",
+    "gitHead": "011d31c3b2e3e7265cf3d5cd9122b60514d3ae3f",
+    "gitDirty": true,
+    "sourceSha256": "275eca329468829e02e8c0594914b565146f7f5dbea63ae195d133bf5d177617",
+    "promptVersion": "p2a-extraction-v1",
+    "promptSha256": "b5bca2f61d16a7a53125664ea07fe025341646d6336a3b7709c7c59dae1a0a5e",
+    "parameters": {
+      "temperature": 0,
+      "seed": 42,
+      "num_predict": 4096,
+      "num_ctx": 8192
+    },
+    "timeoutMs": 60000,
+    "maxResponseBytes": 262144,
+    "repetitions": 1,
+    "warmup": "none; first sample includes model discovery/load if applicable"
+  },
+  "inventory": {
+    "status": "AVAILABLE",
+    "version": null,
+    "models": [
+      {
+        "id": "gemma-3-4b-it",
+        "digest": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      {
+        "id": "text-embedding-nomic-embed-text-v1.5",
+        "digest": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      }
+    ],
+    "reason": null
+  },
+  "timestamp": "2026-10-27T22:45:55.549Z",
+  "model": "gemma-3-4b-it",
+  "parameters": {
+    "temperature": 0,
+    "seed": 42,
+    "max_tokens": 4096
+  },
+  "promptSha256": "b5bca2f61d16a7a53125664ea07fe025341646d6336a3b7709c7c59dae1a0a5e",
+  "datasetHash": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
+  "smokeIds": [
+    "zh-01",
+    "en-01",
+    "multi-03",
+    "constraints-01",
+    "constraints-03",
+    "constraints-08",
+    "ambiguous-03",
+    "ambiguous-02"
+  ],
+  "total": 8,
+  "counts": {
+    "providerPass": 7,
+    "schemaPass": 7,
+    "evidencePass": 5,
+    "constraintPass": 0,
+    "semanticPass": 0,
+    "fullPass": 0
+  },
+  "fullBenchmarkStatus": "NOT_RUN",
+  "timeout": "TIMEOUT_UNRESOLVED",
+  "cases": [
+    {
+      "id": "zh-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 35775.215574,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unverified_constraint:required|check|report|"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 1,
+      "unsupportedActions": 0,
+      "slotCorrect": 2,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "en-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 35355.66473900001,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unverified_constraint:required|check|sandbox|"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 1,
+      "unsupportedActions": 0,
+      "slotCorrect": 2,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "multi-03",
+      "providerPass": false,
+      "schemaPass": false,
+      "evidencePass": false,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 60003.22923,
+      "httpStatus": null,
+      "error": {
+        "code": "TIMEOUT",
+        "message": "Request timed out or was aborted."
+      },
+      "verificationErrors": [
+        "TIMEOUT"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 0,
+      "slotCorrect": 0,
+      "slotTotal": 5,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": false,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 36442.085886999994,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "omitted_constraint:prohibited|deploy|production|",
+        "fabricated_evidence",
+        "unverified_constraint:required|check|report|",
+        "fabricated_evidence",
+        "unsupported_action:0",
+        "unsupported_slot:0:target",
+        "unverified_source_coverage"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 1,
+      "extraConstraints": 1,
+      "unsupportedActions": 1,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 2,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-03",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 37561.70034800001,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "omitted_constraint:prohibited|delete|logs|",
+        "unverified_constraint:required|check|sandbox|",
+        "negated_or_conditional_card:0",
+        "multi_clause_card_evidence:0"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 1,
+      "extraConstraints": 1,
+      "unsupportedActions": 0,
+      "slotCorrect": 2,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-08",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": false,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 38727.71601199999,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "omitted_constraint:prohibited|publish|*|",
+        "omitted_constraint:prerequisite|publish|*|user confirmation",
+        "fabricated_evidence",
+        "unverified_constraint:required|check|design mockups|",
+        "fabricated_evidence",
+        "unsupported_action:0",
+        "unverified_source_coverage",
+        "unfulfilled_prerequisite"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 2,
+      "extraConstraints": 1,
+      "unsupportedActions": 1,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 2,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "ambiguous-03",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 39736.647211,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unverified_constraint:required|draft|email|",
+        "missing_required:0"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 1,
+      "unsupportedActions": 0,
+      "slotCorrect": 5,
+      "slotTotal": 5,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "ambiguous-02",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 42960.011436,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unverified_constraint:required|check|the document|",
+        "unsupported_action:0",
+        "unsupported_slot:0:target",
+        "unresolved_source"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 1,
+      "unsupportedActions": 1,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    }
+  ],
+  "modelRuntimePreflight": {
+    "modelId": "gemma-3-4b-it",
+    "quantization": "Q8_0",
+    "loadedContextLength": 8192,
+    "stateBeforeSmoke": "loaded / IDLE",
+    "lmsCliCommit": "69d945a",
+    "gpuAccelerationVerified": false
+  },
+  "runtimeStatistics": {
+    "source": "lms log stream --stats --json --source model --filter output; numeric stats only",
+    "matching": "matched by prompt/completion token counts and sequential run",
+    "completedRequests": [
+      {
+        "caseId": "zh-01",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.319318437321489,
+        "timeToFirstTokenSec": 10.096936,
+        "totalTimeSec": 35.732612,
+        "promptTokens": 995,
+        "predictedTokens": 163
+      },
+      {
+        "caseId": "en-01",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.3644214766572595,
+        "timeToFirstTokenSec": 10.034127,
+        "totalTimeSec": 35.331006,
+        "promptTokens": 996,
+        "predictedTokens": 162
+      },
+      {
+        "caseId": "constraints-01",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.321442775634326,
+        "timeToFirstTokenSec": 9.983911,
+        "totalTimeSec": 36.243739,
+        "promptTokens": 1000,
+        "predictedTokens": 167
+      },
+      {
+        "caseId": "constraints-03",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.337859487761084,
+        "timeToFirstTokenSec": 10.082906999999999,
+        "totalTimeSec": 37.536971,
+        "promptTokens": 1003,
+        "predictedTokens": 175
+      },
+      {
+        "caseId": "constraints-08",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.342046131555711,
+        "timeToFirstTokenSec": 10.007968,
+        "totalTimeSec": 38.70533100000001,
+        "promptTokens": 1003,
+        "predictedTokens": 183
+      },
+      {
+        "caseId": "ambiguous-03",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.360865425021249,
+        "timeToFirstTokenSec": 9.999231,
+        "totalTimeSec": 39.712168999999996,
+        "promptTokens": 997,
+        "predictedTokens": 190
+      },
+      {
+        "caseId": "ambiguous-02",
+        "stopReason": "eosFound",
+        "tokensPerSecond": 6.314519283843652,
+        "timeToFirstTokenSec": 9.997399999999999,
+        "totalTimeSec": 42.937358,
+        "promptTokens": 998,
+        "predictedTokens": 209
+      }
+    ]
+  },
+  "timeoutDiagnosis": {
+    "status": "TIMEOUT_UNRESOLVED",
+    "caseId": "multi-03",
+    "configuredTimeoutMs": 60000,
+    "observedDurationMs": 60003.22923,
+    "completedRuntimeStatsAvailable": false,
+    "modelAlreadyLoaded": true,
+    "retries": 0,
+    "timeoutChanged": false,
+    "interpretation": "Completed requests show roughly 6.3 tokens/s and 10s time to first token. The aborted request has no completion stats; slow generation is plausible but exact timeout attribution remains unresolved."
+  }
+}

@@ -25,3 +25,9 @@ it('failed smoke prevents all full benchmark calls and retains NOT_RUN full scor
   const code = await evaluateLMStudio([], { probe: async () => ({ ...absent, status: 'AVAILABLE', reason: null, models: [{ id: 'mock-model', digest: null, details: {} }] }), provider: () => ({ extract }), save: r => { report = r; } });
   expect(code).toBe(2); expect(extract).toHaveBeenCalledTimes(8); expect(report!.stages).toMatchObject({ smoke: 'FAIL', fullLiveBenchmark: 'NOT_RUN' });
 });
+it('blocks the full benchmark when mechanical smoke passes but semantics do not', async () => {
+  const extract = vi.fn(async (sourceInput: string): Promise<ExtractionResult> => ({ sourceInput, identity: { provider: 'mock-test', model: 'not-live', digest: null, providerVersion: null }, durationMs: 0, rawText: 'mock only', proposal: { cards: [], constraints: [], unresolved: [{ evidence: sourceInput, reason: 'blanket refusal' }] }, rawValidation: 'valid', error: null }));
+  let report: RunReport | undefined;
+  const code = await evaluateLMStudio([], { probe: async () => ({ ...absent, status: 'AVAILABLE', reason: null, models: [{ id: 'mock-model', digest: null, details: {} }] }), provider: () => ({ extract }), save: r => { report = r; } });
+  expect(code).toBe(2); expect(extract).toHaveBeenCalledTimes(8); expect(report!.stages).toMatchObject({ providerSmoke: 'PASS', smoke: 'FAIL', fullLiveBenchmark: 'NOT_RUN' });
+});

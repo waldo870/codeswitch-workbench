@@ -66,3 +66,30 @@ it('detects English confirmation dependency and permits two nonconflicting revie
   const p = good(); p.cards[0]!.evidence = 'Check sandbox'; p.cards.push({ intent: 'task', type: 'task', title: 'Review production settings', fields: { action: 'review', target: 'production settings' }, evidence: 'review production settings' });
   expect(verifyProposal('Check sandbox, then review production settings.', p).draftCards).toHaveLength(2);
 });
+it.each([undefined, null, []].map(tool_calls => ({ tool_calls })))('accepts missing/null/empty tool_calls: %j', async ({ tool_calls }) => {
+  const r = await new LMStudioAdapter('mock-local', { fetchImpl: transport(async () => Response.json({ model: 'mock-local', choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(good()), ...(tool_calls === undefined ? {} : { tool_calls }) } }] })) }).extract('check sandbox', { caseId: 'unit-01' });
+  expect(r.rawValidation).toBe('valid'); expect(r.proposal).not.toBeNull(); expect(r.diagnostics).toMatchObject({ provider: 'lmstudio', model: 'mock-local', caseId: 'unit-01', httpStatus: 200, stage: 'complete', code: null });
+});
+it.each([[{ id: 'call', type: 'function', function: { name: 'send', arguments: '{}' } }], {}, '', '[]', false, 0].map(tool_calls => ({ tool_calls })))('rejects real calls and invalid tool_calls types: %j', async ({ tool_calls }) => {
+  const r = await new LMStudioAdapter('mock-local', { fetchImpl: transport(async () => Response.json({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(good()), tool_calls } }] })) }).extract('check sandbox');
+  expect(r.error?.code).toBe('PROVIDER_FORMAT'); expect(r.proposal).toBeNull(); expect(r.diagnostics).toMatchObject({ stage: 'provider_envelope', httpStatus: 200, code: 'PROVIDER_FORMAT' }); expect(r.rawText).toContain('sandbox');
+});
+it.each(['tool_calls', 'length', 'content_filter', 'unexpected'])('refuses unexpected finish reason %s even with empty tools', async finish_reason => {
+  const r = await new LMStudioAdapter('mock-local', { fetchImpl: transport(async () => Response.json({ choices: [{ finish_reason, message: { content: JSON.stringify(good()), tool_calls: [] } }] })) }).extract('check sandbox');
+  expect(r.error?.code).toBe('PROVIDER_FORMAT'); expect(r.proposal).toBeNull(); expect(r.diagnostics?.finishReason).toBe(finish_reason);
+});
+it('preserves bounded redacted failure content without producing cards', async () => {
+  const content = JSON.stringify({ password: 'super-private-password', nested: { api_key: 'super-private-key' }, detail: 'Bearer abcdef-secret-123 sk-private-key-123456', padding: 'x'.repeat(5000) });
+  const r = await new LMStudioAdapter('mock-local', { fetchImpl: transport(async () => Response.json({ choices: [{ finish_reason: 'length', message: { content, tool_calls: [] } }] })) }).extract('check sandbox', { caseId: 'case-1' });
+  expect(r.proposal).toBeNull(); expect(r.diagnostics?.stage).toBe('provider_envelope'); expect(r.rawText!.length).toBeLessThanOrEqual(2060); expect(r.rawText).not.toMatch(/super-private|abcdef-secret|sk-private/); expect(r.rawText).toContain('REDACTED');
+});
+it('marks JSON/schema/HTTP/timeout failure stages with no accepted proposals', async () => {
+  for (const [response, code, stage, status] of [
+    [() => Response.json({ choices: [{ finish_reason: 'stop', message: { content: 'broken' } }] }), 'INVALID_JSON', 'json_parse', 200],
+    [() => Response.json({ choices: [{ finish_reason: 'stop', message: { content: '{}' } }] }), 'SCHEMA_MISMATCH', 'schema_validation', 200],
+    [() => new Response('Authorization: Bearer do-not-save', { status: 403 }), 'HTTP_ERROR', 'transport', 403],
+  ] as const) {
+    const r = await new LMStudioAdapter('mock-local', { fetchImpl: transport(async () => response()) }).extract('check sandbox');
+    expect(r.error?.code).toBe(code); expect(r.diagnostics).toMatchObject({ stage, httpStatus: status, code }); expect(r.proposal).toBeNull(); expect(JSON.stringify(r)).not.toContain('do-not-save');
+  }
+});

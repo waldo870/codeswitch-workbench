@@ -1,3 +1,4 @@
+import { newDiagnostics, redactDiagnostic } from './diagnostics.js';
 import { boundedJsonRequest, loopbackEndpoint, ProviderError, type TransportOptions } from './local-transport.js';
 import { extractUntrustedProposal } from './proposal-extraction.js';
 import { proposalSchema } from './proposal-schema.js';
@@ -31,23 +32,33 @@ export class LMStudioAdapter implements ExtractionProvider {
     if (!model || model.length > 200 || /[\x00-\x1f]|cloud/i.test(model)) throw new Error('Use an advertised local model ID.');
     this.identity = { provider: 'lmstudio', model, digest: null, providerVersion: null };
   }
-  private async initialize(signal?: AbortSignal) {
-    const probe = await probeLMStudio(this.options, signal), selected = probe.models.find(m => m.id === this.model);
+  private async initialize(signal?: AbortSignal, onResponse?: (status: number) => void) {
+    const probe = await probeLMStudio({ ...this.options, onResponse }, signal), selected = probe.models.find(m => m.id === this.model);
     if (!selected) throw new ProviderError('MODEL_UNAVAILABLE', probe.reason ?? 'Model is not in local inventory.');
     this.identity = { ...this.identity, digest: selected.digest, details: selected.details, providerVersion: probe.version };
   }
   async extract(input: string, options: ExtractOptions = {}) {
+    const diagnostics = newDiagnostics('lmstudio', this.model, options.caseId);
+    const requestOptions = { ...this.options, onResponse: (status: number) => { diagnostics.httpStatus = status; this.options.onResponse?.(status); } };
     return extractUntrustedProposal(input, () => this.identity, async () => {
-      await (this.ready ??= this.initialize(options.signal));
+      diagnostics.stage = 'discovery';
+      await (this.ready ??= this.initialize(options.signal, requestOptions.onResponse));
+      diagnostics.httpStatus = null; diagnostics.stage = 'transport';
       const envelope = await lmstudioRequest('/v1/chat/completions', {
         model: this.model, stream: false, ...LMSTUDIO_PARAMETERS,
         response_format: { type: 'json_schema', json_schema: { name: 'codeswitch_extraction', strict: true, schema: proposalSchema } },
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: input }],
-      }, this.options, options.signal) as { model?: unknown; choices?: { finish_reason?: unknown; message?: { content?: unknown; refusal?: unknown; tool_calls?: unknown } }[] };
+      }, requestOptions, options.signal) as { usage?: Record<string, unknown>; model?: unknown; choices?: { finish_reason?: unknown; message?: { content?: unknown; refusal?: unknown; tool_calls?: unknown } }[] };
+      diagnostics.stage = 'provider_envelope';
       const choice = envelope?.choices?.[0];
-      if (!Array.isArray(envelope?.choices) || !choice || envelope.choices.length !== 1 || choice.finish_reason !== 'stop' || choice.message?.refusal || choice.message?.tool_calls || typeof choice.message?.content !== 'string') throw new ProviderError('PROVIDER_FORMAT', 'Expected one completed text proposal without tool calls or refusal.');
+      diagnostics.finishReason = typeof choice?.finish_reason === 'string' ? redactDiagnostic(choice.finish_reason, 50) : null;
+      diagnostics.contentPreview = typeof choice?.message?.content === 'string' ? redactDiagnostic(choice.message.content) : null;
+      diagnostics.usage = envelope?.usage && typeof envelope.usage === 'object' ? Object.fromEntries(Object.entries(envelope.usage).filter(([key, v]) => ['prompt_tokens', 'completion_tokens', 'total_tokens'].includes(key) && typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : null;
+      const tools = choice?.message?.tool_calls;
+      const invalidTools = tools != null && (!Array.isArray(tools) || tools.length > 0);
+      if (!Array.isArray(envelope?.choices) || !choice || envelope.choices.length !== 1 || choice.finish_reason !== 'stop' || choice.message?.refusal || invalidTools || typeof choice.message?.content !== 'string') throw new ProviderError('PROVIDER_FORMAT', 'Expected one completed text proposal without tool calls or refusal.');
       if (typeof envelope.model === 'string' && envelope.model !== this.model) throw new ProviderError('PROVIDER_FORMAT', 'Response model differs from requested identity.');
       return choice.message.content;
-    }, options.signal);
+    }, options.signal, diagnostics);
   }
 }
