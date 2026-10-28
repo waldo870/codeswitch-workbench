@@ -2,16 +2,19 @@
 
 **One Voice. Multiple Languages. Verified Workflows.**
 
-- Project: CodeSwitch Workbench
-- Competition category: Workplace AI
-- Target hardware: ASUS UGen300 / Hailo-10H
-- Current status: Deterministic text and reviewed offline speech prototype
-- Hardware integration: Planned / Not Tested
-- No affiliation with or dependency on AgentMorph
+Project: CodeSwitch Workbench
+
+Competition category: Workplace AI
+
+Hardware status: Awaiting ASUS UGen300 / Hailo-10H
+
+Current status: Deterministic work-card prototype with P3A/P3B offline speech workflow
+
+Hardware integration: Planned with ASUS UGen300 / Hailo-10H; not yet tested on competition hardware
 
 ## Product overview
 
-An offline-first multilingual voice-to-workflow assistant concept for individual professionals who mix Traditional Chinese, English and technical terms. P0 implements the text-to-workcards core; P1 adds a React browser workspace with editing, human review, local persistence and JSON export. It does not perform AI inference or speech recognition.
+An offline-first multilingual voice-to-workflow assistant for individual professionals who mix Traditional Chinese, English and technical terms. P0 implements deterministic text-to-workcards; P1 adds an editable browser workspace with human review, local persistence and JSON export; P3A/P3B add local offline speech transcription with transcript review before deterministic extraction. The P2 local LLM remains an evaluation-only feature and is not enabled in the product UI.
 
 ## Problem statement
 
@@ -19,7 +22,7 @@ One spoken request can contain several tasks, a meeting, an email draft and a pr
 
 ## Why multilingual voice-to-workflow?
 
-Professionals often describe local context in Chinese while naming tools and technical actions in English. The intended product preserves that language switching through transcription, intent extraction, verification, editable cards, confirmation and local export. P1 implements editing, individual confirmation/rejection and confirmed-only JSON export. Voice remains a future phase. The P0 CLI remains available.
+Professionals often describe local context in Chinese while naming tools and technical actions in English. The workflow preserves original audio identity, raw transcription and user corrections, then sends only a confirmed transcript through the existing deterministic parser and validator. Cards remain editable and require individual confirmation before confirmed-only local JSON export. The P0 CLI remains available.
 
 ## Feature scope
 
@@ -70,11 +73,11 @@ Work cards: 3; Constraints: 1; Validation: PASS
 
 ## Current limitations
 
-This is a narrow rule baseline, not completed multilingual AI. Only the documented verbs, targets, date phrases and clause forms are recognized. Unknown requests and unsupported negations remain unresolved. Shared grammar defects can affect both extraction and validation, so explicit expected fixtures and adversarial tests complement validation. Quotation, conditionals, arbitrary names/addresses, arbitrary dates and general natural language are unsupported. No email body is generated: users must write it themselves. P0 validation intentionally accepts parser drafts only; P1 validates the immutable baseline separately from reviewed cards. Speech, models and hardware integration remain unimplemented.
+The text-to-workcard engine is a narrow deterministic baseline, not completed multilingual AI. Only documented verbs, targets, date phrases and clause forms are recognized. Unknown requests and unsupported negations remain unresolved. Shared grammar limits can affect extraction and validation, so explicit fixtures and adversarial tests complement validation. Quotation, conditionals, arbitrary names/addresses, arbitrary dates and general natural language are unsupported. No email body is generated: users must write it themselves. Offline speech is currently a reviewed prototype using an existing Windows Whisper CPU runtime; one synthetic English fixture passed the reviewed end-to-end flow after explicit punctuation correction. Human, noisy-room and real code-switch speech accuracy, GPU ASR and competition hardware have not been validated. The P2 LLM is not qualified for product use.
 
 ## Roadmap
 
-See [ROADMAP](docs/ROADMAP.md) for P0 through P5. P1 remains the product UI baseline; the current evaluation delivery stops at P2A.
+See [ROADMAP](docs/ROADMAP.md) for P0 through P5. P1 remains the editable product UI baseline; P3A/P3B add a reviewed offline speech path. P2 local LLM work remains research-only.
 
 ## Development and data
 
