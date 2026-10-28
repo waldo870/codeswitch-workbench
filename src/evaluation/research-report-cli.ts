@@ -3,7 +3,7 @@ import { reportsDir } from './report.js';
 import { loadDataset } from './dataset.js';
 import { researchMarkdown } from './research-report.js';
 const names = process.argv.slice(2);
-if (names.length !== 1 || !/^p25-[a-z0-9-]+$/.test(names[0]!)) throw new Error('Choose one recorded p25-model filename without extension.');
+if (names.length !== 1 || !/^(?:p25|p2-windows)-[a-z0-9-]+$/.test(names[0]!)) throw new Error('Choose one recorded p25-model or p2-windows-model filename without extension.');
 const file = `${reportsDir}/${names[0]}`;
 const report = JSON.parse(readFileSync(file + '.json', 'utf8')) as Parameters<typeof researchMarkdown>[0];
 const dataset = loadDataset();

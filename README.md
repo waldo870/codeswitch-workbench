@@ -189,3 +189,24 @@ See [the research report](reports/p25-gemma-3-12b-it.md) and [model decision / s
 ### P2 finalization
 
 **P2_ENGINEERING_COMPLETE_WITH_LIMITATIONS**. Local LLM product qualification remains NOT_QUALIFIED; the UI stays deterministic. The final readonly W7900 runtime check is blocked by Vulkan hardware-survey failure and existing HIP invalid-code-object0x1010 model evidence. GPU benchmark NOT_RUN; ROCm7.2 upgrade is not authorized. No driver/runtime/model installation occurred. See [P2 final report](docs/P2_FINAL_REPORT.md) for backup verification, actual CPU metrics, GPU evidence and remaining work. The feature branch is the development checkpoint; local main is initialization only and is not a P2 application release.
+
+### Windows LM Studio from WSL (explicit Node-only opt-in)
+
+Use an owner-started Windows server and an already loaded model. The configured IPv4 must equal the current WSL NAT default gateway; arbitrary hosts/URLs, credentials, paths, ports, redirects and non-WSL use are rejected. The normal adapter remains loopback-only unless this explicit option is provided. No browser/provider connection or bridge is added.
+
+```sh
+# Read the current gateway; the application independently rechecks /proc/net/route.
+ip route show default
+# Set HOST to that Windows WSL NAT gateway (host only, no URL).
+export CODESWITCH_WINDOWS_WSL_HOST="<current-WSL-NAT-gateway>"
+pnpm smoke:windows --model=gemma-3-27b-it
+# Research is allowed after failed strict smoke; it grants no product qualification.
+pnpm benchmark:research --model=gemma-3-27b-it
+pnpm benchmark:research:report p2-windows-gemma-3-27b-it
+unset CODESWITCH_WINDOWS_WSL_HOST
+```
+
+`smoke:windows` exits2 unless all eight existing Full Smoke checks pass. Research uses the unchanged fixed prompt/schema/gold, with60s/case and65min total, and records actual failures. Windows artifacts have separate filenames and do not overwrite CPU or WSL failure evidence. The earlier strict `benchmark:llm` command retains its loopback default; use the explicit Windows smoke command for this route. Model availability, quantization and GPU participation must be measured separately. No Firewall, binding, driver, ROCm or model download is performed.
+
+
+Windows recovery actual result: **GPU participation verified;60/60 valid completions,0 timeouts** using Gemma3 27B Q8_0. Full Smoke3/8, raw complete20/60, verified16/60, constraints4/13. P2 remains engineering complete with limitations; Local LLM UI is not qualified/enabled. This differs from the historical CPU12B model, so it is not a pure GPU speedup experiment. See [Windows recovery report](reports/p2-windows-recovery.md) for GPU proof, all metric denominators and safety/measurement limitations.

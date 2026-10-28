@@ -1,3 +1,4 @@
+import { windowsWslEndpoint } from './windows-wsl-endpoint.js';
 import { newDiagnostics, redactDiagnostic } from './diagnostics.js';
 import { boundedJsonRequest, loopbackEndpoint, ProviderError, type TransportOptions } from './local-transport.js';
 import { extractUntrustedProposal } from './proposal-extraction.js';
@@ -6,10 +7,10 @@ import { SYSTEM_PROMPT } from './ollama-adapter.js';
 import type { ExtractionProvider, ExtractOptions, Identity } from './types.js';
 export const LMSTUDIO_ENDPOINT = 'http://127.0.0.1:1234';
 export const LMSTUDIO_PARAMETERS = { temperature: 0, seed: 42, max_tokens: 4096 };
-export const lmstudioEndpoint = (value = LMSTUDIO_ENDPOINT) => loopbackEndpoint(value, true);
+export const lmstudioEndpoint = (value = LMSTUDIO_ENDPOINT, windowsWslHost?: string) => windowsWslHost === undefined ? loopbackEndpoint(value, true) : windowsWslEndpoint(value, windowsWslHost);
 export function lmstudioRequest(path: '/v1/models' | '/v1/chat/completions', body: unknown, options: TransportOptions = {}, signal?: AbortSignal) {
   if (!['/v1/models', '/v1/chat/completions'].includes(path)) throw new Error('Unsupported LM Studio path.');
-  return boundedJsonRequest(lmstudioEndpoint(options.endpoint), path, body, options, signal, 'LM Studio');
+  return boundedJsonRequest(lmstudioEndpoint(options.endpoint, options.windowsWslHost), path, body, options, signal, 'LM Studio');
 }
 export interface LocalModel { id: string; digest: string | null; details: Record<string, unknown> }
 export interface LMStudioProbe { status: 'AVAILABLE' | 'NOT_RUN'; version: string | null; models: LocalModel[]; reason: string | null }
@@ -28,7 +29,7 @@ export class LMStudioAdapter implements ExtractionProvider {
   private identity: Identity;
   private ready: Promise<void> | null = null;
   constructor(private model: string, private options: TransportOptions = {}) {
-    lmstudioEndpoint(options.endpoint);
+    lmstudioEndpoint(options.endpoint, options.windowsWslHost);
     if (!model || model.length > 200 || /[\x00-\x1f]|cloud/i.test(model)) throw new Error('Use an advertised local model ID.');
     this.identity = { provider: 'lmstudio', model, digest: null, providerVersion: null };
   }

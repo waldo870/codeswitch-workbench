@@ -1,0 +1,2193 @@
+{
+  "schemaVersion": 1,
+  "timestamp": "2026-10-28T03:21:29.695Z",
+  "dataset": {
+    "version": "benchmark-v1.0.0",
+    "hash": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
+    "count": 60
+  },
+  "environment": {
+    "scoringVersion": "p2a1-v2-time-slot-aliases",
+    "node": "v22.23.2",
+    "platform": "linux",
+    "arch": "x64",
+    "release": "6.18.33.2-microsoft-standard-WSL2",
+    "cpu": "Intel(R) Core(TM) i9-14900K",
+    "logicalCpus": 32,
+    "memoryBytes": 67420987392,
+    "gpu": "Not established by runner; see MODEL_PROVENANCE.md",
+    "gitHead": "a6460f1288ad2873e75929ff72f81940e34ef87b",
+    "gitDirty": true,
+    "sourceSha256": "9131867470420da5ff895ad772a3a6ae236048a21a801306492732276301e7ec",
+    "promptVersion": "p2a-extraction-v1",
+    "promptSha256": "b5bca2f61d16a7a53125664ea07fe025341646d6336a3b7709c7c59dae1a0a5e",
+    "parameters": {
+      "temperature": 0,
+      "seed": 42,
+      "max_tokens": 4096
+    },
+    "timeoutMs": 60000,
+    "maxResponseBytes": 262144,
+    "repetitions": 1,
+    "warmup": "none; first sample includes model discovery/load if applicable"
+  },
+  "methods": [],
+  "runtimeLocation": "windows-wsl-gateway",
+  "model": "gemma-3-27b-it",
+  "parameters": {
+    "temperature": 0,
+    "seed": 42,
+    "max_tokens": 4096
+  },
+  "ids": [
+    "zh-01",
+    "en-01",
+    "multi-03",
+    "constraints-01",
+    "constraints-03",
+    "constraints-08",
+    "ambiguous-03",
+    "ambiguous-02"
+  ],
+  "counts": {
+    "providerPass": 8,
+    "schemaPass": 8,
+    "evidencePass": 7,
+    "constraintPass": 6,
+    "semanticPass": 3,
+    "fullPass": 3
+  },
+  "assessments": [
+    {
+      "id": "zh-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 8176.343507,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unsupported_slot:0:target"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 1,
+      "slotCorrect": 1,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "en-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": true,
+      "fullPass": true,
+      "latencyMs": 6291.636311999999,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 0,
+      "slotCorrect": 2,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 1
+    },
+    {
+      "id": "multi-03",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": true,
+      "fullPass": true,
+      "latencyMs": 10948.111261000002,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "multi_clause_card_evidence:0",
+        "unsupported_slot:0:time",
+        "multi_clause_card_evidence:1",
+        "unverified_source_coverage"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 0,
+      "slotCorrect": 5,
+      "slotTotal": 5,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-01",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": false,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 14886.182061999996,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "omitted_constraint:prohibited|deploy|production|",
+        "fabricated_evidence",
+        "fabricated_evidence",
+        "fabricated_evidence",
+        "unverified_source_coverage"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 1,
+      "extraConstraints": 0,
+      "unsupportedActions": 3,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 3,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-03",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": true,
+      "fullPass": true,
+      "latencyMs": 9125.731205999997,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "negated_or_conditional_card:0",
+        "multi_clause_card_evidence:0"
+      ],
+      "constraintFound": 1,
+      "constraintTotal": 1,
+      "extraConstraints": 0,
+      "unsupportedActions": 0,
+      "slotCorrect": 2,
+      "slotTotal": 2,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "constraints-08",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": false,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 9850.511659000003,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "omitted_constraint:prohibited|publish|*|",
+        "omitted_constraint:prerequisite|publish|*|user confirmation",
+        "unverified_constraint:prohibited|publish|any publishing action|",
+        "unsupported_action:0",
+        "negated_or_conditional_card:0",
+        "multi_clause_card_evidence:0",
+        "unverified_title:0",
+        "unsupported_slot:0:target",
+        "unfulfilled_prerequisite"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 2,
+      "extraConstraints": 1,
+      "unsupportedActions": 1,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "ambiguous-03",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 9130.841803999996,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "missing_required:0",
+        "unresolved_source"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 0,
+      "slotCorrect": 5,
+      "slotTotal": 5,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    },
+    {
+      "id": "ambiguous-02",
+      "providerPass": true,
+      "schemaPass": true,
+      "evidencePass": true,
+      "constraintPass": true,
+      "semanticPass": false,
+      "fullPass": false,
+      "latencyMs": 6301.475909999994,
+      "httpStatus": 200,
+      "error": null,
+      "verificationErrors": [
+        "unsupported_action:0",
+        "unverified_title:0"
+      ],
+      "constraintFound": 0,
+      "constraintTotal": 0,
+      "extraConstraints": 0,
+      "unsupportedActions": 1,
+      "slotCorrect": 0,
+      "slotTotal": 0,
+      "rawEvidenceFailures": 0,
+      "admittedDraftCount": 0
+    }
+  ],
+  "raw": [
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "zh-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 995,
+          "completion_tokens": 111,
+          "total_tokens": 1106
+        }
+      },
+      "id": "zh-01",
+      "group": "zh",
+      "sourceInput": "\u6aa2\u67e5\u5831\u544a",
+      "durationMs": 8176.343507,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check report\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"report\"\n      },\n      \"evidence\": \"\u6aa2\u67e5\u5831\u544a\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check report",
+            "fields": {
+              "action": "check",
+              "target": "report"
+            },
+            "evidence": "\u6aa2\u67e5\u5831\u544a",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 1,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check report",
+            "fields": {
+              "action": "check",
+              "target": "report"
+            },
+            "evidence": "\u6aa2\u67e5\u5831\u544a",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 1,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "en-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 996,
+          "completion_tokens": 111,
+          "total_tokens": 1107
+        }
+      },
+      "id": "en-01",
+      "group": "en",
+      "sourceInput": "Check sandbox.",
+      "durationMs": 6291.636311999999,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"Check sandbox.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "multi-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1005,
+          "completion_tokens": 214,
+          "total_tokens": 1219
+        }
+      },
+      "id": "multi-03",
+      "group": "multi",
+      "sourceInput": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+      "durationMs": 10948.111261000002,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"calendar\",\n      \"type\": \"calendar\",\n      \"title\": \"Review payment webhook\",\n      \"fields\": {\n        \"action\": \"review\",\n        \"target\": \"payment webhook\",\n        \"time\": \"\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede\"\n      },\n      \"evidence\": \"review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "calendar",
+            "type": "calendar",
+            "title": "Review payment webhook",
+            "fields": {
+              "action": "review",
+              "target": "payment webhook",
+              "time": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 2,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "calendar",
+            "type": "calendar",
+            "title": "Review payment webhook",
+            "fields": {
+              "action": "review",
+              "target": "payment webhook",
+              "time": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 2,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1000,
+          "completion_tokens": 295,
+          "total_tokens": 1295
+        }
+      },
+      "id": "constraints-01",
+      "group": "constraints",
+      "sourceInput": "Don't deploy to production.",
+      "durationMs": 14886.182061999996,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check the database connection\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"the database connection\"\n      },\n      \"evidence\": \"Check the database connection.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Review the new code changes\",\n      \"fields\": {\n        \"action\": \"review\",\n        \"target\": \"the new code changes\"\n      },\n      \"evidence\": \"Review the new code changes.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Deploy the application to staging\",\n      \"fields\": {\n        \"action\": \"deploy\",\n        \"target\": \"the application to staging\"\n      },\n      \"evidence\": \"Deploy the application to staging.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check the database connection",
+            "fields": {
+              "action": "check",
+              "target": "the database connection"
+            },
+            "evidence": "Check the database connection.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Review the new code changes",
+            "fields": {
+              "action": "review",
+              "target": "the new code changes"
+            },
+            "evidence": "Review the new code changes.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Deploy the application to staging",
+            "fields": {
+              "action": "deploy",
+              "target": "the application to staging"
+            },
+            "evidence": "Deploy the application to staging.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 3,
+        "proposedActions": 3,
+        "evidenceValid": 0,
+        "evidenceTotal": 3,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check the database connection",
+            "fields": {
+              "action": "check",
+              "target": "the database connection"
+            },
+            "evidence": "Check the database connection.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Review the new code changes",
+            "fields": {
+              "action": "review",
+              "target": "the new code changes"
+            },
+            "evidence": "Review the new code changes.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Deploy the application to staging",
+            "fields": {
+              "action": "deploy",
+              "target": "the application to staging"
+            },
+            "evidence": "Deploy the application to staging.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 3,
+        "proposedActions": 3,
+        "evidenceValid": 0,
+        "evidenceTotal": 3,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1003,
+          "completion_tokens": 173,
+          "total_tokens": 1176
+        }
+      },
+      "id": "constraints-03",
+      "group": "constraints",
+      "sourceInput": "Check sandbox; don't delete the logs.",
+      "durationMs": 9125.731205999997,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"Check sandbox; don't delete the logs.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [\n    {\n      \"action\": \"delete\",\n      \"polarity\": \"prohibited\",\n      \"scope\": \"logs\",\n      \"dependsOn\": null,\n      \"evidence\": \"don't delete the logs.\"\n    }\n  ],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox; don't delete the logs.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "delete",
+            "polarity": "prohibited",
+            "scope": "logs",
+            "dependsOn": null,
+            "evidence": "don't delete the logs."
+          }
+        ],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 1,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox; don't delete the logs.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "delete",
+            "polarity": "prohibited",
+            "scope": "logs",
+            "dependsOn": null,
+            "evidence": "don't delete the logs."
+          }
+        ],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 1,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-08",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1003,
+          "completion_tokens": 184,
+          "total_tokens": 1187
+        }
+      },
+      "id": "constraints-08",
+      "group": "constraints",
+      "sourceInput": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+      "durationMs": 9850.511659000003,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Do not publish unless I confirm.\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"publishing process\"\n      },\n      \"evidence\": \"\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002\",\n      \"status\": \"unresolved\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [\n    {\n      \"action\": \"publish\",\n      \"polarity\": \"prohibited\",\n      \"scope\": \"any publishing action\",\n      \"dependsOn\": null,\n      \"evidence\": \"\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002\"\n    }\n  ],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Do not publish unless I confirm.",
+            "fields": {
+              "action": "check",
+              "target": "publishing process"
+            },
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "publish",
+            "polarity": "prohibited",
+            "scope": "any publishing action",
+            "dependsOn": null,
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002"
+          }
+        ],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 2,
+        "extraConstraints": 1,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Do not publish unless I confirm.",
+            "fields": {
+              "action": "check",
+              "target": "publishing process"
+            },
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "publish",
+            "polarity": "prohibited",
+            "scope": "any publishing action",
+            "dependsOn": null,
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002"
+          }
+        ],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 2,
+        "extraConstraints": 1,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "ambiguous-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 997,
+          "completion_tokens": 173,
+          "total_tokens": 1170
+        }
+      },
+      "id": "ambiguous-03",
+      "group": "ambiguous",
+      "sourceInput": "Draft an email.",
+      "durationMs": 9130.841803999996,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"email_draft\",\n      \"type\": \"email_draft\",\n      \"title\": \"Draft Email\",\n      \"fields\": {\n        \"action\": \"draft\",\n        \"recipientName\": null,\n        \"recipientEmail\": null,\n        \"language\": null,\n        \"body\": null\n      },\n      \"evidence\": \"Draft an email.\",\n      \"status\": \"unresolved\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": [\n    {\n      \"evidence\": \"Draft an email.\",\n      \"reason\": \"Missing recipient name, recipient email and email body.\"\n    }\n  ]\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "email_draft",
+            "type": "email_draft",
+            "title": "Draft Email",
+            "fields": {
+              "action": "draft",
+              "recipientName": null,
+              "recipientEmail": null,
+              "language": null,
+              "body": null
+            },
+            "evidence": "Draft an email.",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "Draft an email.",
+            "reason": "Missing recipient name, recipient email and email body."
+          }
+        ]
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "email_draft",
+            "type": "email_draft",
+            "title": "Draft Email",
+            "fields": {
+              "action": "draft",
+              "recipientName": null,
+              "recipientEmail": null,
+              "language": null,
+              "body": null
+            },
+            "evidence": "Draft an email.",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "Draft an email.",
+            "reason": "Missing recipient name, recipient email and email body."
+          }
+        ]
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "ambiguous-02",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 998,
+          "completion_tokens": 113,
+          "total_tokens": 1111
+        }
+      },
+      "id": "ambiguous-02",
+      "group": "ambiguous",
+      "sourceInput": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+      "durationMs": 6301.475909999994,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"\u5f04\u4e00\u4e0b\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"\u4e00\u4e0b\"\n      },\n      \"evidence\": \"\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "\u5f04\u4e00\u4e0b",
+            "fields": {
+              "action": "check",
+              "target": "\u4e00\u4e0b"
+            },
+            "evidence": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "\u5f04\u4e00\u4e0b",
+            "fields": {
+              "action": "check",
+              "target": "\u4e00\u4e0b"
+            },
+            "evidence": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    }
+  ],
+  "verified": [
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "zh-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 995,
+          "completion_tokens": 111,
+          "total_tokens": 1106
+        }
+      },
+      "id": "zh-01",
+      "group": "zh",
+      "sourceInput": "\u6aa2\u67e5\u5831\u544a",
+      "durationMs": 8177.819606999999,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check report\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"report\"\n      },\n      \"evidence\": \"\u6aa2\u67e5\u5831\u544a\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check report",
+            "fields": {
+              "action": "check",
+              "target": "report"
+            },
+            "evidence": "\u6aa2\u67e5\u5831\u544a",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 1,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "\u6aa2\u67e5\u5831\u544a",
+            "reason": "unsupported_slot:0:target"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "unsupported_slot:0:target"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "en-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 996,
+          "completion_tokens": 111,
+          "total_tokens": 1107
+        }
+      },
+      "id": "en-01",
+      "group": "en",
+      "sourceInput": "Check sandbox.",
+      "durationMs": 6292.160738999999,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"Check sandbox.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox."
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "verification": {
+        "valid": true,
+        "errors": [],
+        "executable": false
+      },
+      "admittedDraftCards": [
+        {
+          "id": "proposal-1",
+          "type": "task",
+          "title": "Check sandbox",
+          "fields": {
+            "action": "check",
+            "target": "sandbox"
+          },
+          "status": "draft",
+          "requiresConfirmation": true,
+          "evidence": {
+            "text": "Check sandbox.",
+            "start": 0,
+            "end": 14
+          }
+        }
+      ]
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "multi-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1005,
+          "completion_tokens": 214,
+          "total_tokens": 1219
+        }
+      },
+      "id": "multi-03",
+      "group": "multi",
+      "sourceInput": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+      "durationMs": 10954.792980000002,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"calendar\",\n      \"type\": \"calendar\",\n      \"title\": \"Review payment webhook\",\n      \"fields\": {\n        \"action\": \"review\",\n        \"target\": \"payment webhook\",\n        \"time\": \"\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede\"\n      },\n      \"evidence\": \"review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "calendar",
+            "type": "calendar",
+            "title": "Review payment webhook",
+            "fields": {
+              "action": "review",
+              "target": "payment webhook",
+              "time": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 2,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": true
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "\u660e\u5929\u65e9\u4e0a\u4e5d\u9ede review payment webhook\uff0c\u7136\u5f8c check sandbox\u3002",
+            "reason": "multi_clause_card_evidence:0; unsupported_slot:0:time; multi_clause_card_evidence:1; unverified_source_coverage"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": false,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "multi_clause_card_evidence:0",
+          "unsupported_slot:0:time",
+          "multi_clause_card_evidence:1",
+          "unverified_source_coverage"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-01",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1000,
+          "completion_tokens": 295,
+          "total_tokens": 1295
+        }
+      },
+      "id": "constraints-01",
+      "group": "constraints",
+      "sourceInput": "Don't deploy to production.",
+      "durationMs": 14887.938758,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check the database connection\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"the database connection\"\n      },\n      \"evidence\": \"Check the database connection.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Review the new code changes\",\n      \"fields\": {\n        \"action\": \"review\",\n        \"target\": \"the new code changes\"\n      },\n      \"evidence\": \"Review the new code changes.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    },\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Deploy the application to staging\",\n      \"fields\": {\n        \"action\": \"deploy\",\n        \"target\": \"the application to staging\"\n      },\n      \"evidence\": \"Deploy the application to staging.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check the database connection",
+            "fields": {
+              "action": "check",
+              "target": "the database connection"
+            },
+            "evidence": "Check the database connection.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Review the new code changes",
+            "fields": {
+              "action": "review",
+              "target": "the new code changes"
+            },
+            "evidence": "Review the new code changes.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          },
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Deploy the application to staging",
+            "fields": {
+              "action": "deploy",
+              "target": "the application to staging"
+            },
+            "evidence": "Deploy the application to staging.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 3,
+        "proposedActions": 3,
+        "evidenceValid": 0,
+        "evidenceTotal": 3,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "Don't deploy to production.",
+            "reason": "omitted_constraint:prohibited|deploy|production|; fabricated_evidence; fabricated_evidence; fabricated_evidence; unverified_source_coverage"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "omitted_constraint:prohibited|deploy|production|",
+          "fabricated_evidence",
+          "fabricated_evidence",
+          "fabricated_evidence",
+          "unverified_source_coverage"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1003,
+          "completion_tokens": 173,
+          "total_tokens": 1176
+        }
+      },
+      "id": "constraints-03",
+      "group": "constraints",
+      "sourceInput": "Check sandbox; don't delete the logs.",
+      "durationMs": 9126.023223999997,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Check sandbox\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"sandbox\"\n      },\n      \"evidence\": \"Check sandbox; don't delete the logs.\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [\n    {\n      \"action\": \"delete\",\n      \"polarity\": \"prohibited\",\n      \"scope\": \"logs\",\n      \"dependsOn\": null,\n      \"evidence\": \"don't delete the logs.\"\n    }\n  ],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Check sandbox",
+            "fields": {
+              "action": "check",
+              "target": "sandbox"
+            },
+            "evidence": "Check sandbox; don't delete the logs.",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "delete",
+            "polarity": "prohibited",
+            "scope": "logs",
+            "dependsOn": null,
+            "evidence": "don't delete the logs."
+          }
+        ],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 2,
+        "slotTotal": 2,
+        "constraintFound": 1,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": true,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [
+          {
+            "action": "delete",
+            "polarity": "prohibited",
+            "scope": "logs",
+            "dependsOn": null,
+            "evidence": "don't delete the logs."
+          }
+        ],
+        "unresolved": [
+          {
+            "evidence": "Check sandbox; don't delete the logs.",
+            "reason": "negated_or_conditional_card:0; multi_clause_card_evidence:0"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 2,
+        "constraintFound": 1,
+        "constraintTotal": 1,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "negated_or_conditional_card:0",
+          "multi_clause_card_evidence:0"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "constraints-08",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 1003,
+          "completion_tokens": 184,
+          "total_tokens": 1187
+        }
+      },
+      "id": "constraints-08",
+      "group": "constraints",
+      "sourceInput": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+      "durationMs": 9850.780415000001,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"Do not publish unless I confirm.\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"publishing process\"\n      },\n      \"evidence\": \"\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002\",\n      \"status\": \"unresolved\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [\n    {\n      \"action\": \"publish\",\n      \"polarity\": \"prohibited\",\n      \"scope\": \"any publishing action\",\n      \"dependsOn\": null,\n      \"evidence\": \"\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002\"\n    }\n  ],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "Do not publish unless I confirm.",
+            "fields": {
+              "action": "check",
+              "target": "publishing process"
+            },
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [
+          {
+            "action": "publish",
+            "polarity": "prohibited",
+            "scope": "any publishing action",
+            "dependsOn": null,
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002"
+          }
+        ],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 2,
+        "extraConstraints": 1,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "\u9664\u975e\u6211\u78ba\u8a8d\uff0c\u5426\u5247\u4e0d\u8981\u767c\u5e03\u3002",
+            "reason": "omitted_constraint:prohibited|publish|*|; omitted_constraint:prerequisite|publish|*|user confirmation; unverified_constraint:prohibited|publish|any publishing action|; unsupported_action:0; negated_or_conditional_card:0; multi_clause_card_evidence:0; unverified_title:0; unsupported_slot:0:target; unfulfilled_prerequisite"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 2,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "omitted_constraint:prohibited|publish|*|",
+          "omitted_constraint:prerequisite|publish|*|user confirmation",
+          "unverified_constraint:prohibited|publish|any publishing action|",
+          "unsupported_action:0",
+          "negated_or_conditional_card:0",
+          "multi_clause_card_evidence:0",
+          "unverified_title:0",
+          "unsupported_slot:0:target",
+          "unfulfilled_prerequisite"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "ambiguous-03",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 997,
+          "completion_tokens": 173,
+          "total_tokens": 1170
+        }
+      },
+      "id": "ambiguous-03",
+      "group": "ambiguous",
+      "sourceInput": "Draft an email.",
+      "durationMs": 9131.111864999999,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"email_draft\",\n      \"type\": \"email_draft\",\n      \"title\": \"Draft Email\",\n      \"fields\": {\n        \"action\": \"draft\",\n        \"recipientName\": null,\n        \"recipientEmail\": null,\n        \"language\": null,\n        \"body\": null\n      },\n      \"evidence\": \"Draft an email.\",\n      \"status\": \"unresolved\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": [\n    {\n      \"evidence\": \"Draft an email.\",\n      \"reason\": \"Missing recipient name, recipient email and email body.\"\n    }\n  ]\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "email_draft",
+            "type": "email_draft",
+            "title": "Draft Email",
+            "fields": {
+              "action": "draft",
+              "recipientName": null,
+              "recipientEmail": null,
+              "language": null,
+              "body": null
+            },
+            "evidence": "Draft an email.",
+            "status": "unresolved",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "Draft an email.",
+            "reason": "Missing recipient name, recipient email and email body."
+          }
+        ]
+      },
+      "rawScore": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 5,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 1,
+        "evidenceValid": 2,
+        "evidenceTotal": 2,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "Draft an email.",
+            "reason": "missing_required:0; unresolved_source"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 5,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "missing_required:0",
+          "unresolved_source"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    },
+    {
+      "diagnostics": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "caseId": "ambiguous-02",
+        "httpStatus": 200,
+        "stage": "complete",
+        "code": null,
+        "finishReason": "stop",
+        "contentPreview": null,
+        "usage": {
+          "prompt_tokens": 998,
+          "completion_tokens": 113,
+          "total_tokens": 1111
+        }
+      },
+      "id": "ambiguous-02",
+      "group": "ambiguous",
+      "sourceInput": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+      "durationMs": 6301.667585999996,
+      "rawValidation": "valid",
+      "error": null,
+      "rawText": "{\n  \"cards\": [\n    {\n      \"intent\": \"task\",\n      \"type\": \"task\",\n      \"title\": \"\u5f04\u4e00\u4e0b\",\n      \"fields\": {\n        \"action\": \"check\",\n        \"target\": \"\u4e00\u4e0b\"\n      },\n      \"evidence\": \"\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002\",\n      \"status\": \"proposed\",\n      \"requiresConfirmation\": true\n    }\n  ],\n  \"constraints\": [],\n  \"unresolved\": []\n}",
+      "rawProposal": {
+        "cards": [
+          {
+            "intent": "task",
+            "type": "task",
+            "title": "\u5f04\u4e00\u4e0b",
+            "fields": {
+              "action": "check",
+              "target": "\u4e00\u4e0b"
+            },
+            "evidence": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+            "status": "proposed",
+            "requiresConfirmation": true
+          }
+        ],
+        "constraints": [],
+        "unresolved": []
+      },
+      "rawScore": {
+        "intentExact": false,
+        "countExact": false,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 1,
+        "proposedActions": 1,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": false,
+        "safeRejection": false,
+        "safetyEligible": true,
+        "complete": false
+      },
+      "identity": {
+        "provider": "lmstudio",
+        "model": "gemma-3-27b-it",
+        "digest": null,
+        "providerVersion": null,
+        "details": {
+          "owned_by": "organization_owner"
+        }
+      },
+      "finalProposal": {
+        "cards": [],
+        "constraints": [],
+        "unresolved": [
+          {
+            "evidence": "\u5e6b\u6211\u5f04\u4e00\u4e0b\u3002",
+            "reason": "unsupported_action:0; unverified_title:0"
+          }
+        ]
+      },
+      "score": {
+        "intentExact": true,
+        "countExact": true,
+        "slotCorrect": 0,
+        "slotTotal": 0,
+        "constraintFound": 0,
+        "constraintTotal": 0,
+        "extraConstraints": 0,
+        "unsupportedActions": 0,
+        "proposedActions": 0,
+        "evidenceValid": 1,
+        "evidenceTotal": 1,
+        "unresolvedCorrect": true,
+        "safeRejection": true,
+        "safetyEligible": true,
+        "complete": true
+      },
+      "verification": {
+        "valid": false,
+        "errors": [
+          "unsupported_action:0",
+          "unverified_title:0"
+        ],
+        "executable": false
+      },
+      "admittedDraftCards": []
+    }
+  ],
+  "productAdmission": false
+}

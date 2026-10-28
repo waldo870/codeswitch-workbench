@@ -1,5 +1,7 @@
 # P2 final report and pre-ROCm-upgrade checkpoint
 
+Latest Windows recovery: **GPU inference VERIFIED; model/product NOT_QUALIFIED**. The WSL GPU BLOCKED findings below remain preserved and specific to that Linux route. See the Windows recovery update appended at the end.
+
 Date: 2026-10-28 (Asia/Taipei). Result: **P2_ENGINEERING_COMPLETE_WITH_LIMITATIONS**. Local LLM product qualification: **NOT_QUALIFIED**. GPU gate: **BLOCKED**. This report does not declare P2_PRODUCT_PASS.
 
 ## Engineering result
@@ -91,3 +93,12 @@ The installed HSA target file was only read/compared. No system libraries, CMake
 P2 is closed as **P2_ENGINEERING_COMPLETE_WITH_LIMITATIONS**. Model quality and GPU prerequisites do not qualify Local LLM product integration. P1 deterministic mode, explicit human confirmation and local export remain available. No LLM UI mode/bridge was added and **P2_PRODUCT_PASS is not declared**.
 
 Potential future work requires separate scope: resolve GPU runtime/code-object compatibility with preserved rollback materials; prepare an independent development set for prompt/action/constraint normalization; preregister held-out evaluation before product integration. P3 speech remains planned/not started. ASUS UGen300/Hailo-10H integration and target-hardware end-to-end validation remain planned/not tested. This task stops here without beginning them or upgrading ROCm.
+
+
+## Windows LM Studio GPU recovery update
+
+Windows LM Studio0.4.26.0 → WSL NAT gateway access is restored, using already loaded Gemma3 27B IT Q8_0. Actual Vulkan2.65.1 llama-server GPU compute and dedicated-memory counters correlate with W7900; GPU participation is verified. Exact layer count/full-layer offload is unverified. No ROCm/driver/firewall/binding/model setting changes occurred. The historical CPU12B experiment and WSL HSA0x1010/llvmpipe failures remain intact.
+
+Simple Schema probe PASS; frozen Smoke Full3/8 (FAIL). Explicit research completed60/60 valid outputs,0 timeouts. Raw complete20/60; independently verified16/60; raw intent51/60,slots138/171; constraint recall4/13; raw evidence96/99. Verified evidence64/64 includes review records. Median/P95 raw latency7298.75/14800.46ms. CPU12B versus Windows27B differs in model size and runtime, so this does not isolate GPU speedup. Baseline remains32/60 complete. The model still fabricates actions on a prohibition and misses constraints; en-05 exposes an independent verifier reminder/type gap. Software261/261 tests and6/6 browser tests pass; software success does not override those model findings.
+
+P2_ENGINEERING_COMPLETE_WITH_LIMITATIONS remains the final status. **P2_PRODUCT_PASS is not declared.** P1 stays deterministic, with no LLM UI or bridge. Next research should define source-preserving/normalized proposals and prerequisite representation on a separate development set, independently harden verification, and measure on held-out data. No prompt tuning on this fixed60-case set, P3 start, ROCm upgrade, model download or new provider occurred. See [full Windows recovery comparison](../reports/p2-windows-recovery.md), [raw experiment](../reports/p2-windows-gemma-3-27b-it.json) and [runtime proof](../reports/p2-windows-runtime.json). The recovery commit is local on feature/p2-windows-lmstudio-recovery; this task does not push or merge it.

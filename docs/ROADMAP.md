@@ -16,3 +16,5 @@ Each phase requires its own scope and acceptance review. P1 does not imply compl
 - **P2.6: Safe UI integration** — conditional on measured capability, evidence/constraint interception and usable latency. Research cannot turn on the feature or change P1 state. No product qualification follows from schema correctness or software test success.
 
 - **P2 final checkpoint** — engineering complete with limitations; model/product LLM qualification failed and GPU inference blocked. Deterministic UI remains operational. GitHub feature backup authorized and verified. ROCm7.2 upgrade and P3 are not started. See P2_FINAL_REPORT.md.
+
+- **Windows GPU recovery** — owner-started Windows LM Studio route verified with W7900 GPU participation; real27B full60-case research completed without timeouts. Model/product Gate still NOT_QUALIFIED; P1 remains deterministic. P3 and ROCm upgrade not started.

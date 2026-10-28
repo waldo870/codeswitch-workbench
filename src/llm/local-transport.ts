@@ -1,6 +1,6 @@
 import type { FailureCode } from './types.js';
 export class ProviderError extends Error { constructor(public code: FailureCode, message: string) { super(message); } }
-export interface TransportOptions { endpoint?: string; fetchImpl?: typeof fetch; timeoutMs?: number; maxResponseBytes?: number; onResponse?: (status: number) => void }
+export interface TransportOptions { windowsWslHost?: string; endpoint?: string; fetchImpl?: typeof fetch; timeoutMs?: number; maxResponseBytes?: number; onResponse?: (status: number) => void }
 export function loopbackEndpoint(value: string, allowLocalhost = false): string {
   const url = new URL(value);
   if (url.protocol !== 'http:' || !['127.0.0.1', '[::1]', ...(allowLocalhost ? ['localhost'] : [])].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error('Only loopback HTTP endpoints are allowed.');

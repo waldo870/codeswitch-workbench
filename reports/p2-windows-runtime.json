@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "timestamp": "2026-10-28T03:27:26.832279+00:00",
+  "startingCommit": "a6460f1288ad2873e75929ff72f81940e34ef87b",
+  "runtimeLocation": "Windows LM Studio accessed from WSL2 NAT gateway",
+  "endpoint": "http://192.168.144.1:1234",
+  "endpointSource": "Explicit CODESWITCH_WINDOWS_WSL_HOST, matched to current kernel default route; not hardcoded in application",
+  "configurationChanged": false,
+  "windowsFirewallChanged": false,
+  "networkBindingChanged": false,
+  "existingListener": "0.0.0.0:1234 (pre-existing owner configuration; not modified)",
+  "providerCliCommit": "dcefd5a",
+  "backend": "llama.cpp-win-x86_64-vulkan-avx2@2.65.1",
+  "model": {
+    "id": "gemma-3-27b-it",
+    "quantization": "Q8_0",
+    "sizeBytesFromNativeApi": 29565344032,
+    "context": 8192,
+    "parallel": 4,
+    "flashAttention": true,
+    "offloadKvCacheToGpu": true,
+    "digest": null,
+    "downloadedOrReloaded": false
+  },
+  "structuredProbe": {
+    "httpStatus": 200,
+    "modelIdMatch": true,
+    "jsonSchemaValid": true,
+    "expectedJson": {
+      "ok": true
+    },
+    "durationMs": 2581.6710499930196,
+    "finishReason": "stop",
+    "promptTokens": 15,
+    "completionTokens": 15
+  },
+  "gpu": {
+    "inferenceVerified": true,
+    "device": "AMD Radeon PRO W7900",
+    "backendSurvey": "compatible, Vulkan GPU survey success",
+    "vulkanVersion": "1.4.357",
+    "windowsDriverVersion": "32.0.32015.7029",
+    "runtimeDriverInfo": "26.10.1 (LLPC)",
+    "computeUtilizationSamplePercent": 93,
+    "modelProcessDedicatedMemorySampleBytes": 32835096576,
+    "processName": "llama-server",
+    "processGpuAdapterCorrelationVerified": true,
+    "correlationMethod": "GPU engine and process-memory counter LUID matched the W7900 Vulkan survey LUID; process PID matched llama-server. Unique identifiers omitted from this curated report.",
+    "processExecutableBackend": "llama.cpp-win-x86_64-vulkan-avx2-2.65.1/llama-server.exe",
+    "loadedGpuModules": [
+      "ggml-vulkan.dll",
+      "vulkan-1.dll"
+    ],
+    "observationPhase": "During fixed smoke requests; one utilization/memory snapshot, not average benchmark utilization",
+    "requestedOffloadLayers": "max",
+    "actualOffloadedLayerCount": null,
+    "fullLayerOffloadVerified": false,
+    "tokensPerSecond": null
+  },
+  "evaluation": {
+    "researchModel": "gemma-3-27b-it",
+    "priorCpuModel": "gemma-3-12b-it",
+    "comparison": "Different model sizes and server runtimes; latency/quality differences cannot be attributed solely to GPU",
+    "fixedDatasetSha256": "d0ada927031c7d88bfc0088b95e54d0d597e85e7dd1924732be14b8768767c94",
+    "promptChanged": false,
+    "goldChanged": false,
+    "schemaChanged": false,
+    "strictGateChanged": false,
+    "researchParameters": {
+      "temperature": 0,
+      "seed": 42,
+      "max_tokens": 4096,
+      "timeoutMs": 60000
+    },
+    "productAdmission": false
+  },
+  "systemChanges": {
+    "rocmUpgrade": false,
+    "gpuDriverChange": false,
+    "modelDownload": false,
+    "windowsModelUnload": false,
+    "browserProviderRequests": false,
+    "newBackendServer": false
+  },
+  "providerVersion": "LM Studio 0.4.26.0",
+  "windowsGatewayInterfaceVerified": "vEthernet (WSL (Hyper-V firewall))"
+}
