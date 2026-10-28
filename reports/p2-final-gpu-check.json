@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "timestamp": "2026-10-28T02:49:55.646102+00:00",
+  "startingCommit": "5f03e2cf55b0a7ebf9e56ded451fd0026bbf73ad",
+  "branch": "feature/p25-model-comparison",
+  "gpuGate": "BLOCKED",
+  "environment": {
+    "distribution": "Ubuntu 22.04.5 LTS",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2",
+    "isolation": "WSL2; Codex filesystem sandbox hides /dev/dxg; approved host readonly probe sees it",
+    "gpu": "AMD Radeon PRO W7900",
+    "architecture": "gfx1100",
+    "rocmPackage": "6.2.3.60203-124~22.04",
+    "hipRuntimePackage": "6.2.41134.60203-124~22.04",
+    "wslHsaPackage": "1.14.0-2057403.22.04",
+    "rocminfoExit": 0,
+    "rocmSmi": "amdgpu module absent; Driver not initialized; not treated as a universal WSL inference diagnosis"
+  },
+  "backup": {
+    "directory": "~/tools/rocm-upgrade-backup",
+    "files": {
+      "packages-before.txt": {
+        "bytes": 31831,
+        "sha256": "ae7bf2e0bb3bc09a0a410abb2d27cdef9916e8430e7182b0c1e5005f44f87405"
+      },
+      "rocminfo-before.txt": {
+        "bytes": 8020,
+        "sha256": "2a55fe29c500a68f53ac2765d29ab28d484efa5586990c87a08fee613002a1e1"
+      },
+      "hsa-targets-before.cmake": {
+        "bytes": 1068,
+        "sha256": "92ab5ebd5b1955414e3657225bbed0d76979edbb85c2c2390bc172f197b90092"
+      }
+    },
+    "currentPackagesSha256": "ae7bf2e0bb3bc09a0a410abb2d27cdef9916e8430e7182b0c1e5005f44f87405",
+    "currentHostRocminfoSha256": "2a55fe29c500a68f53ac2765d29ab28d484efa5586990c87a08fee613002a1e1",
+    "currentHsaCmakeSha256": "92ab5ebd5b1955414e3657225bbed0d76979edbb85c2c2390bc172f197b90092",
+    "allThreeMatch": true
+  },
+  "runtime": {
+    "selectedEngine": "llama.cpp-linux-x86_64-vulkan-avx2@2.41.0",
+    "hostSurvey": "errorSurveyingHardware",
+    "gpuInventory": [],
+    "selectedEngineGpuBuildSupport": "Vulkan-labelled installed binary; actual GPU usability not established because hardware survey fails",
+    "residentModel": "gemma-3-12b-it",
+    "residentState": "IDLE",
+    "quantization": "Q8_0",
+    "context": 8192,
+    "parallel": 1,
+    "residentCpuBackendEvidence": "LM Studio log 2026-10-28.1.log lines9607-9611 warns compiled without GPU support; model loaded at line10044; no subsequent successful GPU load evidenced",
+    "residentCpuEngine": "llama.cpp-linux-x86_64-avx2@2.41.0 per preserved P2.5 record",
+    "cpuOffloadSupport": false,
+    "actualGpuLayers": "NOT_VERIFIED; no successful GPU model load",
+    "gpuTokensPerSecond": null,
+    "gpuTimeoutCount": null,
+    "noReloadOrBackendSelectionThisTask": true
+  },
+  "priorHipEvidence": [
+    {
+      "localSource": "~/tools/hip-w7900-test/gemma12b-rocm.log",
+      "sourceSha256": "05066d2fd9e7df6d2128a65e4c651787b438bf8716bced2261775896a7235423",
+      "sourceBytes": 261,
+      "sourceModifiedAt": "2026-10-28T01:18:13.128718+00:00",
+      "lines": [
+        1,
+        2
+      ],
+      "sanitizedExcerpt": [
+        "process compute queue fail status = 00001010",
+        "HSA_STATUS_ERROR_INVALID_CODE_OBJECT: The code object is invalid. code: 0x1010"
+      ],
+      "reexecuted": false
+    },
+    {
+      "localSource": "~/tools/hip-w7900-test/gemma4b-rocm.log",
+      "sourceSha256": "999a23902c6f2668dc1a1c000acbd4cb40f49b8fc9873d21928e2015770aeecc",
+      "sourceBytes": 261,
+      "sourceModifiedAt": "2026-10-28T01:20:09.728765+00:00",
+      "lines": [
+        1,
+        2
+      ],
+      "sanitizedExcerpt": [
+        "process compute queue fail status = 00001010",
+        "HSA_STATUS_ERROR_INVALID_CODE_OBJECT: The code object is invalid. code: 0x1010"
+      ],
+      "reexecuted": false
+    }
+  ],
+  "priorArithmeticEvidence": [
+    {
+      "localSource": "~/tools/hip-w7900-test/backend-add.log",
+      "sha256": "e7bf08f0724d32f69e9db2362cbf8f5755385863ce6f55c84f5c0af63c6bf7b8",
+      "summary": "167/167 ADD tests passed; not a successful model inference"
+    },
+    {
+      "localSource": "~/tools/hip-w7900-test/backend-mulmat.log",
+      "sha256": "4b3b2227c14d93b0aab569745cc7a097d127bf103e06b690cef70640f9c3f393",
+      "summary": "2490/2490 MUL_MAT tests passed; not a successful model inference"
+    }
+  ],
+  "decision": {
+    "gpuSmoke": "NOT_RUN: GPU inference precondition failed",
+    "gpuBenchmark": "NOT_RUN: GPU_GATE=BLOCKED",
+    "cpuBenchmark": "Historical actual run retained unchanged; 60 attempted,18 valid,42 timeouts",
+    "product": "NOT_QUALIFIED",
+    "rocm72UpgradeAuthorized": false,
+    "repeatedKnownFailedHipModelTests": false,
+    "installedOrUpgradedAnything": false,
+    "modifiedSystemLibrariesOrPermissions": false
+  },
+  "externalHipBuild": {
+    "localDirectory": "~/tools/llama.cpp-rocm",
+    "gitCommit": "d05706b4f32a545814856e98ca518292585443b9",
+    "gitWorktreeCleanAtInspection": true,
+    "cacheDirectory": "build-hip-fixed",
+    "GGML_HIP": true,
+    "GGML_CUDA": false,
+    "GGML_VULKAN": false,
+    "AMDGPU_TARGETS": "gfx1100",
+    "GPU_TARGETS": "gfx1100",
+    "interpretation": "HIP support and target configuration verified; existing model logs still fail with invalid code object0x1010. No binary was rebuilt or reexecuted."
+  }
+}

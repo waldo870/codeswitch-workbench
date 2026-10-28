@@ -185,3 +185,7 @@ pnpm benchmark:research:report p25-gemma-3-12b-it
 ```
 
 See [the research report](reports/p25-gemma-3-12b-it.md) and [model decision / scorer caveats](docs/MODEL_EVALUATION.md). Research exit0 means all requests were attempted, not that model quality passed. The earlier NOT_RUN paragraphs are historical. No 60-case Gemma4B comparison was performed; its prior fixed Full Smoke was0/8.
+
+### P2 finalization
+
+**P2_ENGINEERING_COMPLETE_WITH_LIMITATIONS**. Local LLM product qualification remains NOT_QUALIFIED; the UI stays deterministic. The final readonly W7900 runtime check is blocked by Vulkan hardware-survey failure and existing HIP invalid-code-object0x1010 model evidence. GPU benchmark NOT_RUN; ROCm7.2 upgrade is not authorized. No driver/runtime/model installation occurred. See [P2 final report](docs/P2_FINAL_REPORT.md) for backup verification, actual CPU metrics, GPU evidence and remaining work. The feature branch is the development checkpoint; local main is initialization only and is not a P2 application release.

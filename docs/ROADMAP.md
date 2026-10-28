@@ -14,3 +14,5 @@ Each phase requires its own scope and acceptance review. P1 does not imply compl
 
 - **P2.5: Bounded model comparison** — fixed-prompt CPU Gemma 12B research, individual failures and semantic denominators reported separately; strict qualification preserved. See MODEL_EVALUATION.md for actual coverage and results.
 - **P2.6: Safe UI integration** — conditional on measured capability, evidence/constraint interception and usable latency. Research cannot turn on the feature or change P1 state. No product qualification follows from schema correctness or software test success.
+
+- **P2 final checkpoint** — engineering complete with limitations; model/product LLM qualification failed and GPU inference blocked. Deterministic UI remains operational. GitHub feature backup authorized and verified. ROCm7.2 upgrade and P3 are not started. See P2_FINAL_REPORT.md.
