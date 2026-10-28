@@ -21,6 +21,7 @@ test('review, conflict prevention, reload, rejection and real JSON download', as
   await expect(task.getByText(/Prohibited action/)).toBeVisible();
   await task.getByLabel('Title', { exact: true }).fill('Check sandbox credentials');
   await task.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByRole('region', {name:/Saved work sessions/}).getByRole('status')).toHaveText('Saved in this browser (IndexedDB).');
   await page.reload();
   await expect(task.getByText('confirmed', { exact: true })).toBeVisible();
   await task.getByRole('button', { name: 'Edit', exact: true }).click();
@@ -50,7 +51,8 @@ test('complete user-authored email remains a draft until explicitly confirmed', 
   await email.getByLabel('Email body', { exact: true }).fill('Please review the webhook notes before our meeting.');
   await expect(email.locator('.badge.draft')).toBeVisible();
   await expect(email.getByRole('button', { name: 'Confirm', exact: true })).toBeEnabled();
-  await email.getByRole('button', { name: 'Confirm', exact: true }).click(); await page.reload();
+  await email.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByRole('region', {name:/Saved work sessions/}).getByRole('status')).toHaveText('Saved in this browser (IndexedDB).'); await page.reload();
   await expect(email.getByText('confirmed', { exact: true })).toBeVisible();
   await expect(email.getByText('vincent@example.test', { exact: true })).toBeVisible();
 });

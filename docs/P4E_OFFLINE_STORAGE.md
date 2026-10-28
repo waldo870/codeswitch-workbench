@@ -13,7 +13,7 @@ Workspace v1 continues to carry the original utterance, parser output, UTF-16 ev
 
 ## Save, open, delete
 
-Analyzed work and subsequent card edits/reviews are saved to the active session. The UI reports saving, saved, or failed state. A failed write remains only in memory, is not called saved, and blocks confirmation/export while persistence is unavailable. New Workspace starts a distinct session; the session list can reopen any validated record. Deleting one session requires a second confirmation. Clear Local Data separately requires confirmation and removes all app records and legacy payloads.
+Analyzed work and subsequent card edits/reviews are saved to the active session. The UI reports saving, saved, or failed state. A failed write remains only in memory, is not called saved, and blocks confirmation/export while persistence is unavailable. While workspace or transcript persistence is saving or has failed, the page installs a `beforeunload` warning so reload/close does not silently discard pending in-memory changes. Wait for the explicit saved state before intentionally reloading. New Workspace starts a distinct session; the session list can reopen any validated record. Deleting one session requires a second confirmation. Clear Local Data separately requires confirmation and removes all app records and legacy payloads.
 
 IndexedDB writes are serialized within the repository instance. Cross-tab concurrency is not coordinated; do not edit the same session in multiple tabs. Browser quota, private-browsing restrictions, user clearing, or profile removal can make local data unavailable. There is no encryption or cloud backup.
 
