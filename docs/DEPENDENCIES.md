@@ -124,3 +124,7 @@ Source licensing remains reserved for the owner. No model is installed. This inv
 ## P3 optional external runtime
 
 No new pnpm dependency is introduced. The opted-in Windows ASR worker uses an existing owner-managed Python/NumPy/PyTorch/OpenAI Whisper installation and existing local .pt checkpoint; these are not bundled or installed by this repository. [Whisper upstream code/model license](https://github.com/openai/whisper) is MIT; other installed runtime package licenses remain their own. This does not assign a source license to CodeSwitch Workbench or redistribute weights/voices. The optional fixture generator uses already installed Windows System.Speech voices, with no voice/audio corpus download and no audio binary committed. See P3_RUNTIME_PROVENANCE.md.
+
+## P4 optional worker contract
+
+P4 adds no pnpm dependency and does not install Python packages, HailoRT, drivers, or HEFs. The protocol fixture uses Python 3 standard-library modules only. Its `--mock` output is labelled Mock and is never a Live ASR result. The default worker response is `HARDWARE_UNAVAILABLE`; there is no Hailo SDK import or device inference implementation. Hailo Apps source/model/resource terms must be checked against their current upstream licensing before any future provisioning or redistribution.

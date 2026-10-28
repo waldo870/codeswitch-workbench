@@ -12,7 +12,7 @@ export function speechBridge(provider?:SpeechRecognizer) {
   if(!local || !host || !/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(host) || req.headers.origin && req.headers.origin!==`http://${host}` || req.headers['sec-fetch-site']==='cross-site'){respond(403,{error:'Only same-origin local browser requests are allowed.'});return;}
   let recognizer=provider;
   try {if(!recognizer){const config=whisperConfig();if(config)recognizer=new WindowsWhisper(config);}}catch{ /* configuration details remain private */ }
-  if(req.url==='/api/speech/capabilities' && req.method==='GET'){respond(200,{configured:Boolean(recognizer),busy,provider:'windows-whisper',limits:{bytes:MAX_AUDIO_BYTES,seconds:120},formats:['wav-pcm16-mono-16000']});return;}
+  if(req.url==='/api/speech/capabilities' && req.method==='GET'){respond(200,{configured:Boolean(recognizer),busy,provider:recognizer?.providerId??(recognizer?'custom':null),modelId:recognizer?.modelId??null,executionMode:recognizer?.executionMode??null,limits:{bytes:MAX_AUDIO_BYTES,seconds:120},formats:['wav-pcm16-mono-16000']});return;}
   if(req.url!=='/api/speech/transcribe' || req.method!=='POST'){respond(404,{error:'Unsupported speech route.'});return;}
   if(req.headers['content-type']!=='audio/wav' || req.headers['x-codeswitch-speech']!=='1'){respond(415,{error:'Use the audio import control with PCM WAV.'});return;}
   if(!recognizer){respond(503,{error:'Local ASR is unavailable. Text workflow remains available.'});return;}

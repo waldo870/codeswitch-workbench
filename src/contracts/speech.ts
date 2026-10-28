@@ -1,6 +1,11 @@
 export interface AudioSource { id: string; name: string; bytes: number; duration: number; format: 'wav'; sampleRate: 16000; channels: 1; bitsPerSample: 16 }
-export type SpeechErrorCode = 'UNAVAILABLE' | 'TIMEOUT' | 'CANCELLED' | 'FORMAT' | 'CORRUPTED_AUDIO' | 'TOO_LARGE' | 'TOO_LONG' | 'EMPTY_TRANSCRIPT' | 'MALFORMED_RESPONSE' | 'MISSING_MODEL' | 'PROVIDER_ERROR';
-export interface SpeechResult { sourceAudioId: string; transcript: string; language: string | null; modelId: string; provider: string; duration: number; inferenceDuration: number; confidence?: number; status: 'success' | 'failed' | 'cancelled'; errors: { code: SpeechErrorCode; message: string }[] }
+export interface AudioFormatMetadata { container: 'wav'; encoding: 'pcm_s16le'; sampleRateHz: 16000; channels: 1; bitsPerSample: 16 }
+export interface SpeechRuntimeMetadata { mode: 'live' | 'mock'; runtime: string; device: 'cpu' | 'hailo' | 'unknown'; version?: string; architecture?: string }
+export type SpeechErrorCode = 'UNAVAILABLE' | 'TIMEOUT' | 'CANCELLED' | 'FORMAT' | 'CORRUPTED_AUDIO' | 'TOO_LARGE' | 'TOO_LONG' | 'EMPTY_TRANSCRIPT' | 'MALFORMED_RESPONSE' | 'MISSING_MODEL' | 'HARDWARE_UNAVAILABLE' | 'WORKER_PROTOCOL' | 'WORKER_ERROR' | 'PROVIDER_ERROR';
+export interface SpeechResult { sourceAudioId: string; transcript: string; language: string | null; modelId: string; provider: string; duration: number; inferenceDuration: number; confidence?: number; audioFormat?: AudioFormatMetadata; runtime?: SpeechRuntimeMetadata; status: 'success' | 'failed' | 'cancelled'; errors: { code: SpeechErrorCode; message: string }[] }
+export type SpeechProviderResult = SpeechResult & { audioFormat: AudioFormatMetadata; runtime: SpeechRuntimeMetadata };
 export interface SpeechSession { schemaVersion: 1; source: AudioSource; recognition: SpeechResult; transcript: string; edits: { before: string; after: string }[]; revision: number; confirmedRevision: number | null }
 export interface SpeechProvenance { session: SpeechSession; origin: 'raw-asr' | 'corrected-transcript' }
-export interface SpeechRecognizer { transcribe(bytes: Uint8Array, source: AudioSource, signal?: AbortSignal): Promise<SpeechResult> }
+export interface SpeechRecognizer { readonly providerId?: string; readonly modelId?: string; readonly executionMode?: 'live' | 'mock'; transcribe(bytes: Uint8Array, source: AudioSource, signal?: AbortSignal): Promise<SpeechResult> }
+/** Provider metadata is declared outside the transcript so provenance never depends on model prose. */
+export interface SpeechProvider extends SpeechRecognizer { readonly providerId: string; readonly modelId: string; readonly executionMode: 'live' | 'mock'; transcribe(bytes: Uint8Array, source: AudioSource, signal?: AbortSignal): Promise<SpeechProviderResult> }

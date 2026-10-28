@@ -3,7 +3,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { mkdir,mkdtemp,writeFile,rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { AudioSource, SpeechRecognizer, SpeechResult } from '../contracts/speech.js';
+import type { AudioSource, SpeechProvider, SpeechProviderResult, SpeechResult } from '../contracts/speech.js';
 import { SpeechError, identifyAudio } from './audio.js';
 export const ASR_TIMEOUT_MS=300_000;
 export interface WhisperConfig { python: string; modelFile: string }
@@ -46,11 +46,14 @@ export const runWhisperWorker:WorkerRun=async(config,bytes,signal)=>{
  });
  } finally {try{await rm(directory,{recursive:true,force:true});}catch{throw new SpeechError('PROVIDER_ERROR','Temporary audio cleanup failed. Inspect the private local audio directory.');}}
 };
-export class WindowsWhisper implements SpeechRecognizer {
+export class WindowsWhisper implements SpeechProvider {
  constructor(private config:WhisperConfig,private run:WorkerRun=runWhisperWorker){}
- async transcribe(bytes:Uint8Array,source:AudioSource,signal?:AbortSignal):Promise<SpeechResult>{
+ readonly providerId='windows-whisper';
+ get modelId(){return this.config.modelFile.split(/[\\/]/).at(-1)!.replace(/\.pt$/i,'');}
+ get executionMode(){return this.run===runWhisperWorker?'live':'mock';}
+ async transcribe(bytes:Uint8Array,source:AudioSource,signal?:AbortSignal):Promise<SpeechProviderResult>{
   const start=performance.now(),modelId=this.config.modelFile.split(/[\\/]/).at(-1)!.replace(/\.pt$/i,'');
-  const base={sourceAudioId:source.id,language:null,modelId,provider:'windows-whisper',duration:source.duration};
+  const base={sourceAudioId:source.id,language:null,modelId,provider:'windows-whisper',duration:source.duration,audioFormat:{container:'wav' as const,encoding:'pcm_s16le' as const,sampleRateHz:16000 as const,channels:1 as const,bitsPerSample:16 as const},runtime:{mode:(this.run===runWhisperWorker?'live':'mock') as 'live'|'mock',runtime:'windows-python-whisper',device:'cpu' as const}};
   try{
    const identified=await identifyAudio(bytes,source.name);if(identified.id!==source.id || identified.duration!==source.duration)throw new SpeechError('CORRUPTED_AUDIO','Audio identity changed.');
    const text=await this.run(this.config,bytes,signal);let r:Record<string,unknown>;
