@@ -1,11 +1,13 @@
 # Roadmap
 
 - **P0: Text-to-workcards** — deterministic adapter, contracts, evidence reconciliation, constraints, unresolved content, local CLI, original tests and CI configuration. Completed baseline.
-- **P1: Editable Web UI** — React/Vite workspace, source-linked editing, explicit confirmation/rejection, validation after edits, localStorage v1 and confirmed-only JSON export. Completed product baseline.
+- **P1: Editable Web UI** — React/Vite workspace, source-linked editing, explicit confirmation/rejection, validation after edits and confirmed-only JSON export. Completed product baseline; v1 data migrates from localStorage to IndexedDB in P4E.
 - **P2A: Local LLM evaluation** — provider-neutral Ollama adapter, original 60-example benchmark, independent validation and reports implemented. Deterministic baseline measured; initial runtime-unavailable result retained as history; later Gemma 4B smoke ran and failed qualification.
 - **P2B: Integration decision** — use measured raw/verified comparisons and human failure review before any UI integration. Not started.
 - **P3A/P3B: Offline speech-to-workflow** — completed a WAV import, local Whisper CPU transcription, transcript correction/confirmation and deterministic card review/export path. The live end-to-end evidence is one synthetic English fixture; broad multilingual speech evaluation is not complete.
 - **P4 Prep: Hailo readiness** — provider/runtime contracts, bounded JSON worker protocol, explicit Mock-only Python fixture, cross-provider benchmark contract and Stage II deployment checklist implemented. HailoRT, HEFs, hardware, accuracy and latency remain NOT_RUN / Not Tested. Real deployment remains future work after hardware and SDK review.
+- **P4E: Offline persistence** — IndexedDB-backed sessions, transcript review, validated import/export, legacy Workspace v1 migration and versioned service-worker app-shell caching implemented. Browser offline simulation is covered; real network-loss cold-start across target hosting/browser setups remains unverified.
+- **P4F: Offline acceptance** — simulated Internet-unavailable, ASR worker unavailable, LM Studio unavailable and Hailo unavailable paths are covered. Hailo Live and P3C real bilingual speech remain NOT_RUN. See P4E/P4F acceptance documents.
 - **P5: End-to-end validation** — test speech through confirmed local exports, constraint preservation, privacy and recovery on target hardware. Not started.
 
 Each phase requires its own scope and acceptance review. P1 does not imply completion of P2–P5. Optional later export formats include ICS and Markdown; neither is implemented.

@@ -8,6 +8,7 @@ import { confirmCard, createWorkspace, editCard, EXAMPLE, exportWorkspace, MAX_I
 import { loadWorkspace, saveWorkspace, STORAGE_KEY, type StoragePort } from './storage/local-workspace.js';
 import { EvidenceViewer } from './components/EvidenceViewer.js';
 import { LABELS, WorkCardEditor } from './components/WorkCardEditor.js';
+import { PersistentApp } from './PersistentApp.js';
 
 function browserStorage(): StoragePort {
   return { getItem: key => window.localStorage.getItem(key), setItem: (key, value) => window.localStorage.setItem(key, value), removeItem: key => window.localStorage.removeItem(key) };
@@ -19,7 +20,7 @@ export function downloadJson(document: ExportDocument): void {
   window.document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-export function App({ storage = browserStorage(), download = downloadJson, speechClient }: { storage?: StoragePort; speechClient?: SpeechClient; download?: (document: ExportDocument) => void }) {
+function LegacyApp({ storage = browserStorage(), download = downloadJson, speechClient }: { storage?: StoragePort; speechClient?: SpeechClient; download?: (document: ExportDocument) => void }) {
   const [initial] = useState(() => loadWorkspace(storage));
   const [workspace, setWorkspace] = useState<Workspace | null>(initial.workspace);
   const [input, setInput] = useState(initial.workspace?.originalInput ?? EXAMPLE);
@@ -92,4 +93,8 @@ export function App({ storage = browserStorage(), download = downloadJson, speec
     <section className="panel export-panel"><div><h2>Take your reviewed work with you</h2><p>JSON includes confirmed cards, original evidence, constraints and review history. No emails are sent or calendar events created.</p>{exportReason && <p id="export-reason" className="muted">{exportReason}</p>}</div><button className="primary" disabled={Boolean(exportReason)} aria-describedby={exportReason ? 'export-reason' : undefined} onClick={() => { try { download(exportWorkspace(workspace)); setMessage('Confirmed cards exported locally. No actions were executed.'); } catch (error) { setMessage(error instanceof Error ? error.message : 'Export failed.'); } }}>Export confirmed JSON</button></section>
     <footer><p role="status">{storageMessage}</p><button onClick={() => setPending('clear')}>Clear Local Data</button><p className="muted">P3 · Local transcript review · Deterministic cards · LLM product integration disabled</p></footer>
   </main>;
+}
+
+export function App(props: { storage?: StoragePort; speechClient?: SpeechClient; download?: (document: ExportDocument) => void }) {
+  return props.storage ? <LegacyApp {...props} /> : <PersistentApp speechClient={props.speechClient} />;
 }
