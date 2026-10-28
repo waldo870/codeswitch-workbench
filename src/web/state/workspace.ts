@@ -1,3 +1,5 @@
+import type { SpeechProvenance } from '../../contracts/speech.js';
+import { validateSpeechProvenance } from '../../speech/session.js';
 import { extract } from '../../engine/extract.js';
 import { validate } from '../../engine/validate.js';
 import type { Extraction, WorkCard } from '../../contracts/work-card.js';
@@ -9,8 +11,8 @@ export type EditableCard = Exclude<WorkCard, { type: 'email_draft' }> | (Omit<Ex
 export type EditKey = 'title' | 'action' | 'target' | 'time' | 'recipientName' | 'recipientEmail' | 'language' | 'body';
 export type CardEvent = { kind: 'edit'; field: EditKey; before: string | null; after: string | null } | { kind: 'confirm'; revision: number } | { kind: 'reject' };
 export interface CardState { id: string; current: EditableCard; history: CardEvent[]; revision: number; confirmedRevision: number | null }
-export interface Workspace { schemaVersion: 1; originalInput: string; parsed: Extraction; cards: CardState[] }
-export interface ExportDocument { schemaVersion: 1; kind: 'confirmed-workcards'; originalInput: string; constraints: Extraction['constraints']; cards: CardState[]; executed: false }
+export interface Workspace { speech?: SpeechProvenance; schemaVersion: 1; originalInput: string; parsed: Extraction; cards: CardState[] }
+export interface ExportDocument { speech?: SpeechProvenance; schemaVersion: 1; kind: 'confirmed-workcards'; originalInput: string; constraints: Extraction['constraints']; cards: CardState[]; executed: false }
 const clone = <T,>(value: T): T => structuredClone(value);
 export const same = (a: unknown, b: unknown): boolean => {
   if (a === b) return true;
@@ -19,10 +21,10 @@ export const same = (a: unknown, b: unknown): boolean => {
   const x = a as Record<string, unknown>, y = b as Record<string, unknown>;
   return Object.keys(x).length === Object.keys(y).length && Object.keys(x).every(k => Object.hasOwn(y, k) && same(x[k], y[k]));
 };
-export function createWorkspace(input: string): Workspace {
+export function createWorkspace(input: string, speech?: SpeechProvenance): Workspace {
   if (!input.trim() || input.length > MAX_INPUT) throw new Error(`Enter 1–${MAX_INPUT} characters.`);
   const parsed = extract(input);
-  return { schemaVersion: 1, originalInput: input, parsed, cards: parsed.cards.map(card => ({ id: card.id, current: clone(card), history: [], revision: 0, confirmedRevision: null })) };
+  return { ...(speech ? {speech:validateSpeechProvenance(speech,input)} : {}), schemaVersion: 1, originalInput: input, parsed, cards: parsed.cards.map(card => ({ id: card.id, current: clone(card), history: [], revision: 0, confirmedRevision: null })) };
 }
 export function editableKeys(card: EditableCard): EditKey[] {
   return card.type === 'email_draft' ? ['title', 'recipientName', 'recipientEmail', 'language', 'body'] : card.type === 'calendar' ? ['title', 'action', 'target', 'time'] : ['title', 'action', 'target'];
@@ -98,7 +100,7 @@ export function restoreWorkspace(value: unknown): Workspace {
   if (!value || typeof value !== 'object') throw new Error('Invalid workspace.');
   const raw = value as Workspace;
   if (raw.schemaVersion !== 1 || typeof raw.originalInput !== 'string' || !Array.isArray(raw.cards)) throw new Error('Unsupported workspace schema.');
-  const rebuilt = createWorkspace(raw.originalInput);
+  const rebuilt = createWorkspace(raw.originalInput, raw.speech);
   if (!same(raw.parsed, rebuilt.parsed) || raw.cards.length !== rebuilt.cards.length) throw new Error('Original extraction or evidence was changed.');
   rebuilt.cards = rebuilt.cards.map((initial, index) => {
     const saved = raw.cards[index];
@@ -151,13 +153,13 @@ export function exportWorkspace(value: unknown): ExportDocument {
     const errors = safetyErrors(workspace, card.current);
     if (errors.length || card.confirmedRevision !== card.revision) throw new Error(errors.join(' ') || 'Stale confirmation.');
   }
-  return { schemaVersion: 1, kind: 'confirmed-workcards', originalInput: workspace.originalInput, constraints: clone(workspace.parsed.constraints), cards: clone(cards), executed: false };
+  return { ...(workspace.speech ? {speech:clone(workspace.speech)} : {}), schemaVersion: 1, kind: 'confirmed-workcards', originalInput: workspace.originalInput, constraints: clone(workspace.parsed.constraints), cards: clone(cards), executed: false };
 }
 export function validateExport(value: unknown): boolean {
   try {
     const raw = value as ExportDocument;
     if (!raw || !Array.isArray(raw.cards) || !raw.cards.length) return false;
-    const workspace = createWorkspace(raw.originalInput);
+    const workspace = createWorkspace(raw.originalInput, raw.speech);
     if (new Set(raw.cards.map(c => c.id)).size !== raw.cards.length || raw.cards.some(c => !workspace.cards.some(s => s.id === c.id))) return false;
     workspace.cards = workspace.cards.map(c => raw.cards.find(s => s.id === c.id) ?? c);
     return same(raw, exportWorkspace(workspace));

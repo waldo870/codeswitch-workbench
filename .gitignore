@@ -5,3 +5,12 @@ test-results/
 playwright-report/
 
 /reports/local-diagnostics/
+
+/.speech-local/
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.pt
+*.gguf
+__pycache__/

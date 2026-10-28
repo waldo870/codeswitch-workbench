@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-10-28T07:28:00.287Z",
+  "test": "Live real ASR, synthetic spoken fixture (not a human recording)",
+  "fixtureText": "Check sandbox credentials. Do not deploy to production.",
+  "fixtureVoice": "Existing Windows Microsoft David Desktop offline SAPI",
+  "recognition": {
+    "sourceAudioId": "sha256:b5ea9d94f81ad97ad0a14551b48d862195c6076ec271665c046f428af76c433d",
+    "language": "en",
+    "modelId": "large-v3",
+    "provider": "windows-whisper",
+    "duration": 4.845,
+    "transcript": " Check sandbox credentials Do not deploy to production",
+    "inferenceDuration": 49144.977838,
+    "status": "success",
+    "errors": []
+  },
+  "correctedTranscript": "Check sandbox credentials. Do not deploy to production.",
+  "correctionHistory": [
+    {
+      "before": " Check sandbox credentials Do not deploy to production",
+      "after": "Check sandbox credentials. Do not deploy to production."
+    }
+  ],
+  "audio": {
+    "name": "p3-smoke.wav",
+    "bytes": 155086,
+    "duration": 4.845,
+    "format": "wav",
+    "sampleRate": 16000,
+    "channels": 1,
+    "bitsPerSample": 16,
+    "id": "sha256:b5ea9d94f81ad97ad0a14551b48d862195c6076ec271665c046f428af76c433d"
+  },
+  "workcardCount": 1,
+  "constraints": [
+    {
+      "action": "deploy",
+      "polarity": "prohibited",
+      "scope": "production",
+      "evidence": {
+        "text": "Do not deploy to production",
+        "start": 27,
+        "end": 54
+      }
+    }
+  ],
+  "transcriptConfirmed": true,
+  "exportValidated": true,
+  "userActions": "Automated browser clicks simulate explicit human confirmations; no product auto-confirmation.",
+  "gpuAsrVerified": false,
+  "project": "desktop-chromium",
+  "metrics": {
+    "raw": {
+      "cer": {
+        "numerator": 3,
+        "denominator": 55,
+        "value": 0.05454545454545454
+      },
+      "wer": {
+        "numerator": 2,
+        "denominator": 8,
+        "value": 0.25
+      },
+      "codeSwitchTermAccuracy": {
+        "numerator": 3,
+        "denominator": 3,
+        "value": 1
+      }
+    },
+    "rawConstraintPreservation": {
+      "numerator": 0,
+      "denominator": 1
+    },
+    "reviewedConstraintPreservation": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "rawCardCount": 0,
+    "rawUnresolvedCount": 1,
+    "reviewedCardCount": 1,
+    "termCoverageFixtureKind": "English technical-term coverage only; not a real code-switch speech evaluation"
+  },
+  "finalSourceReplayValidation": true,
+  "transport": "Private generated WAV, SHA-256 rechecked by Windows worker; closed stdin and request-scoped cancellation marker",
+  "liveCancellation": {
+    "result": "PASS",
+    "browserTest": "live Windows ASR cancellation preserves existing work cards",
+    "remainingRequestDirectories": 0,
+    "remainingWindowsWorkers": 0
+  }
+}

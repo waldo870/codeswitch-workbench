@@ -18,3 +18,5 @@ Each phase requires its own scope and acceptance review. P1 does not imply compl
 - **P2 final checkpoint** — engineering complete with limitations; model/product LLM qualification failed and GPU inference blocked. Deterministic UI remains operational. GitHub feature backup authorized and verified. ROCm7.2 upgrade and P3 are not started. See P2_FINAL_REPORT.md.
 
 - **Windows GPU recovery** — owner-started Windows LM Studio route verified with W7900 GPU participation; real27B full60-case research completed without timeouts. Model/product Gate still NOT_QUALIFIED; P1 remains deterministic. P3 and ROCm upgrade not started.
+
+- **P3A/P3B delivered** — original synthetic English audio was transcribed by existing Windows Whisper CPU, explicitly corrected/confirmed and passed deterministic card/constraint/export flow. P3_END_TO_END_PASS is limited to that reviewed fixture. LM Studio ASR public API unsupported in the installed version; no driver/model download or LLM UI enablement. P3C metrics/interfaces prepared; actual multilingual/human/corpus evaluation is future work. Hailo/UGen300 remains planned/not tested.

@@ -5,7 +5,7 @@
 - Project: CodeSwitch Workbench
 - Competition category: Workplace AI
 - Target hardware: ASUS UGen300 / Hailo-10H
-- Current status: Text-only deterministic prototype
+- Current status: Deterministic text and reviewed offline speech prototype
 - Hardware integration: Planned / Not Tested
 - No affiliation with or dependency on AgentMorph
 
@@ -210,3 +210,23 @@ unset CODESWITCH_WINDOWS_WSL_HOST
 
 
 Windows recovery actual result: **GPU participation verified;60/60 valid completions,0 timeouts** using Gemma3 27B Q8_0. Full Smoke3/8, raw complete20/60, verified16/60, constraints4/13. P2 remains engineering complete with limitations; Local LLM UI is not qualified/enabled. This differs from the historical CPU12B model, so it is not a pure GPU speedup experiment. See [Windows recovery report](reports/p2-windows-recovery.md) for GPU proof, all metric denominators and safety/measurement limitations.
+
+## P3: offline speech import and transcript review
+
+The browser can import WAV, run an explicitly configured existing Windows Whisper worker, preserve the raw transcript, review/correct it and confirm it before deterministic extraction. Cards still require their own confirmation. The P2 LLM remains disabled in the product. LM Studio0.4.26's public audio transcription endpoint was tested and is unsupported; an existing Windows Python Whisper installation is used instead. No package/model/driver is installed by the application.
+
+Supported audio: PCM WAV,16000 Hz,mono,16-bit,4 MB/120s maximum. Other formats/remote URLs are refused. Browser audio stays in memory; the worker briefly uses a private ignored request WAV and cleans it up. Only metadata/transcript/corrections are saved to localStorage. Reload requires reimporting audio for another transcription; saved review/work cards remain available.
+
+```sh
+pnpm install --frozen-lockfile
+# Replace these with EXISTING owner-managed paths, never a model name/URL:
+export CODESWITCH_ASR_PYTHON='/mnt/c/Users/<you>/AppData/Local/Programs/Python/Python310/python.exe'
+export CODESWITCH_ASR_MODEL_FILE='C:\Users\<you>\.cache\whisper\large-v3.pt'
+pnpm dev
+```
+
+Open the loopback URL Vite prints. Choose Import Audio → Transcribe → inspect Original ASR transcript → Edit Transcript if needed → Confirm Transcript → Analyze Confirmed Transcript → review evidence/constraints → confirm/reject cards → Export confirmed JSON. Reanalysis asks before replacing existing work. Editing a transcript invalidates its confirmation; previously analyzed cards retain their earlier immutable source until explicitly replaced. Raw ASR without punctuation may remain unresolved: correct it explicitly; the parser does not guess sentence boundaries.
+
+Without valid existing ASR configuration, Transcribe is unavailable and the text workflow remains usable. The Node bridge accepts only same-origin loopback audio requests; it exposes no arbitrary URL, model selector or command. A300s worker timeout and cancellation path are enforced. Do not enter secrets; exports include raw and corrected transcripts.
+
+To reproduce the original synthetic spoken Live Smoke, use the already installed Microsoft David Desktop voice with `tests/live/generate-speech.ps1`, writing `.speech-local/p3-smoke.wav`; no WAV is tracked. Configure the existing runtime above, run `pnpm build`, then `CODESWITCH_LIVE_ASR=1 pnpm speech:live`. Live tests are opt-in and are marked skipped/NOT_RUN in ordinary CI, never counted as mock ASR success. See [speech architecture](docs/P3_SPEECH_ARCHITECTURE.md), [runtime provenance](docs/P3_RUNTIME_PROVENANCE.md) and [test report](docs/P3_TEST_REPORT.md). This is reviewed speech workflow support, not evidence of reliable raw mixed-language recognition, GPU ASR or Hailo integration.

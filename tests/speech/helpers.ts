@@ -1,0 +1,3 @@
+import type { SpeechResult,AudioSource } from '../../src/contracts/speech.js';
+export function wav(seconds=1){const b=Buffer.alloc(44+32000*seconds);b.write('RIFF');b.writeUInt32LE(b.length-8,4);b.write('WAVE',8);b.write('fmt ',12);b.writeUInt32LE(16,16);b.writeUInt16LE(1,20);b.writeUInt16LE(1,22);b.writeUInt32LE(16000,24);b.writeUInt32LE(32000,28);b.writeUInt16LE(2,32);b.writeUInt16LE(16,34);b.write('data',36);b.writeUInt32LE(b.length-44,40);return new Uint8Array(b);}
+export const recognition=(source:AudioSource,text='check sandbox'):SpeechResult=>({sourceAudioId:source.id,transcript:text,language:'en',modelId:'mock-unit-only',provider:'windows-whisper',duration:source.duration,inferenceDuration:10,status:'success',errors:[]});

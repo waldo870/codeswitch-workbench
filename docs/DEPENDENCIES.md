@@ -120,3 +120,7 @@ Source licensing remains reserved for the owner. No model is installed. This inv
 | why-is-node-running | 3.2.1 | MIT |
 | xml-name-validator | 5.0.0 | Apache-2.0 |
 | xmlchars | 2.2.0 | MIT |
+
+## P3 optional external runtime
+
+No new pnpm dependency is introduced. The opted-in Windows ASR worker uses an existing owner-managed Python/NumPy/PyTorch/OpenAI Whisper installation and existing local .pt checkpoint; these are not bundled or installed by this repository. [Whisper upstream code/model license](https://github.com/openai/whisper) is MIT; other installed runtime package licenses remain their own. This does not assign a source license to CodeSwitch Workbench or redistribute weights/voices. The optional fixture generator uses already installed Windows System.Speech voices, with no voice/audio corpus download and no audio binary committed. See P3_RUNTIME_PROVENANCE.md.

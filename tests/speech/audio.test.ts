@@ -1,0 +1,10 @@
+import {expect,it} from 'vitest';
+import {identifyAudio,inspectWav} from '../../src/speech/audio.js';
+import {wav} from './helpers.js';
+it('identifies content by SHA-256 and measures PCM duration without trusting file metadata',async()=>{const a=await identifyAudio(wav(2),'fake/path/voice.wav'),b=await identifyAudio(wav(2),'other.wav');expect(a.id).toBe(b.id);expect(a.duration).toBe(2);expect(a.name).toBe('voice.wav');});
+it.each(['x.mp3','x.exe','https://host/audio','voice.wav.js'])('rejects unsupported audio %s',name=>expect(()=>inspectWav(wav(),name)).toThrow());
+it('rejects oversized audio before decoding',()=>expect(()=>inspectWav(new Uint8Array(4_000_001),'x.wav')).toThrow('4 MB'));
+it('rejects duration above limit',()=>expect(()=>inspectWav(wav(121),'x.wav')).toThrow('120 seconds'));
+it.each([20,22,24,28,32,34])('rejects invalid PCM header at offset %s',offset=>{const b=wav();b[offset]=b[offset]!^255;expect(()=>inspectWav(b,'x.wav')).toThrow();});
+it('rejects truncated data, corrupt magic, wrong RIFF length and empty audio',()=>{for(const b of [wav().subarray(0,50),new Uint8Array(44),wav(0)])expect(()=>inspectWav(b,'x.wav')).toThrow();const b=wav();b[4]=0;expect(()=>inspectWav(b,'x.wav')).toThrow();});
+it('requires data and format chunks',()=>{const b=wav();b.set(new TextEncoder().encode('xxxx'),36);expect(()=>inspectWav(b,'x.wav')).toThrow('missing');});
