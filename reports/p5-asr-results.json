@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "status": "NOT_RUN",
+  "generatedAt": "2026-10-28T16:32:58.757Z",
+  "datasetVersion": "Common Voice Scripted Speech 27.0 (planned; no local sample manifest)",
+  "datasetRevision": null,
+  "datasetSha256": null,
+  "manifestSha256": null,
+  "seed": "codeswitch-p5-small-2026-01",
+  "runtime": {
+    "provider": null,
+    "modelId": null,
+    "runtime": null,
+    "device": null
+  },
+  "sampleCounts": {
+    "zhTW": 0,
+    "english": 0,
+    "total": 0
+  },
+  "summary": {
+    "zh-TW": {
+      "completed": 0,
+      "failed": 0,
+      "timedOut": 0,
+      "notRun": 0,
+      "cer": null,
+      "wer": null,
+      "latencyP50Ms": null,
+      "latencyP95Ms": null,
+      "modelLoadP50Ms": null,
+      "modelLoadP95Ms": null,
+      "inferenceP50Ms": null,
+      "inferenceP95Ms": null
+    },
+    "en": {
+      "completed": 0,
+      "failed": 0,
+      "timedOut": 0,
+      "notRun": 0,
+      "cer": null,
+      "wer": null,
+      "latencyP50Ms": null,
+      "latencyP95Ms": null,
+      "modelLoadP50Ms": null,
+      "modelLoadP95Ms": null,
+      "inferenceP50Ms": null,
+      "inferenceP95Ms": null
+    }
+  },
+  "cases": [],
+  "limitations": [
+    "No local sample manifest is present. Common Voice MDC sample retrieval is pending Owner-provided email/access and terms acceptance; FLEURS has no Traditional Chinese Mandarin (zh-TW) configuration. No audio was downloaded.",
+    "Windows Whisper is not configured in this environment. Set the existing CODESWITCH_ASR_PYTHON and CODESWITCH_ASR_MODEL_FILE values after owner-approved local runtime setup; no model download is performed."
+  ]
+}

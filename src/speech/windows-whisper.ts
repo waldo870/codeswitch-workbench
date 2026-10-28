@@ -58,9 +58,9 @@ export class WindowsWhisper implements SpeechProvider {
    const identified=await identifyAudio(bytes,source.name);if(identified.id!==source.id || identified.duration!==source.duration)throw new SpeechError('CORRUPTED_AUDIO','Audio identity changed.');
    const text=await this.run(this.config,bytes,signal);let r:Record<string,unknown>;
    try{r=JSON.parse(text);}catch{throw new SpeechError('MALFORMED_RESPONSE','ASR returned invalid JSON.');}
-   if(r.sourceAudioId!==source.id || r.model!==modelId || r.provider!=='windows-whisper' || r.device!=='cpu' || typeof r.text!=='string' || r.text.length>10000 || !(r.language===null || typeof r.language==='string' && r.language.length<50))throw new SpeechError('MALFORMED_RESPONSE','ASR response schema or model identity mismatch.');
+   if(r.sourceAudioId!==source.id || r.model!==modelId || r.provider!=='windows-whisper' || r.device!=='cpu' || typeof r.text!=='string' || r.text.length>10000 || !(r.language===null || typeof r.language==='string' && r.language.length<50) || (r.modelLoadDurationMs!==undefined && (!Number.isFinite(r.modelLoadDurationMs)||Number(r.modelLoadDurationMs)<0)) || (r.transcriptionDurationMs!==undefined && (!Number.isFinite(r.transcriptionDurationMs)||Number(r.transcriptionDurationMs)<0)) || (r.modelLoadDurationMs===undefined)!==(r.transcriptionDurationMs===undefined))throw new SpeechError('MALFORMED_RESPONSE','ASR response schema or model identity mismatch.');
    if(!r.text.trim())throw new SpeechError('EMPTY_TRANSCRIPT','No speech transcript was returned.');
-   return {...base,transcript:r.text,language:r.language as string|null,inferenceDuration:performance.now()-start,status:'success',errors:[]};
+   return {...base,transcript:r.text,language:r.language as string|null,...(r.modelLoadDurationMs!==undefined?{timing:{modelLoadDurationMs:Number(r.modelLoadDurationMs),transcriptionDurationMs:Number(r.transcriptionDurationMs)}}:{}),inferenceDuration:performance.now()-start,status:'success',errors:[]};
   }catch(e){const error=e instanceof SpeechError?e:new SpeechError('PROVIDER_ERROR','Local ASR failed.');return {...base,transcript:'',inferenceDuration:performance.now()-start,status:error.code==='CANCELLED'?'cancelled':'failed',errors:[{code:error.code,message:error.message}]};}
  }
 }

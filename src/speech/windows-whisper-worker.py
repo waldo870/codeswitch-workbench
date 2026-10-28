@@ -32,9 +32,13 @@ try:
     with contextlib.redirect_stdout(sys.stderr):
         import numpy as np, whisper, torch
         torch.set_num_threads(8)
+        load_started=time.perf_counter()
         model = whisper.load_model(sys.argv[1], device='cpu')
+        model_load_ms=(time.perf_counter()-load_started)*1000
+        transcription_started=time.perf_counter()
         result = model.transcribe(np.frombuffer(pcm, dtype=np.int16).astype(np.float32)/32768.0, fp16=False, verbose=None, task='transcribe')
-    print(json.dumps({'sourceAudioId':'sha256:'+hashlib.sha256(data).hexdigest(),'text': result['text'], 'language': result.get('language'), 'model':os.path.basename(sys.argv[1])[:-3], 'provider':'windows-whisper','device':'cpu'}, ensure_ascii=False), flush=True)
+        transcription_ms=(time.perf_counter()-transcription_started)*1000
+    print(json.dumps({'sourceAudioId':'sha256:'+hashlib.sha256(data).hexdigest(),'text': result['text'], 'language': result.get('language'), 'model':os.path.basename(sys.argv[1])[:-3], 'provider':'windows-whisper','device':'cpu','modelLoadDurationMs':model_load_ms,'transcriptionDurationMs':transcription_ms}, ensure_ascii=False), flush=True)
 except Exception:
     # Never print private audio/text, paths or provider stack traces.
     os._exit(22)

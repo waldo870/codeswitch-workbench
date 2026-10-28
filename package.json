@@ -22,7 +22,8 @@
     "benchmark:research": "tsx src/evaluation/research-cli.ts",
     "benchmark:research:report": "tsx src/evaluation/research-report-cli.ts",
     "smoke:windows": "tsx src/evaluation/windows-smoke-cli.ts",
-    "speech:live": "playwright test --project=desktop-chromium --grep \"live (offline|Windows)\""
+    "speech:live": "playwright test --project=desktop-chromium --grep \"live (offline|Windows)\"",
+    "benchmark:speech": "tsx src/speech/p5-cli.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

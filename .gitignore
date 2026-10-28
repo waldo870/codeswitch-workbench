@@ -7,6 +7,7 @@ playwright-report/
 /reports/local-diagnostics/
 
 /.speech-local/
+local-only/p5-speech/
 *.wav
 *.mp3
 *.flac

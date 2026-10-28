@@ -1,5 +1,24 @@
 # P0 test report
 
+## P4G release and P5 speech evaluation checkpoint (2026-10-29)
+
+P4G was verified and released before P5 work began. The `feature/p4g-feedback-improvement` commit `6747ed0d00215ef71ff1473b4cff54fe7c484357` was a fast-forward descendant of the then-current `origin/main`. The release gates passed, the public GitHub `main` was verified at that SHA, and GitHub Actions run `40724014820` completed successfully. The feature branch was preserved. No visibility change was made.
+
+P5 branch: `feature/p5-open-speech-evaluation`, based on verified main `6747ed0d00215ef71ff1473b4cff54fe7c484357`.
+
+| Command | Result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | PASS |
+| `pnpm typecheck` | PASS |
+| `pnpm test` | PASS: 340 tests across 24 files |
+| `pnpm build` | PASS |
+| `pnpm demo` | PASS: 3 work cards, 1 constraint; validation passed |
+| `pnpm test:browser` | PASS: 32 passed; 4 existing live ASR tests skipped (not counted as passed) |
+| `pnpm benchmark:speech` | Correctly reports `NOT_RUN`, 0 samples; report metrics remain null |
+| `git diff --check` | PASS |
+
+No Common Voice or FLEURS audio was downloaded. Common Voice download requires Owner-provided account access and acceptance of the current dataset terms. There is no local sample manifest, and the existing Windows Whisper runtime/model is not configured in this execution environment. Therefore there are no live transcription results, CER/WER values, ASR latencies, or P4G proposals derived from measured errors. The benchmark implementation and reports distinguish missing data from zero error and do not claim a live ASR pass.
+
 Task: P0_TEXT_WORKCARDS_FOUNDATION. Local verification completed in the supplied development environment (session date: 2026-10-22).
 
 ## Environment and provenance
