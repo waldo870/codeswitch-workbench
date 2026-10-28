@@ -3,9 +3,10 @@ import { restoreSpeech } from '../../speech/session.js';
 import { editCard, rejectCard, restoreWorkspace, type Workspace } from '../state/workspace.js';
 import { SPEECH_STORAGE_KEY } from './local-speech.js';
 import { STORAGE_KEY, type StoragePort } from './local-workspace.js';
+import { resetImportedFeedback, validateFeedbackCollections, type FeedbackCollections, type FeedbackRecord, type ImprovementProposal, type ImprovementSession } from '../feedback/model.js';
 
 export const WORKSPACE_DB_NAME = 'codeswitch-workbench';
-export const WORKSPACE_DB_VERSION = 1;
+export const WORKSPACE_DB_VERSION = 2;
 export const WORKSPACE_EXPORT_FORMAT = 'codeswitch-workspace';
 export const ACTIVE_WORKSPACE_SETTING = 'codeswitch-workbench.active-workspace';
 export const LEGACY_MIGRATION_SETTING = 'codeswitch-workbench.localstorage-migration.v1';
@@ -16,7 +17,7 @@ const MAX_BUNDLE_BYTES = 4_000_000;
 export interface ExportMetadata { kind: 'workspace-json' | 'confirmed-workcards-json'; exportedAt: string; cardIds: string[] }
 export interface WorkspaceRecord {
   id: string;
-  schemaVersion: 1;
+  schemaVersion: 2;
   createdAt: string;
   updatedAt: string;
   workspace: Workspace;
@@ -26,13 +27,17 @@ export interface WorkspaceRecord {
   transcriptCorrections: SpeechSession['edits'];
   constraints: Workspace['parsed']['constraints'];
   exportMetadata: ExportMetadata[];
+  feedbacks: FeedbackRecord[];
+  proposals: ImprovementProposal[];
+  improvementSessions: ImprovementSession[];
 }
-export interface WorkspaceBundle { format: typeof WORKSPACE_EXPORT_FORMAT; schemaVersion: 1; workspaceId: string; createdAt: string; updatedAt: string; workspace: Workspace; exportMetadata: ExportMetadata[] }
+export interface WorkspaceBundle extends FeedbackCollections { format: typeof WORKSPACE_EXPORT_FORMAT; schemaVersion: 2; workspaceId: string; createdAt: string; updatedAt: string; workspace: Workspace; exportMetadata: ExportMetadata[] }
 export interface WorkspaceListResult { records: WorkspaceRecord[]; errors: string[] }
 export interface WorkspaceRepository {
   list(): Promise<WorkspaceListResult>;
   get(id: string): Promise<WorkspaceRecord | null>;
-  save(workspace: Workspace, id?: string): Promise<WorkspaceRecord>;
+  save(workspace: Workspace, id?: string, collections?: FeedbackCollections): Promise<WorkspaceRecord>;
+  saveFeedbackCollections(id: string, collections: FeedbackCollections): Promise<WorkspaceRecord>;
   delete(id: string): Promise<void>;
   clearAll(): Promise<void>;
   loadSpeechDraft(): Promise<SpeechSession | null>;
@@ -47,29 +52,33 @@ const iso = (value: unknown): value is string => typeof value === 'string' && Nu
 const ownKeys = (value: object, keys: string[]) => Object.keys(value).every(key => keys.includes(key)) && keys.every(key => Object.hasOwn(value, key));
 const randomId = () => globalThis.crypto.randomUUID();
 
-function buildRecord(id: string, workspaceValue: unknown, previous?: WorkspaceRecord): WorkspaceRecord {
+function buildRecord(id: string, workspaceValue: unknown, previous?: WorkspaceRecord, collections?: FeedbackCollections): WorkspaceRecord {
   if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error('Invalid workspace ID.');
   const workspace = restoreWorkspace(workspaceValue);
   const session = workspace.speech?.session;
   const now = new Date().toISOString();
   return {
-    id, schemaVersion: 1, createdAt: previous?.createdAt ?? now, updatedAt: now, workspace,
+    id, schemaVersion: 2, createdAt: previous?.createdAt ?? now, updatedAt: now, workspace,
     audioMetadata: session ? { sha256: session.source.id, name: session.source.name, bytes: session.source.bytes, durationSeconds: session.source.duration, format: session.source.format, sampleRateHz: session.source.sampleRate, channels: session.source.channels, bitsPerSample: session.source.bitsPerSample } : null,
     asrMetadata: session ? { providerId: session.recognition.provider, modelId: session.recognition.modelId, runtime: session.recognition.runtime ?? null, executionMode: session.recognition.runtime?.mode ?? 'unknown' } : null,
     rawTranscript: session?.recognition.transcript ?? null,
     transcriptCorrections: session ? structuredClone(session.edits) : [],
     constraints: structuredClone(workspace.parsed.constraints),
     exportMetadata: previous ? structuredClone(previous.exportMetadata) : [],
+    feedbacks: structuredClone(collections?.feedbacks ?? previous?.feedbacks ?? []),
+    proposals: structuredClone(collections?.proposals ?? previous?.proposals ?? []),
+    improvementSessions: structuredClone(collections?.improvementSessions ?? previous?.improvementSessions ?? []),
   };
 }
 
 export function validateWorkspaceRecord(value: unknown): WorkspaceRecord {
   if (!value || typeof value !== 'object') throw new Error('Invalid workspace record.');
   const r = value as WorkspaceRecord;
-  if (!ownKeys(r, ['id','schemaVersion','createdAt','updatedAt','workspace','audioMetadata','asrMetadata','rawTranscript','transcriptCorrections','constraints','exportMetadata']) || r.schemaVersion !== 1 || !iso(r.createdAt) || !iso(r.updatedAt) || !Array.isArray(r.exportMetadata) || r.exportMetadata.length > 1000) throw new Error('Unsupported workspace record schema.');
+  if (!ownKeys(r, ['id','schemaVersion','createdAt','updatedAt','workspace','audioMetadata','asrMetadata','rawTranscript','transcriptCorrections','constraints','exportMetadata','feedbacks','proposals','improvementSessions']) || r.schemaVersion !== 2 || !iso(r.createdAt) || !iso(r.updatedAt) || !Array.isArray(r.exportMetadata) || r.exportMetadata.length > 1000) throw new Error('Unsupported workspace record schema.');
   const rebuilt = buildRecord(r.id, r.workspace, r);
   if (r.audioMetadata !== null && JSON.stringify(r.audioMetadata) !== JSON.stringify(rebuilt.audioMetadata) || r.asrMetadata !== null && JSON.stringify(r.asrMetadata) !== JSON.stringify(rebuilt.asrMetadata) || r.rawTranscript !== rebuilt.rawTranscript || JSON.stringify(r.transcriptCorrections) !== JSON.stringify(rebuilt.transcriptCorrections) || JSON.stringify(r.constraints) !== JSON.stringify(rebuilt.constraints) || !Array.isArray(r.transcriptCorrections) || !Array.isArray(r.constraints) || r.exportMetadata.some(item => !item || !ownKeys(item, ['kind','exportedAt','cardIds']) || !['workspace-json','confirmed-workcards-json'].includes(item.kind) || !iso(item.exportedAt) || !Array.isArray(item.cardIds) || item.cardIds.length > 1000 || item.cardIds.some(id => typeof id !== 'string'))) throw new Error('Workspace provenance or export metadata was changed.');
-  return structuredClone(r);
+  const collections = validateFeedbackCollections(r.id, rebuilt.workspace, { feedbacks: r.feedbacks, proposals: r.proposals, improvementSessions: r.improvementSessions });
+  return { ...structuredClone(r), ...collections };
 }
 
 export function invalidateImportedConfirmations(value: unknown): Workspace {
@@ -88,9 +97,13 @@ export function invalidateImportedConfirmations(value: unknown): Workspace {
 export function parseWorkspaceBundle(value: unknown): WorkspaceBundle {
   if (!value || typeof value !== 'object') throw new Error('Invalid workspace JSON.');
   const b = value as WorkspaceBundle;
-  if (!ownKeys(b, ['format','schemaVersion','workspaceId','createdAt','updatedAt','workspace','exportMetadata']) || b.format !== WORKSPACE_EXPORT_FORMAT || b.schemaVersion !== 1 || !/^[0-9a-f-]{36}$/i.test(b.workspaceId) || !iso(b.createdAt) || !iso(b.updatedAt) || !Array.isArray(b.exportMetadata) || b.exportMetadata.length > 1000) throw new Error('Unsupported workspace JSON format or version.');
-  const record = validateWorkspaceRecord({ ...buildRecord(b.workspaceId, b.workspace), createdAt: b.createdAt, updatedAt: b.updatedAt, exportMetadata: b.exportMetadata });
-  return { format: WORKSPACE_EXPORT_FORMAT, schemaVersion: 1, workspaceId: record.id, createdAt: record.createdAt, updatedAt: record.updatedAt, workspace: record.workspace, exportMetadata: record.exportMetadata };
+  const schemaVersion = (value as { schemaVersion?: unknown }).schemaVersion;
+  const common = ['format','schemaVersion','workspaceId','createdAt','updatedAt','workspace','exportMetadata'];
+  const keys = schemaVersion === 1 ? common : [...common,'feedbacks','proposals','improvementSessions'];
+  if (!ownKeys(b, keys) || b.format !== WORKSPACE_EXPORT_FORMAT || ![1,2].includes(schemaVersion as number) || !/^[0-9a-f-]{36}$/i.test(b.workspaceId) || !iso(b.createdAt) || !iso(b.updatedAt) || !Array.isArray(b.exportMetadata) || b.exportMetadata.length > 1000) throw new Error('Unsupported workspace JSON format or version.');
+  const collections: FeedbackCollections = schemaVersion === 1 ? { feedbacks: [], proposals: [], improvementSessions: [] } : { feedbacks: (value as WorkspaceBundle).feedbacks, proposals: (value as WorkspaceBundle).proposals, improvementSessions: (value as WorkspaceBundle).improvementSessions };
+  const record = validateWorkspaceRecord({ ...buildRecord(b.workspaceId, b.workspace, undefined, collections), createdAt: b.createdAt, updatedAt: b.updatedAt, exportMetadata: b.exportMetadata });
+  return { format: WORKSPACE_EXPORT_FORMAT, schemaVersion: 2, workspaceId: record.id, createdAt: record.createdAt, updatedAt: record.updatedAt, workspace: record.workspace, exportMetadata: record.exportMetadata, feedbacks: record.feedbacks, proposals: record.proposals, improvementSessions: record.improvementSessions };
 }
 
 export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
@@ -103,10 +116,14 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     if (this.database) return this.database;
     this.database = new Promise((resolve, reject) => {
       const request = this.factory!.open(WORKSPACE_DB_NAME, WORKSPACE_DB_VERSION);
-      request.onupgradeneeded = () => {
+      request.onupgradeneeded = event => {
         const db = request.result;
         if (!db.objectStoreNames.contains(WORKSPACES)) db.createObjectStore(WORKSPACES, { keyPath: 'id' });
         if (!db.objectStoreNames.contains(META)) db.createObjectStore(META, { keyPath: 'key' });
+        if (event.oldVersion === 1) {
+          const cursorRequest = request.transaction!.objectStore(WORKSPACES).openCursor();
+          cursorRequest.onsuccess = () => { const cursor = cursorRequest.result; if (!cursor) return; const row = cursor.value as Record<string, unknown>; if (row.schemaVersion === 1) cursor.update({ ...row, schemaVersion: 2, feedbacks: [], proposals: [], improvementSessions: [] }); cursor.continue(); };
+        }
       };
       request.onsuccess = () => { const db = request.result; db.onversionchange = () => { db.close(); this.database = null; }; resolve(db); };
       request.onerror = () => { this.database = null; reject(new Error('Local database could not be opened.'));
@@ -143,11 +160,15 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     return new Promise((resolve,reject) => { const tx=db.transaction(WORKSPACES,'readonly'), request=tx.objectStore(WORKSPACES).get(id); request.onsuccess=()=>{try{resolve(request.result===undefined?null:validateWorkspaceRecord(request.result));}catch{reject(new Error('Saved session is corrupt or uses an unsupported version. It was not changed.'));}};request.onerror=()=>reject(new Error('Saved session could not be opened.')); });
   }
 
-  save(workspaceValue: Workspace, id: string = randomId()): Promise<WorkspaceRecord> {
+  save(workspaceValue: Workspace, id: string = randomId(), collections?: FeedbackCollections): Promise<WorkspaceRecord> {
     return this.enqueue(async () => {
       const workspace=restoreWorkspace(workspaceValue), db=await this.open();
-      return new Promise((resolve,reject)=>{const tx=db.transaction(WORKSPACES,'readwrite'),store=tx.objectStore(WORKSPACES),get=store.get(id);let record:WorkspaceRecord;get.onsuccess=()=>{try{const previous=get.result===undefined?undefined:validateWorkspaceRecord(get.result);record=buildRecord(id,workspace,previous);store.put(record);}catch(e){tx.abort();reject(e);}};get.onerror=()=>{tx.abort();reject(new Error('Saved session could not be read before update.'));};tx.oncomplete=()=>resolve(record!);tx.onerror=()=>reject(new Error('Local save failed. Check browser storage quota and retry.'));tx.onabort=()=>reject(new Error('Local save failed. Existing saved data was preserved.'));});
+      return new Promise((resolve,reject)=>{const tx=db.transaction(WORKSPACES,'readwrite'),store=tx.objectStore(WORKSPACES),get=store.get(id);let record:WorkspaceRecord;get.onsuccess=()=>{try{const previous=get.result===undefined?undefined:validateWorkspaceRecord(get.result);record=validateWorkspaceRecord(buildRecord(id,workspace,previous,collections));store.put(record);}catch(e){tx.abort();reject(e);}};get.onerror=()=>{tx.abort();reject(new Error('Saved session could not be read before update.'));};tx.oncomplete=()=>resolve(record!);tx.onerror=()=>reject(new Error('Local save failed. Check browser storage quota and retry.'));tx.onabort=()=>reject(new Error('Local save failed. Existing saved data was preserved.'));});
     });
+  }
+
+  saveFeedbackCollections(id: string, collections: FeedbackCollections): Promise<WorkspaceRecord> {
+    return this.enqueue(async()=>{const record=await this.get(id);if(!record)throw new Error('Saved session was not found.');const validated=validateFeedbackCollections(id,record.workspace,collections);const updated:WorkspaceRecord={...record,...validated,updatedAt:new Date().toISOString()};const db=await this.open();await new Promise<void>((resolve,reject)=>{const tx=db.transaction(WORKSPACES,'readwrite');tx.objectStore(WORKSPACES).put(updated);tx.oncomplete=()=>resolve();tx.onerror=tx.onabort=()=>reject(new Error('Feedback could not be saved locally.'));});return updated;});
   }
 
   delete(id: string): Promise<void> { return this.enqueue(async()=>{const db=await this.open();await new Promise<void>((resolve,reject)=>{const tx=db.transaction(WORKSPACES,'readwrite');tx.objectStore(WORKSPACES).delete(id);tx.oncomplete=()=>resolve();tx.onerror=tx.onabort=()=>reject(new Error('Session deletion failed.'));});}); }
@@ -162,12 +183,13 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
 
   async exportBundle(id: string): Promise<WorkspaceBundle> {
     const record=await this.get(id);if(!record)throw new Error('Saved session was not found.');
-    return {format:WORKSPACE_EXPORT_FORMAT,schemaVersion:1,workspaceId:record.id,createdAt:record.createdAt,updatedAt:record.updatedAt,workspace:record.workspace,exportMetadata:record.exportMetadata};
+    return {format:WORKSPACE_EXPORT_FORMAT,schemaVersion:2,workspaceId:record.id,createdAt:record.createdAt,updatedAt:record.updatedAt,workspace:record.workspace,exportMetadata:record.exportMetadata,feedbacks:record.feedbacks,proposals:record.proposals,improvementSessions:record.improvementSessions};
   }
   async importBundle(value: unknown): Promise<WorkspaceRecord> {
-    const bundle=parseWorkspaceBundle(value), workspace=invalidateImportedConfirmations(bundle.workspace);
+    const bundle=parseWorkspaceBundle(value), workspace=invalidateImportedConfirmations(bundle.workspace), id=randomId();
+    const collections=resetImportedFeedback(bundle,bundle.workspaceId,id);
     // Always allocate a new ID; imports never overwrite a saved session, even if IDs match.
-    return this.save(workspace);
+    return this.save(workspace,id,collections);
   }
   async markExported(id:string,kind:ExportMetadata['kind'],cardIds:string[]):Promise<WorkspaceRecord>{
     return this.enqueue(async()=>{const record=await this.get(id);if(!record)throw new Error('Saved session was not found.');const validIds=new Set(record.workspace.cards.map(c=>c.id));if(cardIds.some(card=>!validIds.has(card)))throw new Error('Export references an unknown card.');const marked={...record,exportMetadata:[...record.exportMetadata,{kind,exportedAt:new Date().toISOString(),cardIds:[...cardIds]}]};const db=await this.open();return new Promise((resolve,reject)=>{const tx=db.transaction(WORKSPACES,'readwrite');tx.objectStore(WORKSPACES).put(marked);tx.oncomplete=()=>resolve(marked);tx.onerror=tx.onabort=()=>reject(new Error('Export history could not be saved.'));});});

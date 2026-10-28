@@ -4,7 +4,7 @@ import { invalidateImportedConfirmations, parseWorkspaceBundle, type WorkspaceBu
 
 function bundle(workspace=createWorkspace(EXAMPLE)):WorkspaceBundle {
   const now='2026-10-28T00:00:00.000Z';
-  return {format:'codeswitch-workspace',schemaVersion:1,workspaceId:'12345678-1234-4234-8234-123456789abc',createdAt:now,updatedAt:now,workspace,exportMetadata:[]};
+  return {format:'codeswitch-workspace',schemaVersion:2,workspaceId:'12345678-1234-4234-8234-123456789abc',createdAt:now,updatedAt:now,workspace,exportMetadata:[],feedbacks:[],proposals:[],improvementSessions:[]};
 }
 
 it('validates complete Workspace JSON and refuses incompatible versions or tampered evidence',()=>{
@@ -12,6 +12,12 @@ it('validates complete Workspace JSON and refuses incompatible versions or tampe
   expect(()=>parseWorkspaceBundle({...bundle(),schemaVersion:99})).toThrow(/Unsupported/);
   const tampered=structuredClone(bundle());tampered.workspace.parsed.cards[1]!.evidence.start++;
   expect(()=>parseWorkspaceBundle(tampered)).toThrow(/evidence|changed/i);
+});
+
+it('imports Workspace JSON v1 as an empty-feedback v2 record without changing source data',()=>{
+  const current=bundle();const legacy={format:current.format,schemaVersion:1,workspaceId:current.workspaceId,createdAt:current.createdAt,updatedAt:current.updatedAt,workspace:current.workspace,exportMetadata:current.exportMetadata};
+  const migrated=parseWorkspaceBundle(legacy);
+  expect(migrated).toMatchObject({schemaVersion:2,feedbacks:[],proposals:[],improvementSessions:[],workspace:{originalInput:EXAMPLE}});
 });
 
 it('resets imported confirmations but retains user edits, rejection, evidence and constraints',()=>{

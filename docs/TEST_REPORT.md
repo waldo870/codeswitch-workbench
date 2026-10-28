@@ -283,3 +283,23 @@ P4A–P4D release SHA `98c8dd5e78aea84ff92d329f13c2af7147547e08` was verified on
 P4F browser evidence is a simulated outage: Playwright first establishes the production preview service-worker cache and a saved IndexedDB workspace, then marks the browser context offline and reloads. The UI/session/cards/constraints reopen and ASR remains explicitly unavailable. This does not represent a physical network disconnect, browser restart/cold-start after a real outage, or verification across hosted origins. Windows Whisper and LM Studio are not required for the deterministic text UI; Hailo absence remains `HARDWARE_UNAVAILABLE` by existing contract tests. Mock and skipped Live tests are not counted as hardware/ASR passes.
 
 Actual P4E/P4F gates: `pnpm install --frozen-lockfile` PASS; `pnpm typecheck` PASS; `pnpm test` PASS (324/324, 22 files; all 322 previous tests retained plus 2 storage contract tests); `pnpm build` PASS; `pnpm demo` PASS (3 draft cards, 1 prohibited constraint); `pnpm test:browser` PASS (24 passed, 4 existing opt-in Live ASR tests skipped); `git diff --check` PASS. Browser additions cover multiple sessions/deletion confirmation, validated non-overwriting import and confirmation invalidation, legacy evidence/constraint migration, offline shell + IndexedDB reopen, quota failure, corrupt IndexedDB provenance, and corrupt localStorage retention/explicit clear. `HAILO_LIVE_STATUS=NOT_RUN`, `P3C_REAL_BILINGUAL_SPEECH=NOT_RUN`, `REAL_NETWORK_DISCONNECT=NOT_RUN`.
+
+## P4E/F release and P4G feedback workflow (2026-10-28)
+
+P4E/F was reverified from feature HEAD `5e2554b92bc29536cf89200d096d626de039b220` on top of origin/main `98c8dd5e78aea84ff92d329f13c2af7147547e08`. Frozen install, typecheck, 324 Vitest tests, build, CLI demo and browser suite passed (24 passed, 4 existing Live ASR tests skipped). GitHub Actions initially exposed a reload/persistence race; navigation warning and explicit save-state synchronization were added in `b22883ae6f6f02c97bfca8b727864117ca895085`. The feature was fast-forwarded and pushed without force. Remote main was verified at that SHA and GitHub Actions run `40664918000` completed successfully.
+
+P4G started from that verified main on `feature/p4g-feedback-improvement`. Added seven Vitest tests and four browser scenarios (desktop and mobile). Final commands:
+
+| Command | Result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | PASS; lockfile up to date |
+| `pnpm typecheck` | PASS |
+| `pnpm test` | PASS; 331/331 across 23 files |
+| `pnpm build` | PASS; production Vite bundle generated |
+| `pnpm demo` | PASS; 3 draft cards, 1 prohibited constraint, validation PASS |
+| `pnpm test:browser` | PASS; 32 passed, 4 existing Live ASR tests skipped |
+| `git diff --check` | PASS |
+
+P4G browser coverage includes optional rating/comment, feedback persistence and workspace isolation, deterministic proposal editing, explicit approval/rejection, lifecycle transitions and history, unverified test-note labeling, complete Workspace JSON export/import status reset, HTML rendered as text, offline reload, corrupt provenance quarantine, and IndexedDB v1 row migration preserving evidence and constraints. Editing feedback revalidates source provenance and clears any linked stale proposal/session so it must be reviewed afresh. No shell, GitHub, cloud or external work action is invoked.
+
+Limits: browser checks use Playwright Chromium desktop/mobile emulation only; four Live ASR cases were skipped. P4G is local-only and was not pushed or merged. IndexedDB is local and unencrypted. User feedback remains subjective; proposals and test notes are not verified defects or test results. P3C real bilingual speech and Hailo Live remain NOT_RUN.
