@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "status": "HUMAN_EVALUATION_NOT_RUN",
+  "generatedAt": "2026-10-29T20:31:55.250Z",
+  "automationTimingUsedAsHumanTiming": false,
+  "methods": {
+    "manual": {
+      "humanObservationCount": 0,
+      "durationMs": {
+        "median": null,
+        "p95": null
+      },
+      "operationCount": {
+        "mean": null
+      },
+      "manualCorrectionCount": {
+        "mean": null
+      },
+      "completeCardSuccess": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "constraintPreservation": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "collaborationConflicts": {
+        "total": null
+      },
+      "taskCompletion": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    },
+    "routine-template": {
+      "humanObservationCount": 0,
+      "durationMs": {
+        "median": null,
+        "p95": null
+      },
+      "operationCount": {
+        "mean": null
+      },
+      "manualCorrectionCount": {
+        "mean": null
+      },
+      "completeCardSuccess": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "constraintPreservation": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "collaborationConflicts": {
+        "total": null
+      },
+      "taskCompletion": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    },
+    "speech-transcript": {
+      "humanObservationCount": 0,
+      "durationMs": {
+        "median": null,
+        "p95": null
+      },
+      "operationCount": {
+        "mean": null
+      },
+      "manualCorrectionCount": {
+        "mean": null
+      },
+      "completeCardSuccess": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "constraintPreservation": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "collaborationConflicts": {
+        "total": null
+      },
+      "taskCompletion": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    },
+    "encrypted-collaboration": {
+      "humanObservationCount": 0,
+      "durationMs": {
+        "median": null,
+        "p95": null
+      },
+      "operationCount": {
+        "mean": null
+      },
+      "manualCorrectionCount": {
+        "mean": null
+      },
+      "completeCardSuccess": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "constraintPreservation": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "collaborationConflicts": {
+        "total": null
+      },
+      "taskCompletion": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    }
+  },
+  "observations": []
+}
