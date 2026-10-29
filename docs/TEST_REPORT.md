@@ -1,5 +1,13 @@
 # P0 test report
 
+## P5D release and P6 branch acceptance
+
+P5D was fast-forwarded to main and pushed without history rewriting; remote main is `9ea9c23d7a9ca2fbda0ab81b87e7f2ac75394dee`. The GitHub Actions run completed successfully. P5D Product Gate remains `NOT_QUALIFIED`.
+
+P6 local gates: `pnpm install --frozen-lockfile` PASS; `pnpm typecheck` PASS; Vitest **365/365 PASS** across 28 files; `pnpm build` PASS; `pnpm demo` PASS (3 draft cards, 1 prohibited constraint); `PLAYWRIGHT_PORT=4174 pnpm test:browser` **36 PASS, 4 pre-existing Live ASR tests SKIPPED** (40 total); `git diff --check` PASS. Port 4174 was used because an unidentified existing listener occupied the default 4173 during the first attempt; no existing process was terminated.
+
+The new Browser tests cover request/reply file flow in two isolated contexts on this machine, draft-only work cards after import, replay rejection and locally persisted review status for the 28 unverified backlog records. Crypto unit tests cover authenticated round trip, unique nonces, wrong password, tampering, version mismatch, expiry, size limits and three-way merge/conflict detection. These are software tests, not physical cross-device, real network-loss cold-start, or penetration-test evidence. P5D Product Gate remains `NOT_QUALIFIED`.
+
 ## P4G release and P5 speech evaluation checkpoint (2026-10-29)
 
 P4G was verified and released before P5 work began. The `feature/p4g-feedback-improvement` commit `6747ed0d00215ef71ff1473b4cff54fe7c484357` was a fast-forward descendant of the then-current `origin/main`. The release gates passed, the public GitHub `main` was verified at that SHA, and GitHub Actions run `40724014820` completed successfully. The feature branch was preserved. No visibility change was made.

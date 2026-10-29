@@ -1,0 +1,871 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "reports/p5-asr-results.json",
+    "reports/p5d-final.json"
+  ],
+  "count": 28,
+  "policy": "Research and live observations are unverified review candidates; no item is approved or asserted to be a defect.",
+  "entries": [
+    {
+      "id": "asr-zh-tw-test-01",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-01",
+        "audioSha256": "sha256:ad94cbcaf3cc1612365edc7076af1517814f64122080994d3d80ec6b239b5467",
+        "sourceId": "common_voice_zh-TW_30401427.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-01",
+        "metric": {
+          "numerator": 5,
+          "denominator": 4,
+          "value": 1.25
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review unsupported transcript in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-zh-tw-test-02",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-02",
+        "audioSha256": "sha256:a4bece034b5ff5e7d923fbe93c9d23d425e4c728ae89d48141c1cdb8c3a7b2fd",
+        "sourceId": "common_voice_zh-TW_22120835.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-02",
+        "metric": {
+          "numerator": 4,
+          "denominator": 10,
+          "value": 0.4
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-zh-tw-test-03",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-03",
+        "audioSha256": "sha256:9898b9b18360a9b63672f85939e9eed078cd7502a4c35928f4cdc844681475b8",
+        "sourceId": "common_voice_zh-TW_25766406.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-03",
+        "metric": {
+          "numerator": 1,
+          "denominator": 10,
+          "value": 0.1
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-zh-tw-test-04",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-04",
+        "audioSha256": "sha256:7b61b5d4a3bad3878a2f367f11edcfb925deef8323d31c5082820d9e96fc75d9",
+        "sourceId": "common_voice_zh-TW_18688203.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-04",
+        "metric": {
+          "numerator": 0,
+          "denominator": 7,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review ASR performance in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-zh-tw-test-05",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-05",
+        "audioSha256": "sha256:3c96dbda6101567bbab0f486e7b95cfc1f4293a682139c3e56e3d318a4c60b29",
+        "sourceId": "common_voice_zh-TW_18353805.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-05",
+        "metric": {
+          "numerator": 0,
+          "denominator": 7,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review ASR performance in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-zh-tw-test-09",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "zh-tw-test-09",
+        "audioSha256": "sha256:7491cdb5b82cf951538493366081d59631a162b481ed1726c3c973e3330ef4e9",
+        "sourceId": "common_voice_zh-TW_17389823.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "zh-tw-test-09",
+        "metric": {
+          "numerator": 2,
+          "denominator": 7,
+          "value": 0.2857142857142857
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-01",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-01",
+        "audioSha256": "sha256:489250b3699fccab6339c1499affc8fb544f43517045e0e5693ddd516d700072",
+        "sourceId": "spontaneous-speech-en-76591.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-01",
+        "metric": {
+          "numerator": 2,
+          "denominator": 1,
+          "value": 2
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review unsupported transcript in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-02",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-02",
+        "audioSha256": "sha256:c74041fa082f73d79dde954e0967edbcb1bb4321fb41eabcfccdfb78aae384f6",
+        "sourceId": "spontaneous-speech-en-70776.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-02",
+        "metric": {
+          "numerator": 2,
+          "denominator": 79,
+          "value": 0.02531645569620253
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-03",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-03",
+        "audioSha256": "sha256:f071e311c05eb9d0d5255116f09345371ba9ddb8e4ea540e80ad211e546dd363",
+        "sourceId": "spontaneous-speech-en-67150.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-03",
+        "metric": {
+          "numerator": 61,
+          "denominator": 217,
+          "value": 0.28110599078341014
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-04",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-04",
+        "audioSha256": "sha256:d88b95ca819dc36583aac7dc57925da14c52de040347086416138576e40400dd",
+        "sourceId": "spontaneous-speech-en-80610.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-04",
+        "metric": {
+          "numerator": 0,
+          "denominator": 5,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-05",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-05",
+        "audioSha256": "sha256:1e9df50dc9bd940c78fbacaad884e176d031c58a52260977fd8536110758b8de",
+        "sourceId": "spontaneous-speech-en-73921.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-05",
+        "metric": {
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-06",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-06",
+        "audioSha256": "sha256:285171f0576ee1acfce3b9268fbd7b058f2483aeae0e72dbf4e1bec150cedf71",
+        "sourceId": "spontaneous-speech-en-70842.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-06",
+        "metric": {
+          "numerator": 10,
+          "denominator": 91,
+          "value": 0.10989010989010989
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review missing words in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-07",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-07",
+        "audioSha256": "sha256:535d1f2a87b8ae7a8509cc671eb299208d8388f1bfae613089140e87fa19c1b3",
+        "sourceId": "spontaneous-speech-en-78579.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-07",
+        "metric": {
+          "numerator": 0,
+          "denominator": 8,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-08",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-08",
+        "audioSha256": "sha256:434548c797c2d43d2a554e044f7ca29bc7ac2efc99c96a0de69c334fbdb2c073",
+        "sourceId": "spontaneous-speech-en-73904.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-08",
+        "metric": {
+          "numerator": 0,
+          "denominator": 6,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-09",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-09",
+        "audioSha256": "sha256:77b8dc068036a22fd9676a97a49f072c8309d7033ff46bfb56d5415ba0fa1d74",
+        "sourceId": "spontaneous-speech-en-78559.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-09",
+        "metric": {
+          "numerator": 0,
+          "denominator": 11,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "asr-en-test-10",
+      "source": {
+        "kind": "live",
+        "report": "reports/p5-asr-results.json",
+        "sampleId": "en-test-10",
+        "audioSha256": "sha256:b7ae8680e48a9ea7d3e110cbba74f5517c01c88083f45bc49daa618ebfe0b6f5",
+        "sourceId": "spontaneous-speech-en-75665.mp3"
+      },
+      "category": "speech_recognition",
+      "originalIssue": "A fixed public evaluation sample differed from its reference. This is a benchmark observation, not a verified product defect; inspect the sample, dataset conditions, and ASR output before deciding whether to create a product feedback record.",
+      "expectedBehavior": "Human reviewers should inspect the sample and source conditions before accepting this behavior.",
+      "reproductionEvidence": {
+        "sampleId": "en-test-10",
+        "metric": {
+          "numerator": 0,
+          "denominator": 9,
+          "value": 0
+        },
+        "status": "completed"
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review punctuation in ASR evaluation",
+        "acceptanceCriteria": [
+          "Manually review the cited sample and reference under the dataset license.",
+          "Check whether preprocessing, transcript normalization, or domain mismatch explains the difference.",
+          "If the issue is reproducible in authorized product data, add a reviewed P4G feedback record and regression test."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-001",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-009",
+        "testCaseId": "zh-prohibition-009",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-009 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-009",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-002",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-011",
+        "testCaseId": "zh-prohibition-011",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-011 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-011",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-003",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-013",
+        "testCaseId": "zh-prohibition-013",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-013 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-013",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-004",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-014",
+        "testCaseId": "zh-prohibition-014",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-014 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-014",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-005",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-017",
+        "testCaseId": "zh-prohibition-017",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-017 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-017",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-006",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-018",
+        "testCaseId": "zh-prohibition-018",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-018 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-018",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-007",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "zh-prohibition-020",
+        "testCaseId": "zh-prohibition-020",
+        "split": "development"
+      },
+      "category": "zh-prohibition",
+      "originalIssue": "Synthetic benchmark case zh-prohibition-020 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "zh-prohibition-020",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review zh-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-008",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "en-prohibition-009",
+        "testCaseId": "en-prohibition-009",
+        "split": "development"
+      },
+      "category": "en-prohibition",
+      "originalIssue": "Synthetic benchmark case en-prohibition-009 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "en-prohibition-009",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review en-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-009",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "en-prohibition-011",
+        "testCaseId": "en-prohibition-011",
+        "split": "development"
+      },
+      "category": "en-prohibition",
+      "originalIssue": "Synthetic benchmark case en-prohibition-011 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "en-prohibition-011",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review en-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-010",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "en-prohibition-013",
+        "testCaseId": "en-prohibition-013",
+        "split": "development"
+      },
+      "category": "en-prohibition",
+      "originalIssue": "Synthetic benchmark case en-prohibition-013 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "en-prohibition-013",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review en-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-011",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "en-prohibition-015",
+        "testCaseId": "en-prohibition-015",
+        "split": "development"
+      },
+      "category": "en-prohibition",
+      "originalIssue": "Synthetic benchmark case en-prohibition-015 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "en-prohibition-015",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review en-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    },
+    {
+      "id": "p5d-draft-012",
+      "source": {
+        "kind": "synthetic",
+        "datasetVersion": "p5d-safety-v1",
+        "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+        "caseId": "en-prohibition-016",
+        "testCaseId": "en-prohibition-016",
+        "split": "development"
+      },
+      "category": "en-prohibition",
+      "originalIssue": "Synthetic benchmark case en-prohibition-016 did not meet the full workflow criteria (constraint not captured; constraint scope mismatch; fail-closed gate blocked the proposal). This is an evaluation observation, not a confirmed product defect. Baseline result was incomplete.",
+      "expectedBehavior": "Review the synthetic case and parser/gate trace; do not assume this is a product defect.",
+      "reproductionEvidence": {
+        "testCaseId": "en-prohibition-016",
+        "split": "development",
+        "baselineIncomplete": true
+      },
+      "reviewStatus": "unreviewed",
+      "verifiedDefect": false,
+      "proposal": {
+        "title": "Review en-prohibition workflow robustness",
+        "acceptanceCriteria": [
+          "Reproduce the behavior with the cited fixed case.",
+          "Confirm the expected product behavior with a reviewer.",
+          "Add regression coverage only if a product defect is verified."
+        ]
+      }
+    }
+  ]
+}

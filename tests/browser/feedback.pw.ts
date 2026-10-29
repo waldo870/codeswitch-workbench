@@ -3,7 +3,7 @@ import { createWorkspace, EXAMPLE } from '../../src/web/state/workspace.js';
 import { ACTIVE_WORKSPACE_SETTING, LEGACY_MIGRATION_SETTING, WORKSPACE_DB_NAME } from '../../src/web/storage/workspace-db.js';
 
 test('feedback becomes an editable, human-approved improvement session with unverified test notes',async({page},info)=>{
- const external:string[]=[];page.on('request',request=>{if(!request.url().startsWith('http://127.0.0.1:4173'))external.push(request.url());});
+ const external:string[]=[];page.on('request',request=>{if(new URL(request.url()).hostname!=='127.0.0.1')external.push(request.url());});
  await page.goto('/');await page.getByRole('button',{name:'Analyze Text'}).click();await expect(page.getByRole('region',{name:/Saved work sessions/}).getByRole('status')).toHaveText('Saved in this browser (IndexedDB).');
  const feedback=page.getByRole('region',{name:'Give Feedback'});await feedback.getByRole('radio',{name:'Incorrect'}).check();await feedback.getByLabel('Category').selectOption('speech_recognition');await feedback.getByLabel(/What would you like us to know/).fill("The transcript missed 'don't deploy to production'. <img src=x onerror=alert(1)>");await feedback.getByLabel(/What did you expect/).fill("Keep don't deploy to production in the transcript.");await feedback.getByLabel(/task: Check sandbox credentials/).check();await feedback.getByRole('button',{name:'Save Feedback'}).click();await expect(feedback.getByRole('status')).toContainText('Feedback saved locally');
  await expect(feedback.locator('img')).toHaveCount(0);await expect(feedback.getByText(/don't deploy to production/).first()).toBeVisible();

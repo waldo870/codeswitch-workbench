@@ -6,7 +6,7 @@ import { LEGACY_MIGRATION_SETTING } from '../../src/web/storage/workspace-db.js'
 test('review, conflict prevention, reload, rejection and real JSON download', async ({ page }, info) => {
   const errors: string[] = [], external: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
-  page.on('request', r => { if (!r.url().startsWith('http://127.0.0.1:4173')) external.push(r.url()); });
+  page.on('request', r => { if (new URL(r.url()).hostname !== '127.0.0.1') external.push(r.url()); });
   await page.goto('/');
   await page.getByRole('button', { name: 'Analyze Text' }).focus();
   await page.keyboard.press('Enter');

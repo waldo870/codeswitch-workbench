@@ -1,0 +1,25 @@
+import { test,expect } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+
+test('same-machine isolated browser profiles exchange and import an encrypted workspace request',async({browser},info)=>{
+  test.setTimeout(30_000);
+  const first=await browser.newContext(),second=await browser.newContext();
+  try{
+    const owner=await first.newPage();await owner.goto('/');await owner.getByRole('button',{name:'Analyze Text'}).click();await expect(owner.getByRole('region',{name:/Saved work sessions/}).getByRole('status')).toHaveText('Saved in this browser (IndexedDB).');await owner.getByRole('article',{name:'task card'}).getByRole('button',{name:'Confirm',exact:true}).click();await expect(owner.getByRole('article',{name:'task card'}).locator('.badge.confirmed')).toBeVisible();
+    await owner.getByLabel('Local collaborator label').fill('owner-local');await owner.getByLabel('Exchange passphrase').fill('offline-collaboration-passphrase');
+    const downloadWait=owner.waitForEvent('download');await owner.getByRole('button',{name:'Export encrypted request'}).click();const download=await downloadWait;const path=info.outputPath('exchange.json');await download.saveAs(path);
+    await owner.locator('.collaboration-cards fieldset').filter({has:owner.getByText('Check sandbox credentials',{exact:true})}).getByLabel('Notes').fill('Owner edited concurrently');
+    const collaborator=await second.newPage();await collaborator.goto('/');await collaborator.getByLabel('Local collaborator label').fill('reviewer-local');await collaborator.getByLabel('Exchange passphrase').fill('offline-collaboration-passphrase');
+    await collaborator.locator('#exchange-file').setInputFiles(path);await collaborator.getByRole('button',{name:'Decrypt and preview'}).click();await expect(collaborator.getByRole('region',{name:'Exchange preview'})).toContainText('request');await collaborator.getByRole('button',{name:'Import as new workspace'}).click();await expect(collaborator.getByText(/Imported as a separate session/)).toBeVisible();
+    await expect(collaborator.getByRole('article',{name:'task card'})).toHaveCount(1);await expect(collaborator.getByRole('article',{name:'task card'}).locator('.badge.draft')).toBeVisible();
+    await collaborator.locator('#exchange-file').setInputFiles(path);await collaborator.getByLabel('Exchange passphrase').fill('offline-collaboration-passphrase');await collaborator.getByRole('button',{name:'Decrypt and preview'}).click();await collaborator.getByRole('button',{name:'Import as new workspace'}).click();await expect(collaborator.getByText(/already imported \(replay rejected\)/)).toBeVisible();
+    const file=JSON.parse(await readFile(path,'utf8'));expect(file.format).toBe('codeswitch-workbench-exchange');expect(file.ciphertext).not.toContain('payment webhook');
+    await expect(collaborator.locator('.collaboration-cards fieldset')).toHaveCount(3,{timeout:5000});const task=collaborator.locator('.collaboration-cards fieldset').filter({has:collaborator.getByText('Check sandbox credentials',{exact:true})});await task.getByLabel('Notes').fill('Reviewed locally');
+    await collaborator.getByLabel('Exchange passphrase').fill('offline-collaboration-passphrase');const replyWait=collaborator.waitForEvent('download');await collaborator.getByRole('button',{name:'Export encrypted reply'}).click();const reply=await replyWait;const replyPath=info.outputPath('reply.json');await reply.saveAs(replyPath);
+    await owner.locator('#exchange-file').setInputFiles(replyPath);await owner.getByLabel('Exchange passphrase').fill('offline-collaboration-passphrase');await owner.getByRole('button',{name:'Decrypt and preview'}).click();await expect(owner.getByRole('region',{name:'Exchange preview'})).toContainText('reply');await expect(owner.getByText(/concurrent edits/)).toBeVisible();const choice=owner.getByRole('region',{name:'Exchange preview'}).getByLabel(/concurrent edits/);await choice.selectOption('incoming');await owner.getByRole('button',{name:'Apply chosen merge'}).click();await expect(owner.getByText(/Manual conflict choices saved/)).toBeVisible();await expect(owner.locator('.collaboration-cards fieldset').filter({has:owner.getByText('Check sandbox credentials',{exact:true})}).getByLabel('Notes')).toHaveValue('Reviewed locally');
+  } finally {await first.close();await second.close();}
+});
+
+test('P4G review candidates retain Live/Synthetic provenance and local review status',async({page})=>{
+  await page.goto('/');const backlog=page.getByRole('region',{name:/P4G research review backlog/});await expect(backlog).toContainText('28');await backlog.getByText('Review candidates').click();const status=backlog.locator('.backlog-item').first().getByLabel('Human review status');await status.selectOption('reviewed');await expect(status).toHaveValue('reviewed');await page.reload();const restored=page.getByRole('region',{name:/P4G research review backlog/});await restored.getByText('Review candidates').click();await expect(restored.locator('.backlog-item').first().getByLabel('Human review status')).toHaveValue('reviewed');await expect(restored).toContainText('verifiedDefect=false');
+});
