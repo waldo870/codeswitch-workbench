@@ -6,6 +6,16 @@ P5D was fast-forwarded to main and pushed without history rewriting; remote main
 
 P6 local gates: `pnpm install --frozen-lockfile` PASS; `pnpm typecheck` PASS; Vitest **365/365 PASS** across 28 files; `pnpm build` PASS; `pnpm demo` PASS (3 draft cards, 1 prohibited constraint); `PLAYWRIGHT_PORT=4174 pnpm test:browser` **36 PASS, 4 pre-existing Live ASR tests SKIPPED** (40 total); `git diff --check` PASS. Port 4174 was used because an unidentified existing listener occupied the default 4173 during the first attempt; no existing process was terminated.
 
+## P6D/P6E/P6F local integration (2026-10-30)
+
+P6D and P6E were developed in independent worktrees from shared local contract commit `697d3542fe43f743bba11d9e9c79d3249db0e795`, then merged without file replacement into local integration branch `feature/p6-integration-efficiency`. P6D commit: `e608dfac37d8625eb2616017598bb01d1309f8aa`. P6E commits: `1df67d84a5f31098da6ff50551e9a98a5695a513` and `63fd98ddc889ff37c0f54aa1422946d3f9e10a07`. P6F evaluation tooling is local and does not affect P1 product behavior.
+
+The P6D UI uses a deterministic mock only. An optional Node-only LM Studio provider and fixed smoke are implemented with mocked transport tests; Live translation was `NOT_RUN` because `CODESWITCH_LMSTUDIO_MODEL` was not configured. P6E creates separate routine drafts and offers a parser/validator-gated conversion to a new P1 Workspace JSON for use with existing P6A collaboration. Conversion blocks partial recognition, creates only draft P1 cards with parser-derived evidence, and explicitly omits routine-only metadata. The P6A encrypted payload schema was not changed.
+
+Final local gates: frozen install PASS; typecheck PASS; Vitest **393/393 PASS** across 33 files; build PASS; CLI demo PASS (3 draft cards and 1 prohibited deploy/production constraint); `PLAYWRIGHT_PORT=4180 pnpm test:browser` PASS with **40 passed and 4 pre-existing opt-in Live ASR tests skipped** across desktop/mobile Chromium. The new P6D/P6E browser flows were also exercised in a targeted run; the final browser gate includes the P6D mock immutability and P6E draft Workspace conversion checks. `pnpm benchmark:p6f` reports `HUMAN_EVALUATION_NOT_RUN`, zero observations, and null timing; this is not a workflow efficiency result.
+
+P6A/P6B main release remains at `fe46d654fbdd211266c8dc14de892186bd6633dc`; no subsequent P6D/E/F change was pushed. P6 physical cross-device validation, live LM Studio translation, routine metadata transport through the encrypted envelope, and human workflow evaluation remain unverified/not implemented.
+
 The new Browser tests cover request/reply file flow in two isolated contexts on this machine, draft-only work cards after import, replay rejection and locally persisted review status for the 28 unverified backlog records. Crypto unit tests cover authenticated round trip, unique nonces, wrong password, tampering, version mismatch, expiry, size limits and three-way merge/conflict detection. These are software tests, not physical cross-device, real network-loss cold-start, or penetration-test evidence. P5D Product Gate remains `NOT_QUALIFIED`.
 
 ## P4G release and P5 speech evaluation checkpoint (2026-10-29)

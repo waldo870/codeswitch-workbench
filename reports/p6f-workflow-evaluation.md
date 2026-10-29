@@ -4,7 +4,7 @@ Status: **HUMAN_EVALUATION_NOT_RUN**
 
 This report compares manual card creation, routine templates, confirmed speech transcripts, and encrypted collaboration. Automated test durations and operation counts are never presented as human workflow measurements.
 
-Generated: 2026-10-29T20:31:55.250Z
+Generated: 2026-10-29T20:43:08.460Z
 
 | Method | Human observations | Duration median / P95 (ms) | Mean operations | Mean corrections | Complete cards | Constraints preserved | Conflicts | Tasks completed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|

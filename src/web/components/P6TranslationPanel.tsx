@@ -65,24 +65,27 @@ export function P6TranslationPanel({ record }: P6ExtensionPanelProps) {
     </select>
     {message && <p role="status">{message}</p>}
     <p>Translations are stored locally in the P6D extension namespace and are not included in workspace or encrypted exchange exports.</p>
+    <div className="p6-translation-constraints" aria-label="Original constraints (translation review)">
+      <strong>Constraint review</strong>
+      <p>{record.workspace.parsed.constraints.length ? `${record.workspace.parsed.constraints.length} original constraint(s) remain unchanged. Review them in the Constraints panel above.` : 'No supported constraints were parsed.'}</p>
+    </div>
     <div className="p6-translation-list">{cards.map(({ id, current }) => {
       const translationKey = translationId(record.id, id, targetLocale);
       const saved = translations[translationKey];
       const currentTranslation = saved && isTranslationCurrent(saved, current, record.id, record.workspace.parsed.constraints) ? saved : null;
       const display = currentTranslation?.translatedText ?? cardTranslationSource(current);
-      return <article key={id} className="p6-translation-card" aria-label={`${current.type} translation`}>
+      return <div key={id} className="p6-translation-card" role="group" aria-label={`${current.type} translation`}>
         <h3>{current.type.replace('_', ' ')} · {current.title}</h3>
         <p><strong>Original title</strong>: <span>{current.title}</span></p>
         <p><strong>{currentTranslation ? 'Mock translation' : 'Fallback (original text)'}</strong>: <span>{display}</span></p>
         <p><strong>Source evidence</strong>: <q>{current.evidence.text}</q></p>
-        <p><strong>Original constraints</strong>: {record.workspace.parsed.constraints.length ? record.workspace.parsed.constraints.map((constraint, index) => <span key={`${constraint.action}-${index}`}>{constraint.polarity}: {constraint.action} / {constraint.scope} — “{constraint.evidence.text}”{index + 1 < record.workspace.parsed.constraints.length ? '; ' : ''}</span>) : 'None parsed'}</p>
         {currentTranslation && <>
           <p>Provenance: {currentTranslation.provenance.providerId} / {currentTranslation.provenance.modelId} · {currentTranslation.provenance.generatedAt} · mock</p>
           <p role="note">Human review required. This is not a confirmation; card status remains {current.status}.</p>
           {currentTranslation.risks.length > 0 && <div role="alert"><strong>Review these translation-sensitive spans</strong><ul>{currentTranslation.risks.map((risk, index) => <li key={`${risk.kind}-${index}`}>{risk.kind}: {risk.text}</li>)}</ul></div>}
         </>}
         <button type="button" disabled={busyId === id} onClick={() => void run(id)}>{busyId === id ? 'Translating…' : 'Create mock translation'}</button>
-      </article>;
+      </div>;
     })}</div>
   </section>;
 }

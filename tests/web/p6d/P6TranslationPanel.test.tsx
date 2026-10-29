@@ -23,18 +23,18 @@ it('labels the feature as mock-only, keeps original evidence/constraints visible
   render(<P6TranslationPanel {...props} />);
   expect(screen.getByText(/Deterministic mock only/)).toBeVisible();
   expect(screen.getByText(/not included in workspace or encrypted exchange exports/)).toBeVisible();
-  expect(screen.getAllByText(/don't deploy to production yet/i)).toHaveLength(3);
+  expect(screen.getByLabelText('Original constraints (translation review)')).toHaveTextContent('1 original constraint(s) remain unchanged');
   expect(screen.queryByRole('button', { name: 'Confirm' })).not.toBeInTheDocument();
 });
 
 it('renders the mock result separately while leaving the source card draft and evidence intact', async () => {
   const before = structuredClone(workspace);
   render(<P6TranslationPanel {...props} />);
-  const article = screen.getByRole('article', { name: 'calendar translation' });
-  fireEvent.click(within(article).getByRole('button', { name: 'Create mock translation' }));
+  const card = screen.getByRole('group', { name: 'calendar translation' });
+  fireEvent.click(within(card).getByRole('button', { name: 'Create mock translation' }));
   expect(await screen.findByText('檢視 payment webhook')).toBeVisible();
-  expect(article).toHaveTextContent(workspace.cards[0]!.current.evidence.text);
-  expect(article).toHaveTextContent('Human review required');
+  expect(card).toHaveTextContent(workspace.cards[0]!.current.evidence.text);
+  expect(card).toHaveTextContent('Human review required');
   expect(workspace).toEqual(before);
   expect(workspace.cards[0]!.current.status).toBe('draft');
 });
@@ -42,9 +42,9 @@ it('renders the mock result separately while leaving the source card draft and e
 it('falls back to original card text for unsupported phrases and storage stays separate', async () => {
   const changed = { ...record, workspace: { ...workspace, cards: workspace.cards.map((card, index) => index === 0 ? { ...card, current: { ...card.current, title: 'Unsupported phrase' } } : card) } } as WorkspaceRecord;
   render(<P6TranslationPanel {...props} record={changed} />);
-  const article = screen.getByRole('article', { name: 'calendar translation' });
-  fireEvent.click(within(article).getByRole('button', { name: 'Create mock translation' }));
+  const card = screen.getByRole('group', { name: 'calendar translation' });
+  fireEvent.click(within(card).getByRole('button', { name: 'Create mock translation' }));
   expect(await screen.findByText(/No exact mock phrase is available/)).toBeVisible();
-  expect(article).toHaveTextContent('Fallback (original text): Unsupported phrase');
+  expect(card).toHaveTextContent('Fallback (original text): Unsupported phrase');
   expect(memory.size).toBe(0);
 });

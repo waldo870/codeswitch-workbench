@@ -127,3 +127,15 @@ The UI reports database/open/migration/quota failures and never marks a failed w
 ## P6 offline collaboration
 
 P6 adds an IndexedDB-backed review backlog and a file-based workspace exchange with PBKDF2-SHA-256/AES-256-GCM. Request import creates a new local workspace and uses existing confirmation-reset import logic. Assignment metadata is separate from Work Card state. Replies use a three-way comparison against the request base; independent edits merge, same-field divergent edits require an explicit choice. A per-profile replay ledger and expiry reduce duplicate/stale use. There is no network collaboration endpoint, verified collaborator identity, encrypted-at-rest workspace database, or full end-to-end security claim. See [P6 collaboration](P6_OFFLINE_COLLABORATION.md).
+
+### P6D translation extension
+
+P6D uses the shared namespaced IndexedDB extension store without changing Workspace or collaboration schemas. The P1 panel defaults to a deterministic exact-phrase mock; translation records carry source card/evidence/constraint snapshots and are human-review-only. A Node-only optional LM Studio provider reuses the bounded local transport and configured loopback/validated WSL host policy; the browser never calls the model. Extension data stays out of normal/encrypted exports unless a later explicit exchange design is implemented. Live translation was not run.
+
+### P6E routine extension
+
+P6E stores versioned templates and independent routine-run cards in its extension namespace. Routine card confirmations do not imply P1 confirmation and no routine operation executes external work. For collaboration, an explicit bridge runs non-rejected titles through the existing parser and validator; it blocks partial/unresolved conversions, preserves only parser-derived evidence, and creates a separate ordinary Workspace JSON. Routine-only assignee/deadline/priority/description/prerequisite metadata is disclosed as omitted; the resulting Workspace can use existing P6A exchange, but routine metadata itself is not carried in that P6A envelope.
+
+### P6F workflow evaluation
+
+`src/evaluation/p6f-workflow.ts` fixes four scenario definitions and validates manually observed records before reporting durations, operation/correction counts, card completion, constraint preservation, collaboration conflicts and task completion. Empty observations produce `HUMAN_EVALUATION_NOT_RUN` with null timing. Automated test runs are never used as human timing evidence; there are no participant results in this release.

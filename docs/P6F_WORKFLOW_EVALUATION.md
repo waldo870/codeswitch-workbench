@@ -6,6 +6,8 @@ P6F defines a versioned, reproducible human workflow evaluation for four paths: 
 
 The versioned scenarios and completion rules live in `src/evaluation/p6f-workflow.ts`. A future observation file must contain observations tied to those scenario IDs, with human observation provenance, timestamps, operation counts, correction counts, expected/complete cards, expected/preserved constraints, conflict counts, and expected/completed tasks. The evaluator validates the scenario pairing, timestamp order and metric bounds before producing per-method numerator/denominator metrics.
 
+For consistent human sessions, start timing after the participant has read the task brief and is ready to begin; stop after all expected cards have been reviewed and applicable constraints checked. For collaboration, include the request/reply exchange, reply review, and conflict choices. Count an operation as one deliberate participant input, selection, or action that changes workflow state; exclude passive rendering, autosave, and background processing. Count a manual correction when the participant edits transcript/card content after its initial entry or analysis. The same observer rubric and task-card/constraint checklist must be applied across all methods.
+
 Run `pnpm benchmark:p6f` to emit a report with no human observations, or `pnpm benchmark:p6f -- path/to/human-observations.json` to evaluate an explicitly supplied local observation file. The input path is read locally and is not uploaded. Do not put identifying participant information in notes. Human timings must be measured during a human session; test automation durations are rejected as a source and never enter those measurements.
 
 ## Measures
