@@ -33,6 +33,10 @@ The Owner ran the existing `pnpm benchmark:speech` in a general WSL terminal. Th
 
 P5D uses 100 project-authored text instructions and 300 deterministic `SYNTHETIC_ERROR_INJECTION` variants. No audio or Whisper result is involved. The 60/40 split is source-grouped and stratified 12/8 per category. `reports/p5d-baseline.*` records the P0 parser before the benchmark-only gate; `reports/p5d-final.*` records the separate conservative gate and per-case comparison. Only Development failures informed the gate and P4G-style draft proposals. Held-out metrics were read after the gate was fixed. P0/P1 product behavior is unchanged. See `docs/P5D_SAFETY_EVALUATION.md` for metric denominators, results, limitations and reproduction.
 
+## P5D.1 failure attribution (2026-10-30)
+
+The P5D dataset SHA and original result files were verified unchanged. The review found that the reported 32/100 baseline complete success includes four precondition cases whose dependency direction was not represented and one case with no actionable expected intent. After auditing those scorer false positives, baseline complete success is 27/100, matching the final report's 27/100. Of 73 strict gate blocks on originals, 68 had a missing constraint; the remaining five were the scorer false positives. The Development-only partial-card retention simulation kept unrelated source-validated tasks as review-required drafts in 60/60 cases; it was not run on held-out or integrated into P1. See `docs/P5D_1_FAILURE_ANALYSIS.md` and `reports/p5d1-failure-analysis.md`. Added five Vitest cases for attribution and Development/held-out isolation.
+
 Checks after the report/code metadata update: `pnpm typecheck`, `pnpm test` (341 tests), `pnpm build`, `pnpm demo`, `pnpm test:browser` (32 passed, 4 existing Live ASR tests skipped), and `git diff --check` passed. The Live ASR results were not regenerated during this review.
 
 Task: P0_TEXT_WORKCARDS_FOUNDATION. Local verification completed in the supplied development environment (session date: 2026-10-22).

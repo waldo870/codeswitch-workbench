@@ -25,7 +25,8 @@
     "speech:live": "playwright test --project=desktop-chromium --grep \"live (offline|Windows)\"",
     "benchmark:speech": "tsx src/speech/p5-cli.ts",
     "benchmark:p5d:baseline": "tsx src/evaluation/p5d-cli.ts baseline",
-    "benchmark:p5d:final": "tsx src/evaluation/p5d-cli.ts final"
+    "benchmark:p5d:final": "tsx src/evaluation/p5d-cli.ts final",
+    "analyze:p5d1": "tsx src/evaluation/p5d1-cli.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

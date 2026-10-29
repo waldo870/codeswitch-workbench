@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "status": "ATTRIBUTION_RESEARCH_ONLY",
+  "datasetVersion": "p5d-safety-v1",
+  "datasetSha256": "sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a",
+  "generatedAt": "2026-10-29T18:42:22.234Z",
+  "sourceReportsUnmodified": true,
+  "historicalHeldOutUsedForTuning": false,
+  "liveASR": false,
+  "overall": {
+    "originals": 100,
+    "synthetic": 300,
+    "negationDeletionVariants": 100,
+    "negationFlips": 20,
+    "flipsBlockedByExistingGate": 5,
+    "flipsNotBlocked": 15,
+    "evidenceValid": 845,
+    "evidenceTotal": 845,
+    "baselineCompleteReported": 32,
+    "baselineCompleteAudited": 27,
+    "finalCompleteReported": 27,
+    "originalGateBlocks": 73,
+    "gateBlocksOnBaselineComplete": 5,
+    "gateBlocksOnAuditedComplete": 0,
+    "parserConstraintMisses": 68,
+    "goldDependencyCases": 20,
+    "dependencyRelationRepresented": 0,
+    "unactionableExpectedUnresolvedCases": 5,
+    "scopeOnlyMismatches": 0
+  },
+  "bySplit": {
+    "development": {
+      "split": "development",
+      "originals": 60,
+      "parserIntentExact": 60,
+      "constraintsExact": 21,
+      "constraintMisses": 39,
+      "scopeOnlyMismatches": 0,
+      "evidenceInvalidRows": 0,
+      "validationInvalid": 0,
+      "finalGateBlocked": 43,
+      "baselineComplete": 21,
+      "blockedBaselineComplete": 4,
+      "blockedBaselineCompleteWithDependency": 4,
+      "blockedBaselineCompleteWithoutActionableIntent": 0,
+      "blockedAuditedBaselineComplete": 0,
+      "parserIntentExactButGateBlocked": 43,
+      "blockedWithMissingConstraint": 39,
+      "blockedWithMissingDependency": 12,
+      "blockedWithoutActionableIntent": 0,
+      "candidateExperiment": "RUN_DEVELOPMENT_ONLY",
+      "candidateDraftCases": "60/60",
+      "candidateDraftCards": 72,
+      "candidateReviewCases": 60,
+      "candidateBlockedCases": 0,
+      "candidateCardsRecoveredFromStrictBlock": 43
+    },
+    "held-out": {
+      "split": "held-out",
+      "originals": 40,
+      "parserIntentExact": 40,
+      "constraintsExact": 11,
+      "constraintMisses": 29,
+      "scopeOnlyMismatches": 0,
+      "evidenceInvalidRows": 0,
+      "validationInvalid": 0,
+      "finalGateBlocked": 30,
+      "baselineComplete": 11,
+      "blockedBaselineComplete": 1,
+      "blockedBaselineCompleteWithDependency": 0,
+      "blockedBaselineCompleteWithoutActionableIntent": 1,
+      "blockedAuditedBaselineComplete": 0,
+      "parserIntentExactButGateBlocked": 30,
+      "blockedWithMissingConstraint": 29,
+      "blockedWithMissingDependency": 8,
+      "blockedWithoutActionableIntent": 5,
+      "candidateExperiment": "NOT_RUN",
+      "candidateDraftCases": null,
+      "candidateDraftCards": null,
+      "candidateReviewCases": null,
+      "candidateBlockedCases": null,
+      "candidateCardsRecoveredFromStrictBlock": null
+    }
+  },
+  "failureCategories": [
+    {
+      "category": "unsupported prohibition vocabulary/action",
+      "count": 39,
+      "examples": [
+        "zh-prohibition-009",
+        "zh-prohibition-011",
+        "zh-prohibition-013",
+        "zh-prohibition-014",
+        "zh-prohibition-017"
+      ]
+    },
+    {
+      "category": "condition/dependency direction absent from proposal contract",
+      "count": 12,
+      "examples": [
+        "precondition-exception-001",
+        "precondition-exception-002",
+        "precondition-exception-003",
+        "precondition-exception-004",
+        "precondition-exception-005"
+      ]
+    },
+    {
+      "category": "negation deletion makes source intent unrecoverable",
+      "count": 60,
+      "examples": [
+        "zh-prohibition-001--negation_deletion",
+        "zh-prohibition-002--negation_deletion",
+        "zh-prohibition-003--negation_deletion",
+        "zh-prohibition-004--negation_deletion",
+        "zh-prohibition-007--negation_deletion"
+      ]
+    },
+    {
+      "category": "gate blocks unrelated drafts while risk remains unresolved",
+      "count": 43,
+      "examples": [
+        "zh-prohibition-009",
+        "zh-prohibition-011",
+        "zh-prohibition-013",
+        "zh-prohibition-014",
+        "zh-prohibition-017"
+      ]
+    }
+  ],
+  "p4gReview": [
+    {
+      "proposalId": "p5d-draft-001",
+      "caseId": "zh-prohibition-009",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_prohibition_lexeme_and_action",
+      "reason": "The parser prohibition grammar does not cover this polarity/action form.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-002",
+      "caseId": "zh-prohibition-011",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_prohibition_lexeme_and_action",
+      "reason": "The parser prohibition grammar does not cover this polarity/action form.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-003",
+      "caseId": "zh-prohibition-013",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_negation_form",
+      "reason": "The parser does not recognize this negation operator with the send action.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-004",
+      "caseId": "zh-prohibition-014",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_negation_form",
+      "reason": "The parser does not recognize this negation operator with the send action.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-005",
+      "caseId": "zh-prohibition-017",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_action_verb",
+      "reason": "The parser prohibition grammar does not include publish/release.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-006",
+      "caseId": "zh-prohibition-018",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_action_verb",
+      "reason": "The parser prohibition grammar does not include publish/release.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-007",
+      "caseId": "zh-prohibition-020",
+      "category": "zh-prohibition",
+      "failureClass": "unsupported_action_verb",
+      "reason": "The parser prohibition grammar does not include publish/release.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-008",
+      "caseId": "en-prohibition-009",
+      "category": "en-prohibition",
+      "failureClass": "unsupported_prohibition_lexeme_and_action",
+      "reason": "The parser prohibition grammar does not cover this polarity/action form.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-009",
+      "caseId": "en-prohibition-011",
+      "category": "en-prohibition",
+      "failureClass": "unsupported_prohibition_lexeme_and_action",
+      "reason": "The parser prohibition grammar does not cover this polarity/action form.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-010",
+      "caseId": "en-prohibition-013",
+      "category": "en-prohibition",
+      "failureClass": "unsupported_negation_form",
+      "reason": "The parser does not recognize this negation operator with the send action.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-011",
+      "caseId": "en-prohibition-015",
+      "category": "en-prohibition",
+      "failureClass": "unsupported_negation_form",
+      "reason": "The parser does not recognize this negation operator with the send action.",
+      "status": "draft",
+      "verifiedDefect": false
+    },
+    {
+      "proposalId": "p5d-draft-012",
+      "caseId": "en-prohibition-016",
+      "category": "en-prohibition",
+      "failureClass": "unsupported_negation_form",
+      "reason": "The parser does not recognize this negation operator with the send action.",
+      "status": "draft",
+      "verifiedDefect": false
+    }
+  ],
+  "developmentExperiment": {
+    "name": "per-card retention with explicit review-required state",
+    "description": "Research-only simulation: keep source-validated cards that do not directly conflict with a recognized prohibition; unresolved clauses and prohibited constraints keep the result in review-required state. Do not label this safe-to-confirm or wire it into P1.",
+    "baselineCompleteReported": "21/60",
+    "baselineCompleteAudited": "17/60",
+    "strictComplete": "17/60",
+    "candidateDraftCases": "60/60",
+    "candidateDraftCards": 72,
+    "reviewRequiredCases": 60,
+    "strictBlockedCasesWithSafeDraftRetained": 43,
+    "heldOut": "NOT_RUN",
+    "productIntegration": false
+  },
+  "counterexamples": [
+    {
+      "caseId": "zh-prohibition-009",
+      "class": "constraint parser miss with valid unrelated task",
+      "observation": "P0 extracts the check task and passes its source validator, but leaves the prohibition unresolved; the final gate blocks the full draft.",
+      "input": "不得刪除日誌，檢查測試設定"
+    },
+    {
+      "caseId": "precondition-exception-001",
+      "class": "prerequisite relation omitted by contract/scorer",
+      "observation": "The prohibited deploy tuple is captured, but the “unless I confirm” condition remains separate unresolved text and no direction-bearing dependency is proposed.",
+      "input": "Unless I confirm, don't deploy to production，check sandbox credentials"
+    },
+    {
+      "caseId": "en-prohibition-001--negation_deletion",
+      "class": "unrecoverable synthetic input damage (E)",
+      "observation": "The variant starts with affirmative “deploy to production”; P0 emits that card. The removed “Don’t” is absent from the text, so neither parser nor gate can infer it.",
+      "input": " deploy to production, check sandbox credentials"
+    },
+    {
+      "caseId": "multi-intent-ambiguous-004",
+      "class": "baseline complete-success scoring false positive",
+      "observation": "Gold expects no actionable intent and an unresolved segment; baseline exact-match logic counts an empty intent set as exact completion.",
+      "input": "Don't deploy to production，check it later"
+    }
+  ],
+  "limitations": [
+    "The original P5D baseline/final JSON and Markdown artifacts are read-only historical evidence; P5D.1 does not rewrite them or the dataset/Gold Labels.",
+    "P5D complete-workflow scoring does not model prerequisite direction. Four baseline-complete cases have gold dependency metadata but no proposal dependency relation; those four are not semantically complete. One additional baseline-complete case has no actionable gold intent and should not count as completion. Audited baseline therefore is 27/100, matching final 27/100.",
+    "The existing held-out split is shown only as historical comparison. The development-only partial-card simulation does not run on held-out cases; it is not an independent validation set. During initial analysis implementation a shared split summary briefly computed candidate counts for held-out; those exploratory counts were discarded, no rule or decision was tuned from them, and final reports mark the held-out experiment NOT_RUN.",
+    "Evidence validity checks offsets and exact source slices, not whether a span semantically entails a constraint. All measured spans locate correctly, but 68 original constraint misses remain semantic coverage failures.",
+    "Negation-deletion variants are synthetic, not ASR outputs. Fifteen of twenty raw flips are not blocked by the existing benchmark gate because the corrupted text contains an affirmative action and no recoverable prohibition cue; outputs remain unconfirmed drafts.",
+    "Per-card retention is an experiment for reducing whole-utterance rejection. An unresolved risk remains visible and review-required; this simulation is not a product safety authorization.",
+    "Constraint scope accuracy equals constraint recall in this dataset: there are zero scope-only mismatches among extracted constraints. Missing extraction is being counted as scope failure by the aggregate denominator, not as a wrong scope prediction."
+  ]
+}
