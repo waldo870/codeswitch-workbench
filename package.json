@@ -28,7 +28,8 @@
     "benchmark:p5d:final": "tsx src/evaluation/p5d-cli.ts final",
     "analyze:p5d1": "tsx src/evaluation/p5d1-cli.ts",
     "analyze:p5d2": "tsx src/evaluation/p5d2-cli.ts",
-    "benchmark:p6f": "tsx src/evaluation/p6f-cli.ts"
+    "benchmark:p6f": "tsx src/evaluation/p6f-cli.ts",
+    "benchmark:p6g": "tsx src/evaluation/p6g-cli.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

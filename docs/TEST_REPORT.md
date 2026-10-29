@@ -1,5 +1,15 @@
 # P0 test report
 
+## P6G workflow time-to-value and metadata integrity (2026-10-30)
+
+P6D/P6E/P6F integration was verified and pushed to `main` at `ad0e45317c9ceecf946c2c0ec82c30f62811fdfa`; GitHub Actions run `40953680016` completed successfully. P6G is being developed from that exact main commit on `feature/p6g-workflow-time-to-value`.
+
+P6G defines the versioned `codeswitch-routine-handoff` sidecar, maps every generated P1 draft to its existing source evidence, validates explicit prerequisite direction/cycles, and carries assignee/deadline/priority/description only by opt-in inside the existing authenticated P6A encrypted envelope. Unsupported prerequisite mapping blocks conversion. The P1 card, source, evidence, constraints and transcript provenance are not rewritten. The receiver must opt in and revalidate. Imported P1 confirmation remains reset to draft. Old encrypted exchanges without the optional sidecar remain compatible. Routine metadata remains outside plain Workspace JSON exports.
+
+The P6G evaluation protocol defines four fixed scenarios and three comparison methods with method-specific end boundaries; encrypted collaboration includes a full request/import/reply/merge round trip in a second local browser profile. The local UI records only facilitator-entered human observations. The current report has zero observations and `HUMAN_EVALUATION_NOT_RUN`; no test duration is presented as user efficiency data. Existing offline acceptance tests simulate Internet loss after Service Worker cache initialization and reopen IndexedDB workspaces; the new Browser flow tests local encrypted metadata round-trip, draft-only imported cards and explicit metadata-preservation opt-in. These are same-machine browser tests, not physical cross-device validation.
+
+Initial P6G regression: frozen install PASS; TypeScript typecheck PASS; Vitest **403/403 PASS** across 35 files; production build PASS; CLI demo PASS (3 draft cards, 1 prohibited deploy/production constraint); browser suite **42 passed, 4 pre-existing opt-in Live ASR tests skipped**; `pnpm benchmark:p6g` PASS and emits `HUMAN_EVALUATION_NOT_RUN` with null timing and zero human observations; `git diff --check` PASS. Skips are not counted as passes. Hailo live inference and P3C real bilingual speech remain NOT_RUN.
+
 ## P5D release and P6 branch acceptance
 
 P5D was fast-forwarded to main and pushed without history rewriting; remote main is `9ea9c23d7a9ca2fbda0ab81b87e7f2ac75394dee`. The GitHub Actions run completed successfully. P5D Product Gate remains `NOT_QUALIFIED`.

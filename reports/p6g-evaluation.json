@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "status": "HUMAN_EVALUATION_NOT_RUN",
+  "generatedAt": "2026-10-29T21:17:56.679Z",
+  "automationTimingUsedAsHumanTiming": false,
+  "scenarios": [
+    {
+      "id": "daily-checklist",
+      "title": "Daily checklist",
+      "taskBrief": "Prepare three cards: review today’s support queue; check sandbox credentials; send the daily status summary. Review each card before marking it confirmed or rejected.",
+      "expectedWorkCards": 3,
+      "expectedConstraints": 0,
+      "completionBoundaryByMethod": {
+        "manual": "All three expected checklist cards are reviewed and explicitly confirmed or rejected; no external work is executed.",
+        "routine-template": "Create a run from Daily Work Checklist, review all three cards and metadata, then explicitly confirm or reject each item; no external work is executed.",
+        "encrypted-collaboration": "Complete the reviewed encrypted request/import/reply/merge round trip in a second local browser profile; review all three cards and the final assignment state; no external work is executed."
+      }
+    },
+    {
+      "id": "meeting-follow-up",
+      "title": "Meeting follow-up",
+      "taskBrief": "After the vendor meeting, prepare a card to summarize decisions, a task to confirm the renewal date, and an English follow-up email draft to Alex. Do not send the email.",
+      "expectedWorkCards": 3,
+      "expectedConstraints": 1,
+      "completionBoundaryByMethod": {
+        "manual": "Review all three cards and the no-send restriction; keep the email as a draft and explicitly confirm or reject each card.",
+        "routine-template": "Create a Meeting Follow-up run, review cards and metadata, preserve the no-send restriction, then explicitly confirm or reject each routine item.",
+        "encrypted-collaboration": "Complete the reviewed encrypted request/import/reply/merge round trip in a second local browser profile; review all cards and verify the email remains a draft and unsent."
+      }
+    },
+    {
+      "id": "shift-handover",
+      "title": "Shift handover",
+      "taskBrief": "Prepare a handover card to review the overnight queue, a card to check access logs, and a card to close the incident after the access logs are checked. Do not grant production access.",
+      "expectedWorkCards": 3,
+      "expectedConstraints": 1,
+      "completionBoundaryByMethod": {
+        "manual": "Review all three cards, preserve the do-not-grant-production-access restriction and the prerequisite direction, then explicitly confirm or reject each card.",
+        "routine-template": "Create a Shift Handover run, review all three cards, metadata and prerequisite direction, then explicitly confirm or reject each routine item.",
+        "encrypted-collaboration": "Complete the reviewed encrypted request/import/reply/merge round trip in a second local browser profile; verify the prerequisite direction and access restriction remain unchanged."
+      }
+    },
+    {
+      "id": "software-release-review",
+      "title": "Software release review",
+      "taskBrief": "Prepare a card to run the release test suite, a card to review the changelog, and a task to request release approval. Do not deploy to production.",
+      "expectedWorkCards": 3,
+      "expectedConstraints": 1,
+      "completionBoundaryByMethod": {
+        "manual": "Review all cards and preserve the production prohibition, then explicitly confirm or reject each card; do not deploy.",
+        "routine-template": "Create a Software Testing / Release Review run, review cards and metadata, preserve the production prohibition, then confirm or reject routine items.",
+        "encrypted-collaboration": "Complete the reviewed encrypted request/import/reply/merge round trip in a second local browser profile; recheck that no deployment action or confirmation was inherited."
+      }
+    }
+  ],
+  "cells": {
+    "daily-checklist": {
+      "manual": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "routine-template": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "encrypted-collaboration": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      }
+    },
+    "meeting-follow-up": {
+      "manual": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "routine-template": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "encrypted-collaboration": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      }
+    },
+    "shift-handover": {
+      "manual": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "routine-template": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "encrypted-collaboration": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      }
+    },
+    "software-release-review": {
+      "manual": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "routine-template": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      },
+      "encrypted-collaboration": {
+        "observations": 0,
+        "durationMs": {
+          "p50": null,
+          "p95": null
+        },
+        "operationsMean": null,
+        "correctionsMean": null,
+        "validWorkCards": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "missedConstraints": {
+          "numerator": 0,
+          "denominator": 0
+        },
+        "handoffConflicts": null,
+        "confirmationsMean": null,
+        "workflowCompleted": {
+          "numerator": 0,
+          "denominator": 0
+        }
+      }
+    }
+  },
+  "observations": []
+}

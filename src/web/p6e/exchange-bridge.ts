@@ -17,7 +17,7 @@ export function convertRoutineRunToWorkspace(run:RoutineRun):RoutineWorkspaceCon
   const intended=run.cards.filter(card=>card.status!=='rejected');
   const sourceText=intended.map(card=>card.title).join('\n');
   const metadataNotTransferred=[
-    'Responsible person, deadline, priority, descriptions, and prerequisites are routine metadata; P1 Work Cards have no compatible fields for these values, so they are not transferred.',
+    'Responsible person, deadline, priority, descriptions, and prerequisites are not P1 Work Card fields. P6G preserves supported metadata in a separate versioned handoff sidecar; these values are not synthesized into P1 fields.',
     'Routine confirmation state is not transferred. Generated P1 cards remain draft and require a new human confirmation.',
   ];
   if(intended.length===0)return{workspace:null,sourceText,supportedItems:0,intendedItems:0,unresolved:['There are no non-rejected routine items to convert.'],metadataNotTransferred,ready:false};

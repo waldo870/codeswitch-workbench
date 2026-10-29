@@ -1,4 +1,5 @@
 import { parseWorkspaceBundle, type WorkspaceBundle } from '../storage/workspace-db.js';
+import { validateRoutineHandoff, type RoutineHandoff } from '../p6g/routine-handoff.js';
 
 export const EXCHANGE_FORMAT = 'codeswitch-workbench-exchange';
 export const EXCHANGE_VERSION = 1;
@@ -25,6 +26,8 @@ export interface CollaborationPayload {
   bundle: WorkspaceBundle;
   baseAssignments: CollaborationAssignment[];
   assignments: CollaborationAssignment[];
+  /** Optional encrypted P6G sidecar. Legacy P6A exchanges omit this field. */
+  routineHandoff?: RoutineHandoff;
 }
 export interface CollaborationState { localWorkspaceId:string|null; assignments: CollaborationAssignment[]; baseAssignments: CollaborationAssignment[]; role: 'owner'|'collaborator'; peerWorkspaceId: string|null; baseDigest: string|null; sourceExchangeId: string|null; importedAt: string|null }
 interface ExchangeHeader { format: typeof EXCHANGE_FORMAT; version: 1; exchangeId: string; createdAt: string; expiresAt: string; salt: string; nonce: string; iterations: number }
@@ -44,6 +47,8 @@ async function derive(password: string, salt: Uint8Array): Promise<CryptoKey> {
 }
 
 export async function createEncryptedExchange(payload: Omit<CollaborationPayload,'exchangeId'>, password: string, now = new Date()): Promise<EncryptedExchange> {
+  const checkedBundle=parseWorkspaceBundle(payload.bundle);
+  if(payload.routineHandoff)validateRoutineHandoff(payload.routineHandoff,checkedBundle.workspace,payload.kind==='request'?checkedBundle.workspaceId:payload.sourceWorkspaceId);
   const exchangeId=randomId(),createdAt=now.toISOString(),expiresAt=new Date(now.getTime()+EXCHANGE_TTL_MS).toISOString();
   const salt=crypto.getRandomValues(new Uint8Array(16)),nonce=crypto.getRandomValues(new Uint8Array(12));
   const header:ExchangeHeader={format:EXCHANGE_FORMAT,version:1,exchangeId,createdAt,expiresAt,salt:toB64(salt),nonce:toB64(nonce),iterations:PBKDF2_ITERATIONS};
@@ -73,6 +78,7 @@ export async function decryptExchange(value: unknown, password: string, now = ne
   const p=parsed as CollaborationPayload;
   if(p.exchangeId!==x.exchangeId||!['request','reply'].includes(p.kind)||typeof p.sourceWorkspaceId!=='string'||!/^([0-9a-f]{64})$/.test(p.baseDigest)||!Array.isArray(p.assignments)||p.assignments.length>1000||!Array.isArray(p.baseAssignments)||p.baseAssignments.length>1000)throw new Error('Exchange payload metadata is invalid.');
   const bundle=parseWorkspaceBundle(p.bundle);
+  if(p.routineHandoff!==undefined)validateRoutineHandoff(p.routineHandoff,bundle.workspace,p.kind==='request'?bundle.workspaceId:p.sourceWorkspaceId);
   const cards=new Set(bundle.workspace.cards.map(c=>c.id));
   const validAssignments=(values:CollaborationAssignment[])=>{const seen=new Set<string>();for(const a of values){if(!a||!cards.has(a.cardId)||seen.has(a.cardId)||typeof a.assignee!=='string'||a.assignee.length>200||!['assigned','in_progress','done','blocked'].includes(a.status)||typeof a.result!=='string'||a.result.length>5000||typeof a.notes!=='string'||a.notes.length>5000||!Array.isArray(a.history)||a.history.length>500||a.history.some(h=>!h||typeof h.at!=='string'||!Number.isFinite(Date.parse(h.at))||typeof h.actor!=='string'||h.actor.length>200||typeof h.field!=='string'||h.field.length>100||!(h.before===null||typeof h.before==='string'&&h.before.length<=5000)||!(h.after===null||typeof h.after==='string'&&h.after.length<=5000)))throw new Error('Invalid collaboration assignment.');seen.add(a.cardId);}};
   validAssignments(p.assignments);validAssignments(p.baseAssignments);

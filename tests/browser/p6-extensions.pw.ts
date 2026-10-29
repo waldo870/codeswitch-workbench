@@ -16,7 +16,7 @@ test('P6D mock translation is a separate review aid and leaves the P1 card uncha
   expect(await card.innerText()).toBe(before);
 });
 
-test('P6E routine run converts only through parser and exports a normal draft Workspace for P6A', async ({ page }) => {
+test('P6E/P6G handoff preserves opt-in metadata inside encrypted P6A exchange and imports draft-only', async ({ page, browser }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Analyze Text' }).click();
   const routines = page.getByRole('region', { name: 'Routine templates' });
@@ -26,22 +26,56 @@ test('P6E routine run converts only through parser and exports a normal draft Wo
   await expect(routines.getByLabel('Template').locator('option').first()).toHaveText(/v2/);
   await routines.getByRole('button', { name: 'Create draft run' }).click();
   await expect(routines).toContainText('Draft routine only');
+  await routines.getByLabel('Prerequisites (one per line)').nth(1).fill('Check sandbox credentials');
   await routines.getByRole('button', { name: 'Confirm reviewed item' }).first().click();
   await expect(routines.getByText('confirmed').first()).toBeVisible();
   const conversion = routines.getByRole('region', { name: 'P1 encrypted collaboration conversion' });
   await expect(conversion).toContainText('2/2 routine items parsed');
   await expect(conversion).toContainText('all parser evidence verified');
-  const downloadPromise = page.waitForEvent('download');
   page.once('dialog', dialog => dialog.accept());
-  await conversion.getByRole('button', { name: 'Create draft Workspace JSON' }).click();
-  const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe('codeswitch-routine-p1-workspace.json');
-  const path = await download.path();
-  expect(path).toBeTruthy();
-  const fs = await import('node:fs/promises');
-  const bundle = JSON.parse(await fs.readFile(path!, 'utf8')) as { format: string; workspace: { cards: { current: { status: string; requiresConfirmation: boolean; evidence: { text: string; start: number; end: number } } }[] } };
-  expect(bundle.format).toBe('codeswitch-workspace');
-  expect(bundle.workspace.cards).toHaveLength(2);
-  expect(bundle.workspace.cards.every(card => card.current.status === 'draft' && card.current.requiresConfirmation)).toBe(true);
-  for (const state of bundle.workspace.cards) expect('Check sandbox credentials\nReview payment webhook'.slice(state.current.evidence.start, state.current.evidence.end)).toBe(state.current.evidence.text);
+  await conversion.getByRole('button', { name: 'Create and open draft handoff Workspace' }).click();
+  await expect(page.locator('#cards-heading')).toBeVisible();
+  const collab = page.getByRole('region', { name: 'Offline collaboration' });
+  const include=collab.getByRole('checkbox', { name: /Include linked routine metadata/ });
+  await expect(include).toBeVisible();
+  await include.check();
+  await collab.getByLabel('Local collaborator label').fill('local test peer');
+  await collab.getByLabel('Exchange passphrase').fill('test only passphrase 123');
+  const exchangeDownload=page.waitForEvent('download');
+  await collab.getByRole('button',{name:'Export encrypted request'}).click();
+  const exchange=await exchangeDownload;
+  const exchangePath=await exchange.path();
+  expect(exchangePath).toBeTruthy();
+  const file=await import('node:fs/promises');
+  const envelope=JSON.parse(await file.readFile(exchangePath!,'utf8')) as {ciphertext:string};
+  expect(envelope.ciphertext).toBeTruthy();
+  expect(JSON.stringify(envelope)).not.toContain('routineHandoff');
+
+  const receiver=await browser.newContext();
+  const receiverPage=await receiver.newPage();
+  await receiverPage.goto('/');
+  await receiverPage.getByLabel('Exchange passphrase').fill('test only passphrase 123');
+  await receiverPage.locator('#exchange-file').setInputFiles(exchangePath!);
+  await receiverPage.getByRole('button',{name:'Decrypt and preview'}).click();
+  const preview=receiverPage.getByRole('region',{name:'Exchange preview'});
+  await expect(receiverPage.getByText('Encrypted routine handoff metadata')).toBeVisible();
+  const preserve=receiverPage.getByRole('checkbox',{name:/Revalidate and preserve these fields locally/});
+  await preserve.check();
+  await preview.getByRole('button',{name:'Import as new workspace'}).click();
+  await expect(receiverPage.getByRole('status').filter({hasText:'routine metadata was revalidated and preserved'})).toBeVisible();
+  await expect(receiverPage.getByRole('region',{name:'Offline collaboration'}).getByRole('checkbox',{name:/Include linked routine metadata/})).toBeVisible();
+  await expect(receiverPage.getByRole('article',{name:'task card'}).first()).toContainText('draft');
+  await receiver.close();
+  await expect(page.getByRole('article', { name: 'task card' }).first()).toContainText('draft');
+});
+
+test('P6G human evaluation panel starts with NOT_RUN and exposes fixed protocols without fabricated data', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Analyze Text' }).click();
+  await expect(page.getByRole('heading', { name: 'Workflow time-to-value study' })).toBeVisible();
+  await expect(page.getByText('HUMAN_EVALUATION_NOT_RUN')).toBeVisible();
+  const panel=page.getByRole('region', { name: 'Workflow time-to-value study' });
+  await expect(panel.getByLabel('Scenario').locator('option')).toHaveCount(4);
+  await expect(panel.getByLabel('Method').locator('option')).toHaveCount(3);
+  await expect(panel.getByText(/No human observations recorded/)).toBeVisible();
 });
