@@ -1,0 +1,602 @@
+[
+  {
+    "id": "v3-zh-001",
+    "category": "zh-negation",
+    "input": "勿將 report 發布到正式環境；review deployment plan",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "publish",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-zh-002",
+    "category": "zh-negation",
+    "input": "不要把郵件寄出去；check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "send",
+        "polarity": "prohibited",
+        "scope": "email"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-zh-003",
+    "category": "zh-negation",
+    "input": "暫時不可以刪除 release log，先檢查測試設定",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "測試設定"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "delete",
+        "polarity": "prohibited",
+        "scope": "release"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-zh-004",
+    "category": "zh-negation",
+    "input": "禁止改動 production settings；review 報告",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "報告"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "modify",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-zh-005",
+    "category": "zh-negation",
+    "input": "不要執行那個 job；check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-en-001",
+    "category": "en-negation",
+    "input": "Never remove the logs; review deployment plan",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "delete",
+        "polarity": "prohibited",
+        "scope": "logs"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-en-002",
+    "category": "en-negation",
+    "input": "Please do not email the report; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "send",
+        "polarity": "prohibited",
+        "scope": "report"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-en-003",
+    "category": "en-negation",
+    "input": "We must not change staging settings; review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "modify",
+        "polarity": "prohibited",
+        "scope": "staging"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-en-004",
+    "category": "en-negation",
+    "input": "Do not run it after the review; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-en-005",
+    "category": "en-negation",
+    "input": "Avoid publishing this release; review deployment plan",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-mix-001",
+    "category": "mixed-negation",
+    "input": "先不要 remove logs；check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "delete",
+        "polarity": "prohibited",
+        "scope": "logs"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-mix-002",
+    "category": "mixed-negation",
+    "input": "Do not 寄出 email；review 報告",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "報告"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "send",
+        "polarity": "prohibited",
+        "scope": "email"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-mix-003",
+    "category": "mixed-negation",
+    "input": "不要 modify production settings；check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "modify",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-mix-004",
+    "category": "mixed-negation",
+    "input": "不得 publish release；review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "publish",
+        "polarity": "prohibited",
+        "scope": "release"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-mix-005",
+    "category": "mixed-negation",
+    "input": "不要 execute 這個 command；check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-pre-001",
+    "category": "prerequisite",
+    "input": "Do not publish the release unless I approve; review deployment plan",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "publish",
+        "polarity": "prohibited",
+        "scope": "release"
+      }
+    ],
+    "expectedPrerequisites": [
+      {
+        "relation": "prohibited_unless",
+        "predicate": "user approval",
+        "action": "publish",
+        "scope": "release"
+      }
+    ],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-pre-002",
+    "category": "prerequisite",
+    "input": "Do not delete logs until backup is complete; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "delete",
+        "polarity": "prohibited",
+        "scope": "logs"
+      }
+    ],
+    "expectedPrerequisites": [
+      {
+        "relation": "prohibited_until",
+        "predicate": "backup",
+        "action": "delete",
+        "scope": "logs"
+      }
+    ],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-pre-003",
+    "category": "prerequisite",
+    "input": "除非 security review 完成，否則不要 deploy to production；review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "deploy",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [
+      {
+        "relation": "prohibited_unless",
+        "predicate": "security review",
+        "action": "deploy",
+        "scope": "production"
+      }
+    ],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-pre-004",
+    "category": "prerequisite",
+    "input": "Do not send the email before I confirm; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "send",
+        "polarity": "prohibited",
+        "scope": "email"
+      }
+    ],
+    "expectedPrerequisites": [
+      {
+        "relation": "prohibited_until",
+        "predicate": "user confirmation",
+        "action": "send",
+        "scope": "email"
+      }
+    ],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-pre-005",
+    "category": "prerequisite",
+    "input": "Wait until approval, then deploy to production",
+    "expectedIntents": [],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-multi-001",
+    "category": "multi-intent",
+    "input": "check sandbox credentials, review payment webhook, and do not deploy to production",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      },
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "deploy",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-multi-002",
+    "category": "multi-intent",
+    "input": "Review the deployment plan; do not delete logs; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      },
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "delete",
+        "polarity": "prohibited",
+        "scope": "logs"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-multi-003",
+    "category": "multi-intent",
+    "input": "檢查測試設定，勿發布 release，然後 review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "測試設定"
+      },
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "publish",
+        "polarity": "prohibited",
+        "scope": "release"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-multi-004",
+    "category": "multi-intent",
+    "input": "Draft an English follow-up email to Vincent; do not send the email; review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "send",
+        "polarity": "prohibited",
+        "scope": "email"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-multi-005",
+    "category": "multi-intent",
+    "input": "Check sandbox credentials; change nothing in production; review deployment plan",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      },
+      {
+        "type": "task",
+        "action": "review",
+        "target": "deployment plan"
+      }
+    ],
+    "expectedConstraints": [
+      {
+        "action": "modify",
+        "polarity": "prohibited",
+        "scope": "production"
+      }
+    ],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": false
+  },
+  {
+    "id": "v3-amb-001",
+    "category": "ambiguous",
+    "input": "Maybe push it later; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-amb-002",
+    "category": "ambiguous",
+    "input": "Do not change that one; review payment webhook",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "review",
+        "target": "payment webhook"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-amb-003",
+    "category": "ambiguous",
+    "input": "Only prepare a draft and leave it there; check sandbox credentials",
+    "expectedIntents": [
+      {
+        "type": "task",
+        "action": "check",
+        "target": "sandbox credentials"
+      }
+    ],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-amb-004",
+    "category": "ambiguous",
+    "input": "Check sandbox credentials unless the test account is ready",
+    "expectedIntents": [],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  },
+  {
+    "id": "v3-amb-005",
+    "category": "ambiguous",
+    "input": "Handle the issue appropriately and report back",
+    "expectedIntents": [],
+    "expectedConstraints": [],
+    "expectedPrerequisites": [],
+    "expectsUnresolved": true
+  }
+]
