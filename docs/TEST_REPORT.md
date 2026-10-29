@@ -29,6 +29,10 @@ The already-present Windows Python 3.10 executable and Whisper `large-v3.pt` che
 
 The Owner ran the existing `pnpm benchmark:speech` in a general WSL terminal. The resulting JSON/Markdown files were reviewed without rerunning ASR. Windows Whisper large-v3 CPU reports 20/20 completed, 0 failed, 0 timeouts; zh-TW scripted CER 12/77 (15.58%), English spontaneous WER 75/430 (17.44%). The per-language sample counts, latency distributions, audio durations, RTFs and five highest normalized error-rate cases are documented in `docs/P5_ASR_EVALUATION.md` and `reports/p5-asr-results.md`. The report has 16 unverified P4G draft candidates; none were approved. No source transcript or audio is included in Git. This is not a mixed-language speech test.
 
+## P5D safety robustness benchmark
+
+P5D uses 100 project-authored text instructions and 300 deterministic `SYNTHETIC_ERROR_INJECTION` variants. No audio or Whisper result is involved. The 60/40 split is source-grouped and stratified 12/8 per category. `reports/p5d-baseline.*` records the P0 parser before the benchmark-only gate; `reports/p5d-final.*` records the separate conservative gate and per-case comparison. Only Development failures informed the gate and P4G-style draft proposals. Held-out metrics were read after the gate was fixed. P0/P1 product behavior is unchanged. See `docs/P5D_SAFETY_EVALUATION.md` for metric denominators, results, limitations and reproduction.
+
 Checks after the report/code metadata update: `pnpm typecheck`, `pnpm test` (341 tests), `pnpm build`, `pnpm demo`, `pnpm test:browser` (32 passed, 4 existing Live ASR tests skipped), and `git diff --check` passed. The Live ASR results were not regenerated during this review.
 
 Task: P0_TEXT_WORKCARDS_FOUNDATION. Local verification completed in the supplied development environment (session date: 2026-10-22).

@@ -1,0 +1,409 @@
+# P5D Baseline Safety Evaluation
+
+- Dataset: p5d-safety-v1
+- Dataset SHA-256: sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a
+- Status: **SYNTHETIC_ONLY**; live ASR: **false**
+- Generated: 2026-10-29T13:30:27.432Z
+- Splits: 240 development cases, 160 held-out cases (parent variants stay in the parent split)
+- Cases: 100 originals, 300 SYNTHETIC_ERROR_INJECTION variants
+
+## Metrics by split
+
+All rates include numerator/denominator. Intent exact match is for the pipeline's accepted cards; raw parser intent exact match is separately recorded in JSON. Constraint recall and scope use gold constraints and raw proposals. Unsupported-action rate is measured on the parser proposal; accepted-card unsupported action is reported separately. Negation flip is measured on raw parser proposals; negationFlipPrevented counts flips blocked by the final gate. Evidence validity measures parser-proposed spans. Safe-rejection denominator is all synthetic variants expected to require rejection. False-rejection denominator is original cases labeled as draft. Human-confirmation denominator is accepted draft cards. Complete workflow denominator is original cases; safe rejection never counts as complete success.
+
+| Split | Originals | Synthetic | Intent exact | Constraint recall | Scope accuracy | Negation flip | Unsupported action | Evidence validity | Safe rejection | False rejection | Confirmation | Complete workflow |
+| --- | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| development | 60 | 180 | 169/240 (70.42%) | 25/240 (10.42%) | 25/240 (10.42%) | 14/60 (23.33%) | 14/245 (5.71%) | 526/526 (100.00%) | 46/180 (25.56%) | 0/60 (0.00%) | 245/245 (100.00%) | 21/60 (35.00%) |
+| heldOut | 40 | 120 | 122/160 (76.25%) | 12/160 (7.50%) | 12/160 (7.50%) | 6/40 (15.00%) | 6/126 (4.76%) | 319/319 (100.00%) | 43/120 (35.83%) | 5/40 (12.50%) | 126/126 (100.00%) | 11/40 (27.50%) |
+| all | 100 | 300 | 291/400 (72.75%) | 37/400 (9.25%) | 37/400 (9.25%) | 20/100 (20.00%) | 20/371 (5.39%) | 845/845 (100.00%) | 89/300 (29.67%) | 5/100 (5.00%) | 371/371 (100.00%) | 32/100 (32.00%) |
+
+## Failure cases
+
+- zh-prohibition-009 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-010 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-011 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-012 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-013 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-014 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-015 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-016 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-017 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-018 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-019 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-020 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-009 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-010 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-011 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-012 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-013 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-014 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-015 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-016 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-017 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-018 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-019 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-020 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-009 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-010 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-011 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-012 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-013 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-014 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-015 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-016 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-017 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-018 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-019 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-020 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-005 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-006 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-007 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-008 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-009 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-010 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-011 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-012 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-013 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-014 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-015 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-016 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-017 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-018 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-019 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-020 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-005 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-006 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-007 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-008 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-009 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-010 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-011 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-012 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-013 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-014 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-015 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-016 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-017 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-018 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-019 (development, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-020 (held-out, original): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-001--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-001--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-001--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-002--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-002--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-002--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-003--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-003--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-003--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-004--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-004--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-004--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 1/1 (100.00%), scope 1/1 (100.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-005--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-005--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-005--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-006--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-006--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-006--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-007--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-007--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-007--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-008--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-008--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-008--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 1/1 (100.00%), scope 1/1 (100.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-009--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-009--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-009--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-010--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-010--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-010--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-011--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-011--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-011--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-012--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-012--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-012--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-013--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-013--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-013--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-014--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-014--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-014--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-015--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-015--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-015--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-016--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-016--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-016--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-017--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-017--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-017--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-018--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-018--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-018--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-019--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-019--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-019--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- zh-prohibition-020--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-020--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- zh-prohibition-020--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-001--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-001--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-001--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-002--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-002--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-002--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-003--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-003--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-003--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-004--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-004--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-004--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-005--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-005--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-005--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-006--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-006--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-006--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-007--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-007--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-007--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-008--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- en-prohibition-008--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-008--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-009--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-009--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-009--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-010--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-010--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-010--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-011--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-011--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-011--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-012--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-012--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-012--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-013--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-013--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-013--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-014--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-014--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-014--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-015--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-015--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-015--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-016--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-016--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-016--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-017--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-017--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-017--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-018--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-018--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-018--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-019--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-019--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-019--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- en-prohibition-020--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-020--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- en-prohibition-020--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-001--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- mixed-prohibition-001--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-001--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-002--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- mixed-prohibition-002--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-002--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-003--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- mixed-prohibition-003--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-003--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-004--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- mixed-prohibition-004--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-004--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-005--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-005--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-005--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-006--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-006--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-006--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-007--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-007--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-007--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-008--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-008--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-008--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-009--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-009--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-009--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-010--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-010--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-010--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-011--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-011--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-011--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-012--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-012--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-012--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-013--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-013--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-013--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-014--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-014--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-014--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-015--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-015--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-015--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-016--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-016--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-016--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-017--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-017--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-017--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-018--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-018--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-018--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-019--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-019--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-019--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- mixed-prohibition-020--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-020--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- mixed-prohibition-020--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-001--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- precondition-exception-001--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 1/1 (100.00%), scope 1/1 (100.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-001--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-002--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- precondition-exception-002--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-002--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-003--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- precondition-exception-003--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 1/1 (100.00%), scope 1/1 (100.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-003--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-004--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/2 (50.00%), safeReject=false, blocked=false
+- precondition-exception-004--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 1/1 (100.00%), scope 1/1 (100.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-004--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-005--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-005--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-005--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-006--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-006--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-006--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-007--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-007--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-007--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-008--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-008--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-008--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-009--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-009--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-009--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-010--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-010--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-010--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-011--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-011--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-011--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-012--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-012--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-012--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-013--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-013--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-013--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-014--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-014--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-014--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-015--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-015--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-015--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-016--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-016--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-016--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-017--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-017--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-017--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-018--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-018--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-018--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-019--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-019--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-019--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- precondition-exception-020--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-020--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- precondition-exception-020--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-001--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/3 (33.33%), safeReject=false, blocked=false
+- multi-intent-ambiguous-001--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-001--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-002--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/3 (33.33%), safeReject=false, blocked=false
+- multi-intent-ambiguous-002--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-002--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-003--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/3 (33.33%), safeReject=false, blocked=false
+- multi-intent-ambiguous-003--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-003--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-004--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 1/1 (100.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-004--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-004--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-005--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-005--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-005--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-006--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-006--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-006--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-007--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-007--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-007--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-008--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-008--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-008--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-009--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-009--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-009--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-010--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-010--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-010--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-011--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-011--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-011--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-012--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-012--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-012--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-013--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-013--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-013--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-014--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-014--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-014--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-015--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-015--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-015--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-016--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-016--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-016--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-017--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-017--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-017--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-018--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-018--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-018--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-019--negation_deletion (development, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-019--homophone_token_substitution (development, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/2 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-019--punctuation_boundary_change (development, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/1 (0.00%), safeReject=false, blocked=false
+- multi-intent-ambiguous-020--negation_deletion (held-out, synthetic_variant, negation_deletion): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-020--homophone_token_substitution (held-out, synthetic_variant, homophone_token_substitution): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+- multi-intent-ambiguous-020--punctuation_boundary_change (held-out, synthetic_variant, punctuation_boundary_change): recall 0/1 (0.00%), scope 0/1 (0.00%), unsupported 0/0 (n/a), safeReject=true, blocked=false
+
+## Outcome flags (overlapping counts)
+
+- Constraint recognized: 37
+- Safe rejected / unresolved: 94
+- Constraint missed: 363
+- Incorrect or unsupported raw parser work card: 20
+- Negation-deletion input not recoverable from text: 100
+- Raw negation flips blocked by final gate: 0
+
+## P4G review drafts
+
+- None generated in baseline mode.
+
+## Limitations
+
+- All inputs are original synthetic text. The three corruptions are deterministic error injections, not Whisper outputs or empirical ASR frequencies.
+- The held-out split is locked by source case ID; variants inherit their parent split. Do not use held-out outcomes to change rules.
+- The P0 parser covers a limited grammar. A safe rejection is not counted as complete workflow success.
+- A deleted negation may make the remaining transcript semantically affirmative; without source audio or ASR alternatives, the original intent cannot be reconstructed from text alone.
