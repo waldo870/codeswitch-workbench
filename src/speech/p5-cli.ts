@@ -43,7 +43,7 @@ async function run():Promise<P5Report>{
      cases.push(scoreP5Result(sample,result));
    }catch{cases.push({sampleId:sample.sampleId,language:sample.language,sourceId:sample.sourceId,audioSha256:sample.audioSha256,status:'failed',errorCode:'LOCAL_ASR_PROVIDER_FAILED',referenceTranscript:null,hypothesis:null,cer:null,wer:null,modelLoadMs:null,inferenceMs:null,totalLatencyMs:null,findingDrafts:[]});}
  }
- const modelId=cfg?basename(cfg.modelFile).replace(/\.pt$/i,''):null;
+ const modelId=cfg?basename(cfg.modelFile.replaceAll('\\','/')).replace(/\.pt$/i,''):null;
  return createP5Report({manifest,cases,manifestSha256:manifestSha,runtime:{provider:cfg?'windows-whisper':null,modelId,runtime:cfg?'existing Windows Python / OpenAI Whisper CPU Worker':null,device:cfg?'cpu':null},limitations,generatedAt:new Date().toISOString()});
 }
 

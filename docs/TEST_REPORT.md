@@ -25,6 +25,12 @@ The Owner-provided Common Voice archives were found under the supplied `voice/` 
 
 The already-present Windows Python 3.10 executable and Whisper `large-v3.pt` checkpoint were found, but the worker configuration environment variables were absent. A direct attempt to start Windows Python reported `WSL (9 - ) ERROR: UtilBindVsockAnyPort:309: socket failed 1`, before Whisper import. Therefore the two-language smoke and live inference were not run. `pnpm benchmark:speech` validated all 20 source/prepared file pairs, hashes, WAV formats, and limits, then emitted `NOT_RUN`: 20 not-run cases, 0 attempts, null CER/WER/latency, and 0 P4G drafts. It did not run transcription. The benchmark report records manifest SHA-256 `sha256:6939e4d0977371bfadd109bee5a04275e03c0d8ecbc6fb37e86ce26eb2294b11` and the distinct dataset release per language.
 
+## P5 live result review (2026-10-29)
+
+The Owner ran the existing `pnpm benchmark:speech` in a general WSL terminal. The resulting JSON/Markdown files were reviewed without rerunning ASR. Windows Whisper large-v3 CPU reports 20/20 completed, 0 failed, 0 timeouts; zh-TW scripted CER 12/77 (15.58%), English spontaneous WER 75/430 (17.44%). The per-language sample counts, latency distributions, audio durations, RTFs and five highest normalized error-rate cases are documented in `docs/P5_ASR_EVALUATION.md` and `reports/p5-asr-results.md`. The report has 16 unverified P4G draft candidates; none were approved. No source transcript or audio is included in Git. This is not a mixed-language speech test.
+
+Checks after the report/code metadata update: `pnpm typecheck`, `pnpm test` (341 tests), `pnpm build`, `pnpm demo`, `pnpm test:browser` (32 passed, 4 existing Live ASR tests skipped), and `git diff --check` passed. The Live ASR results were not regenerated during this review.
+
 Task: P0_TEXT_WORKCARDS_FOUNDATION. Local verification completed in the supplied development environment (session date: 2026-10-22).
 
 ## Environment and provenance

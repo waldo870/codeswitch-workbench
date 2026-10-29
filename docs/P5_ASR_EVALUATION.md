@@ -56,6 +56,19 @@ The CLI uses the existing `WindowsWhisper` provider and fails closed on a missin
 
 For a transcript/reference discrepancy, a deterministic classifier can emit a **draft candidate** in the P4G `speech_recognition` category tagged with one or more of: missing words, incorrect technical terms, punctuation, negation, language switching, unsupported transcript, or performance. It includes dataset/sample/hash references, not the speech content. Each draft says the observation is unverified and requires human review. It does not create a Workspace Feedback record, approve a proposal, mark a defect, change code, create a GitHub Issue, or produce a work card. Public dataset utterances are not workplace commands and are never fed into the workflow parser as user instructions.
 
-## Current results
+## Live results review (2026-10-29)
 
-The current P5 report records 10 zh-TW and 10 English local samples, 0 ASR attempts, 20 not-run cases, null CER/WER/latency, and `NOT_RUN`. The manifest SHA-256 is recorded; per-language cohort revisions are pinned separately. The report contains sample IDs and prepared audio hashes, not transcript text. This is a runtime blocker, not a failed model and not a passing benchmark. No P3C real bilingual workplace speech or Hailo live result is claimed.
+The existing live result was reviewed without rerunning ASR. Windows Whisper large-v3 CPU completed all 20 samples: zh-TW CER **12/77 = 15.58%** and English WER **75/430 = 17.44%**. These metrics are per-language and are not combined. The samples are separate zh-TW scripted read speech and English spontaneous speech; this is **not** a Chinese-English code-switch test, workplace-command evaluation, negation-preservation test, or Hailo result.
+
+| Cohort | Samples | Audio duration total / median / range | Model-load P50/P95 | Inference P50/P95 | Total provider latency P50/P95 | Inference RTF P50/P95 | End-to-end RTF P50/P95 |
+| --- | ---: | --- | --- | --- | --- | --- | --- |
+| zh-TW scripted | 10 | 38.964 s / 3.816 s / 2.520–5.076 s | 9.15 / 9.91 s | 13.69 / 74.17 s | 26.94 / 96.88 s | 3.73 / 29.43 | 7.26 / 38.44 |
+| English spontaneous | 10 | 178.956 s / 4.968 s / 2.052–70.992 s | 8.95 / 9.24 s | 13.55 / 130.65 s | 26.01 / 142.65 s | 2.55 / 6.47 | 5.07 / 12.67 |
+
+Durations were read from the prepared PCM WAV headers. Inference RTF is transcription duration divided by audio duration; end-to-end RTF uses total provider latency divided by audio duration. P50/P95 use the report's nearest-rank percentile convention; with 10 samples, P95 is the maximum. Model loading, transcription and total provider latency are separate quantities: total latency includes process/validation overhead and model loading, and should not be added to the separately reported timings.
+
+The per-sample highest normalized error rates were `en-test-01` 2/1 words (200%; a one-word denominator makes this rate unstable), `zh-tw-test-01` 5/4 characters (125%), `zh-tw-test-02` 4/10 characters (40%), `zh-tw-test-09` 2/7 characters (28.57%), and `en-test-03` 61/217 words (28.11%). The reports contain these opaque sample IDs and counts only, not the transcript text.
+
+There are **16 case-level P4G draft candidates**, all `verifiedDefect=false`, still requiring human review, with none approved or integrated. Their overlapping heuristic tags count: missing words 8, punctuation 6, performance 7, incorrect technical terms 4, unsupported transcript 2; negation and language-switching tags 0. These are classifier labels, not independent findings. In particular, the current technical-term classifier treats changed ASCII tokens broadly; the four tags do not establish technical terminology errors. No candidate was converted into a P4G product feedback record.
+
+`Dataset SHA-256: NOT_AVAILABLE` means a hash of either full source corpus/archive was not computed. The report retains the exact selected-sample manifest SHA-256 (`sha256:6939e4d0977371bfadd109bee5a04275e03c0d8ecbc6fb37e86ce26eb2294b11`), and the ignored local manifest contains original and prepared audio hashes. These do not stand in for a full dataset hash. The JSON report omits transcript text; audio and manifest remain under the ignored local directory. No P3C real code-switch speech or Hailo live result is claimed.
