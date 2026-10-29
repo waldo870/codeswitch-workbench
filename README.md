@@ -50,6 +50,31 @@ P0 provides task, calendar and email_draft contracts, a deterministic extraction
 
 P6 adds offline routine templates, human time-to-value observation tooling, metadata-preserving encrypted handoff, and an offline daily planner. P6H tracks Today, Upcoming, Blocked and Completed items, task dependencies, owners, due dates, progress, end-of-day review and tomorrow draft plans. Planner progress is separate from P1 card confirmation. P6G human evaluation remains `HUMAN_EVALUATION_NOT_RUN` until real participants provide observations.
 
+### P7A/P7B research status
+
+**Verified**
+
+- Windows Whisper ASR (local CPU workflow; see the P5 report for the measured sample cohort and limits).
+- Deterministic Work Cards with evidence and constraint validation.
+- Offline Workspace persistence.
+- Encrypted offline collaboration exchange.
+- Routine templates and the daily planner.
+
+**Experimental / Mock only**
+
+- Nemotron 0.6B provider contract.
+- Dual ASR coordinator.
+- Partial/final transcript event contract.
+- Dual review and disagreement cues.
+
+These P7A/P7B items have contract and Mock tests only; they are not live ASR implementations and do not represent device validation.
+
+**Not yet verified**
+
+- Nemotron Windows CPU or Vulkan inference.
+- Hailo-10H live inference.
+- Real Chinese-English code-switch speech evaluation.
+
 ## Architecture
 
 `text → deterministic adapter → cards + constraints + unresolved → validator → CLI JSON`
