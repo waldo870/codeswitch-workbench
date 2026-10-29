@@ -3,19 +3,19 @@
 - Dataset: p5d-safety-v1
 - Dataset SHA-256: sha256:696f86d9865e5aecace2bab0d01c09d0b5b2d7e49195e7c1b4c110c0e7a1a86a
 - Status: **SYNTHETIC_ONLY**; live ASR: **false**
-- Generated: 2026-10-29T13:30:28.794Z
+- Generated: 2026-10-29T13:32:59.818Z
 - Splits: 240 development cases, 160 held-out cases (parent variants stay in the parent split)
 - Cases: 100 originals, 300 SYNTHETIC_ERROR_INJECTION variants
 
 ## Metrics by split
 
-All rates include numerator/denominator. Intent exact match is for the pipeline's accepted cards; raw parser intent exact match is separately recorded in JSON. Constraint recall and scope use gold constraints and raw proposals. Unsupported-action rate is measured on the parser proposal; accepted-card unsupported action is reported separately. Negation flip is measured on raw parser proposals; negationFlipPrevented counts flips blocked by the final gate. Evidence validity measures parser-proposed spans. Safe-rejection denominator is all synthetic variants expected to require rejection. False-rejection denominator is original cases labeled as draft. Human-confirmation denominator is accepted draft cards. Complete workflow denominator is original cases; safe rejection never counts as complete success.
+All rates include numerator/denominator. Proposal intent exact match is raw parser output; intent exact match is for cards accepted by the evaluation pipeline. Constraint recall and scope use gold constraints and raw proposals. Unsupported-action rate is measured on parser proposals; accepted-card unsupported action is separate. Negation flip is measured on raw parser proposals; negationFlipPrevented counts flips blocked by the final gate. Evidence validity measures parser-proposed spans. Safe-rejection denominator is all synthetic variants expected to require rejection. False-rejection denominator is original cases labeled as draft. Human-confirmation denominator is accepted draft cards. Complete workflow denominator is original cases; safe rejection never counts as complete success.
 
-| Split | Originals | Synthetic | Intent exact | Constraint recall | Scope accuracy | Negation flip | Unsupported action | Evidence validity | Safe rejection | False rejection | Confirmation | Complete workflow |
-| --- | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| development | 60 | 180 | 18/240 (7.50%) | 25/240 (10.42%) | 25/240 (10.42%) | 14/60 (23.33%) | 14/245 (5.71%) | 526/526 (100.00%) | 169/180 (93.89%) | 43/60 (71.67%) | 42/42 (100.00%) | 17/60 (28.33%) |
-| heldOut | 40 | 120 | 31/160 (19.38%) | 12/160 (7.50%) | 12/160 (7.50%) | 6/40 (15.00%) | 6/126 (4.76%) | 319/319 (100.00%) | 114/120 (95.00%) | 30/40 (75.00%) | 23/23 (100.00%) | 10/40 (25.00%) |
-| all | 100 | 300 | 49/400 (12.25%) | 37/400 (9.25%) | 37/400 (9.25%) | 20/100 (20.00%) | 20/371 (5.39%) | 845/845 (100.00%) | 283/300 (94.33%) | 73/100 (73.00%) | 65/65 (100.00%) | 27/100 (27.00%) |
+| Split | Originals | Synthetic | Proposal intent exact | Accepted intent exact | Constraint recall | Scope accuracy | Negation flip | Unsupported proposal | Unsupported accepted | Evidence validity | Safe rejection | False rejection | Confirmation | Complete workflow |
+| --- | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| development | 60 | 180 | 169/240 (70.42%) | 18/240 (7.50%) | 25/240 (10.42%) | 25/240 (10.42%) | 14/60 (23.33%) | 14/245 (5.71%) | 10/42 (23.81%) | 526/526 (100.00%) | 169/180 (93.89%) | 43/60 (71.67%) | 42/42 (100.00%) | 17/60 (28.33%) |
+| heldOut | 40 | 120 | 122/160 (76.25%) | 31/160 (19.38%) | 12/160 (7.50%) | 12/160 (7.50%) | 6/40 (15.00%) | 6/126 (4.76%) | 5/23 (21.74%) | 319/319 (100.00%) | 114/120 (95.00%) | 30/40 (75.00%) | 23/23 (100.00%) | 10/40 (25.00%) |
+| all | 100 | 300 | 291/400 (72.75%) | 49/400 (12.25%) | 37/400 (9.25%) | 37/400 (9.25%) | 20/100 (20.00%) | 20/371 (5.39%) | 15/65 (23.08%) | 845/845 (100.00%) | 283/300 (94.33%) | 73/100 (73.00%) | 65/65 (100.00%) | 27/100 (27.00%) |
 
 ## Baseline vs final fail-closed pipeline
 
