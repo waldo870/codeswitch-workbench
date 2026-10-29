@@ -146,7 +146,7 @@ pnpm exec playwright install chromium
 pnpm test:browser
 ```
 
-The local verification reused an existing Chromium cache; no browser download was needed. CI is configured to install Chromium and run the browser tests after build. CI has not been run on GitHub for this branch. A bundled Noto Sans TC font supplies Chinese glyphs locally without contacting a font CDN; its third-party license is recorded separately.
+The initial P1 local verification reused an existing Chromium cache; no browser download was needed. CI is configured to install Chromium and run browser tests after build. At that P1 checkpoint, GitHub CI had not yet run for the feature branch; later release runs are per commit. A bundled Noto Sans TC font supplies Chinese glyphs locally without contacting a font CDN; its third-party license is recorded separately.
 
 ## P7 test evidence
 

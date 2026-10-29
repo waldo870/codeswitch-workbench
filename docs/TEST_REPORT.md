@@ -394,4 +394,6 @@ P6H stores versioned date plans in the existing IndexedDB extension store. It va
 | `pnpm test:browser` | PASS; 42 passed, 4 opt-in Live ASR cases skipped (not counted as passes) |
 | `git diff --check` | PASS |
 
+The P7 release was fast-forwarded to public `main` at `c832ee82a38e790c687b8e96ecf160675ecf9cbf`. GitHub Actions CI run [40960687099](https://github.com/waldo870/codeswitch-workbench/actions/runs/40960687099) completed successfully on that commit, including install, typecheck, tests, demo, build, browser suite, and benchmark commands. GitHub emitted runner/action Node 20 deprecation and Ubuntu runner migration notices; they did not fail the run.
+
 Browser P6H coverage is simulated Chromium desktop/mobile: create a plan from a linked routine, hold a dependent item until prerequisite completion, create the next-day draft, reload with the cached app shell while browser context is offline, encrypt/export and import plans into a second isolated browser context. This is not a physical network outage or physical cross-device acceptance. The imported P1 work cards remain drafts. No real human P6G observations were added. No P5D/P1 gate, Windows runtime, Hailo adapter, model, or audio data was changed.
