@@ -12,6 +12,26 @@ Current status: Deterministic work-card prototype with P3A/P3B offline speech wo
 
 Hardware integration: Planned with ASUS UGen300 / Hailo-10H; not yet tested on competition hardware
 
+## 30-second introduction
+
+CodeSwitch turns a mixed Traditional Chinese and English work request into source-linked draft cards. People inspect the evidence and constraints, edit each card, and confirm it themselves. The browser keeps workspaces locally; routines can feed a daily plan, and reviewed workspace exchanges can be passphrase-encrypted for offline handoff. Nothing sends email, deploys software, or runs a task.
+
+```mermaid
+flowchart LR
+  A[Text or reviewed local transcript] --> B[Deterministic parser]
+  B --> C[Evidence and constraint validation]
+  C --> D[Editable draft cards]
+  D --> E[Human review and confirmation]
+  E --> F[Local export or encrypted file handoff]
+  G[P6E routine template] --> H[P6G metadata sidecar]
+  H --> I[P6H daily planner]
+  I --> F
+  J[IndexedDB workspace] <--> D
+  J <--> I
+```
+
+For the reproducible product tour, see [the three-minute demo walkthrough](docs/DEMO_WALKTHROUGH.md). Three minutes is the presentation target; it is not a measured human time-to-value result.
+
 ## Product overview
 
 An offline-first multilingual voice-to-workflow assistant for individual professionals who mix Traditional Chinese, English and technical terms. P0 implements deterministic text-to-workcards; P1 adds an editable browser workspace with human review, local persistence and JSON export; P3A/P3B add local offline speech transcription with transcript review before deterministic extraction. The P2 local LLM remains an evaluation-only feature and is not enabled in the product UI.
@@ -27,6 +47,8 @@ Professionals often describe local context in Chinese while naming tools and tec
 ## Feature scope
 
 P0 provides task, calendar and email_draft contracts, a deterministic extraction adapter, required/prohibited constraints, source evidence, unresolved clauses, independent validation and a CLI. No API keys, network inference, accounts, external tools or hardware are needed at runtime. Every produced card starts as a draft requiring confirmation. P1 records human edits and review decisions; no execution API exists.
+
+P6 adds offline routine templates, human time-to-value observation tooling, metadata-preserving encrypted handoff, and an offline daily planner. P6H tracks Today, Upcoming, Blocked and Completed items, task dependencies, owners, due dates, progress, end-of-day review and tomorrow draft plans. Planner progress is separate from P1 card confirmation. P6G human evaluation remains `HUMAN_EVALUATION_NOT_RUN` until real participants provide observations.
 
 ## Architecture
 
@@ -77,7 +99,11 @@ The text-to-workcard engine is a narrow deterministic baseline, not completed mu
 
 ## Roadmap
 
-See [ROADMAP](docs/ROADMAP.md) for P0 through P5. P1 remains the editable product UI baseline; P3A/P3B add a reviewed offline speech path. P2 local LLM work remains research-only.
+See [ROADMAP](docs/ROADMAP.md) for project stages. P1 remains the editable product UI baseline; P3A/P3B add a reviewed offline speech path. P2 local LLM work remains research-only. Hailo-10H Stage II is hardware readiness work only: no Hailo runtime, Whisper HEF, accuracy, latency or competition-device result is claimed. See [P4 readiness](docs/P4_HAILO_READINESS.md).
+
+### Hailo-10H Stage II readiness
+
+The repository contains a planned deployment checklist and an explicitly Mock-only worker contract. Stage II still requires the actual ASUS UGen300/Hailo-10H, then-current official SDK/runtime, compatible Whisper artifact and license review, device discovery, offline installation procedure and measured end-to-end tests. W7900/ROCm or Windows LM Studio results do not establish Hailo compatibility. No Hailo SDK, HEF, Hailo inference, accuracy or latency has been tested here.
 
 ## Development and data
 
@@ -121,6 +147,10 @@ pnpm test:browser
 ```
 
 The local verification reused an existing Chromium cache; no browser download was needed. CI is configured to install Chromium and run the browser tests after build. CI has not been run on GitHub for this branch. A bundled Noto Sans TC font supplies Chinese glyphs locally without contacting a font CDN; its third-party license is recorded separately.
+
+## P7 test evidence
+
+Latest P7 local gates: frozen install, typecheck, production build and CLI demo passed; Vitest passed **411/411**; Browser passed **42**, with **4 opt-in Live ASR checks skipped** (not counted as passes). The P6H browser flow covered IndexedDB plan persistence, dependency blocking, tomorrow drafts, cached-shell offline reload and explicit encrypted plan import. These are engineering/browser simulation results, not human workflow observations or physical cross-device acceptance. See [the full test report](docs/TEST_REPORT.md).
 
 ## P2A: local LLM evaluation (separate from the UI)
 

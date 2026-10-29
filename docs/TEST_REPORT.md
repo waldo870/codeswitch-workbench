@@ -378,3 +378,20 @@ Added a benchmark-only scoring-v2 audit, a versioned bilingual constraint/prereq
 P5D.2 measured Development complete success 17/60 original cases and independent validation v4 1/24. Development constraint recall/scope 159/240 and 124/240, prerequisite direction 22/48, negation flips 14/60 synthetic deletions, unsupported raw actions 14/245, unsupported constraints 35/159, evidence location/lexical alignment 443/443, draft retention 245/245, false rejection 0/194. Independent validation constraint recall/scope 13/19 and 12/19, prerequisites 4/4, unsupported actions 0/26, unsupported constraints 2/14, evidence location 45/45 (lexical alignment 44/45), draft retention 27/27 and false rejection 0/23. The two earlier authored sets (66 cases combined) were viewed during implementation and are reported only as development calibration. The lexical evidence score is not a human semantic entailment evaluation. This experiment is synthetic text only, not ASR, and is not connected to P1.
 
 Final P5D.2 gates: `pnpm install --frozen-lockfile` PASS; `pnpm typecheck` PASS; `pnpm test` PASS (360/360 across 27 files); `pnpm build` PASS; `pnpm demo` PASS (3 draft cards, 1 prohibited constraint, validation PASS); `pnpm test:browser` PASS (32 passed, 4 existing opt-in Live ASR tests skipped); `pnpm analyze:p5d2` PASS (historical P5D fixture/report hash check passed, output v2 JSON/Markdown, historical held-out candidate evaluation NOT_RUN); `git diff --check` PASS. Browser skips are not counted as passes. No live ASR, P1 integration, hardware test, remote operation, or model download occurred.
+# P7 Product Readiness (2026-10-30)
+
+Starting from verified `main` / `origin/main` SHA `82cc43507357decb610b224909636289beea363e`, created local branch `feature/p7-product-readiness`. Added README architecture/demo intro, `docs/DEMO_WALKTHROUGH.md`, `docs/P6G_HUMAN_EVALUATION.md`, and P6H daily planner contract/UI. P6G still has no human observations; the guide and existing local result-entry instrument do not constitute a participant study.
+
+P6H stores versioned date plans in the existing IndexedDB extension store. It validates P6E/P6G owner/deadline metadata and prerequisite direction against P1 source evidence, retains P1 constraints, enforces prerequisite completion, tracks local progress independently of P1 confirmation, and creates a tomorrow draft after end-of-day review. The optional encrypted P6A payload includes P6H only alongside its P6G handoff. Import remaps the local workspace ID, requires explicit preservation and refuses conflicting local data; it does not inherit P1 confirmation.
+
+| Command | Result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | PASS; up to date |
+| `pnpm typecheck` | PASS |
+| `pnpm test` | PASS; 411/411, 36 files |
+| `pnpm build` | PASS |
+| `pnpm demo` | PASS; 3 draft cards, 1 prohibited constraint, validation PASS |
+| `pnpm test:browser` | PASS; 42 passed, 4 opt-in Live ASR cases skipped (not counted as passes) |
+| `git diff --check` | PASS |
+
+Browser P6H coverage is simulated Chromium desktop/mobile: create a plan from a linked routine, hold a dependent item until prerequisite completion, create the next-day draft, reload with the cached app shell while browser context is offline, encrypt/export and import plans into a second isolated browser context. This is not a physical network outage or physical cross-device acceptance. The imported P1 work cards remain drafts. No real human P6G observations were added. No P5D/P1 gate, Windows runtime, Hailo adapter, model, or audio data was changed.

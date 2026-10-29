@@ -18,6 +18,8 @@
 - **P6G: Metadata integrity and workflow time-to-value** — versioned opt-in metadata sidecar through the existing encrypted P6A exchange; source/evidence/dependency validation and confirmation reset; local human-observation instrument for three methods and four fixed scenarios. Human study remains `HUMAN_EVALUATION_NOT_RUN`; Hailo Live and P3C real bilingual speech remain NOT_RUN.
 - **P6: Target-hardware end-to-end validation** — test speech through confirmed local exports, constraint preservation, privacy and recovery on Hailo/UGen300 hardware. Not started.
 
+- **P7 product readiness** — product introduction and reproducible demo guide, fixed-protocol P6G human-study procedure, and P6H offline daily planning on validated P6E/P6G metadata. P6H stores local plans, directed prerequisites, owner/deadline provenance, progress and end-of-day review. Encrypted exchange is an opt-in P6A sidecar and conflicting local plans are not overwritten. P6G has no real participant observations yet. Hailo-10H Stage II hardware acceptance and P3C real bilingual speech remain not run.
+
 Each phase requires its own scope and acceptance review. P1 does not imply completion of P2–P5. Optional later export formats include ICS and Markdown; neither is implemented.
 
 - **P2A.1: LM Studio runtime adapter** — shared bounded transport/decoder, explicit local model selection and fixed 8-case smoke gate implemented. Scoring audit fixed time aliases outside time slots without changing gold. The original delivery had no runtime; P2A.4 subsequently measured Gemma 4B Full Smoke 0/8. Its 60-case strict benchmark remains NOT_RUN. P2B decision remains deferred.

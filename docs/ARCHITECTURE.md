@@ -143,3 +143,10 @@ P6E stores versioned templates and independent routine-run cards in its extensio
 ### P6G workflow time-to-value
 
 `src/evaluation/p6g-evaluation.ts` defines four fixed scenario briefs and three methods (manual, routine-template, encrypted-collaboration), validates human-observation records and computes duration percentiles and explicit metric denominators. The browser instrument stores observations in a separate IndexedDB extension namespace and exports them only on user action. The CLI starts from no observations by default; automated test durations cannot satisfy the `human_observation` contract. Current report status is `HUMAN_EVALUATION_NOT_RUN`.
+# P7 product layer: P6H daily planning
+
+P6H is an additive IndexedDB extension namespace (`p6h.daily-plans`, schema v1) over a P1 workspace and its validated P6G routine handoff. The sidecar links routine card IDs to stable P1 card IDs, keeps dependent-to-prerequisite edges, copies routine owner/deadline with provenance markers, and records local planner dates/progress/review. Every read and write revalidates against current P1 evidence and constraints. It does not change the P1 card contract or confirmation state.
+
+The planner buckets Today, Upcoming, Blocked and Completed. Progress completion is separate from P1 confirmation. A card with an unsatisfied prerequisite cannot be marked complete. End-of-day carry-forward creates a new plan with `not_started` progress and records completed prerequisites as satisfied; it never creates a calendar event or external action.
+
+P6A encrypted exchange optionally includes the P6H collection only alongside its P6G handoff. The exchange schema extension is optional, preserving compatibility with existing P6A files. Decryption validates the collection against the authenticated workspace/evidence; import requires explicit preservation, remaps the destination workspace ID and refuses to overwrite conflicting local data. Existing workspace imports still invalidate P1 confirmations. See [P6H planner](P6H_DAILY_WORKFLOW.md).

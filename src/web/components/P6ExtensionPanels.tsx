@@ -2,6 +2,7 @@ import type { WorkspaceRecord, WorkspaceRepository } from '../storage/workspace-
 import { P6TranslationPanel } from './P6TranslationPanel.js';
 import { P6RoutineTemplatesPanel } from './P6RoutineTemplatesPanel.js';
 import { P6GTimeToValuePanel } from './P6GTimeToValuePanel.js';
+import { P6HDailyPlannerPanel } from './P6HDailyPlannerPanel.js';
 
 export interface P6ExtensionPanelProps { record:WorkspaceRecord|null; repository:WorkspaceRepository; onWorkspaceCreated?:(id:string)=>void }
 
@@ -11,5 +12,6 @@ export function P6ExtensionPanels(props:P6ExtensionPanelProps){
     <P6TranslationPanel {...props}/>
     <P6RoutineTemplatesPanel {...props}/>
     <P6GTimeToValuePanel {...props}/>
+    <P6HDailyPlannerPanel record={props.record}/>
   </>;
 }

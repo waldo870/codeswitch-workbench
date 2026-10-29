@@ -1,7 +1,7 @@
 import { WORKSPACE_DB_NAME, WORKSPACE_DB_VERSION } from './workspace-db.js';
 
 /** Namespaced IndexedDB extension data. Extensions own their JSON contracts and validation. */
-export type WorkspaceExtensionNamespace = 'p6d.translation' | 'p6e.routine-templates' | 'p6g.routine-handoff' | 'p6g.time-to-value';
+export type WorkspaceExtensionNamespace = 'p6d.translation' | 'p6e.routine-templates' | 'p6g.routine-handoff' | 'p6g.time-to-value' | 'p6h.daily-plans';
 export const EXTENSION_VALUE_MAX_BYTES = 1_000_000;
 const META = 'meta';
 const KEY_PREFIX = 'workspace-extension:';
@@ -14,7 +14,7 @@ export interface WorkspaceExtensionStore {
 
 const validId=(id:string)=>id.length>0&&id.length<=200&&!/[\\/\u0000-\u001f]/.test(id);
 const keyOf=(namespace:WorkspaceExtensionNamespace,id:string)=>{
-  if(!['p6d.translation','p6e.routine-templates','p6g.routine-handoff','p6g.time-to-value'].includes(namespace)||!validId(id))throw new Error('Invalid local workspace extension key.');
+  if(!['p6d.translation','p6e.routine-templates','p6g.routine-handoff','p6g.time-to-value','p6h.daily-plans'].includes(namespace)||!validId(id))throw new Error('Invalid local workspace extension key.');
   return `${KEY_PREFIX}${namespace}:${id}`;
 };
 
