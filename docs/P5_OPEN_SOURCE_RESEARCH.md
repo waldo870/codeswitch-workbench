@@ -26,6 +26,10 @@ FLEURS is a publicly visible alternative under CC BY 4.0. The current Hugging Fa
 3. If Common Voice access is unavailable, pause the zh-TW/English comparison or ask Owner to authorize a separately labelled FLEURS Mandarin-China + English fallback. Do not describe that fallback as Traditional Chinese or spontaneous code-switch.
 4. Keep CS-Dialogue research-only. It is not part of the benchmark manifest and was not downloaded.
 
+## Owner-provided Common Voice archives used for local sample preparation
+
+The Owner supplied already-downloaded archives under `/home/waldo870/projects/voice/`; no download or redistribution was performed. The zh-TW archive is `cv-corpus-27.0-2026-09-11/zh-TW`, whose README identifies Taiwan Mandarin / Traditional Chinese, CC0-derived source corpus, `test.tsv` with `path` and `sentence` fields, and MP3 clips. The English archive is `sps-corpus-5.0-2026-09-11-en`, whose README identifies English Spontaneous Speech, CC-0, a `test` split, `audio_file`, `duration_ms`, and `transcription` fields, with MP3 audio. The local benchmark selected 10 records from each official test split using the fixed seed documented in the evaluation report. Selected original and converted audio stays in Git-ignored `local-only/p5-speech/`; no demographics or full dataset are copied into the repository history.
+
 ## References and legal recheck
 
 - Hailo Apps release/readme/license and speech app are linked above; recheck HailoRT, DFC, HEF resource licenses and H10 support at the exact release used.

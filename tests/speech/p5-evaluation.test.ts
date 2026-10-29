@@ -85,6 +85,14 @@ it('reports partial provider attempts separately and keeps timeout latency in pe
  expect(report.status).toBe('PARTIAL_LIVE_RESULTS');expect(report.summary['zh-TW']).toMatchObject({timedOut:1,notRun:9,latencyP50Ms:90_000});expect(report.summary.en.wer).toBeNull();
 });
 
+it('keeps independent dataset revisions for Traditional Chinese and English cohorts',()=>{
+ const manifest=twenty(),samples=manifest.samples.map(s=>s.language==='en'?{...s,datasetVersion:'sps-corpus-5.0-2026-09-11-en',datasetRevision:'sps-corpus-5.0-2026-09-11-en'}:s);
+ const report=createP5Report({manifest:{...manifest,samples},cases:[],manifestSha256:null,runtime});
+ expect(report.datasetsByLanguage['zh-TW']).toContainEqual({datasetId:'mozilla-foundation/common_voice',datasetVersion:'27.0',datasetRevision:'MDC-27.0',locale:'zh-TW',split:'test'});
+ expect(report.datasetsByLanguage.en).toContainEqual({datasetId:'mozilla-foundation/common_voice',datasetVersion:'sps-corpus-5.0-2026-09-11-en',datasetRevision:'sps-corpus-5.0-2026-09-11-en',locale:'en',split:'test'});
+ expect(report.datasetRevision).toBeNull();
+});
+
 it('rejects unknown and duplicate evaluation result IDs',()=>{
  const manifest=twenty(),s=manifest.samples[0]!,timed=scoreP5Result(s,result(s));
  expect(()=>createP5Report({manifest,cases:[{...timed,sampleId:'unknown'}],manifestSha256:null,runtime})).toThrow(/unknown or duplicate/);

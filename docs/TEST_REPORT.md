@@ -19,6 +19,12 @@ P5 branch: `feature/p5-open-speech-evaluation`, based on verified main `6747ed0d
 
 No Common Voice or FLEURS audio was downloaded. Common Voice download requires Owner-provided account access and acceptance of the current dataset terms. There is no local sample manifest, and the existing Windows Whisper runtime/model is not configured in this execution environment. Therefore there are no live transcription results, CER/WER values, ASR latencies, or P4G proposals derived from measured errors. The benchmark implementation and reports distinguish missing data from zero error and do not claim a live ASR pass.
 
+## P5 real Common Voice sample preparation (2026-10-29)
+
+The Owner-provided Common Voice archives were found under the supplied `voice/` data directory. Source metadata was read from the zh-TW dataset README and `test.tsv`, and the English Spontaneous Speech README and `ss-corpus-en.tsv`. Fixed-seed SHA-256 ordering selected 10 records from each official test split. The zh-TW release is `cv-corpus-27.0-2026-09-11`; the English release is `sps-corpus-5.0-2026-09-11-en`. Both dataset READMEs state CC0. The local manifest contains the exact source IDs, unchanged references, license/attribution, original audio hash and prepared WAV hash. Original and prepared selected audio remains under ignored `local-only/p5-speech/`; no full dataset, audio, transcript, or demographic fields are in the Git diff.
+
+The already-present Windows Python 3.10 executable and Whisper `large-v3.pt` checkpoint were found, but the worker configuration environment variables were absent. A direct attempt to start Windows Python reported `WSL (9 - ) ERROR: UtilBindVsockAnyPort:309: socket failed 1`, before Whisper import. Therefore the two-language smoke and live inference were not run. `pnpm benchmark:speech` validated all 20 source/prepared file pairs, hashes, WAV formats, and limits, then emitted `NOT_RUN`: 20 not-run cases, 0 attempts, null CER/WER/latency, and 0 P4G drafts. It did not run transcription. The benchmark report records manifest SHA-256 `sha256:6939e4d0977371bfadd109bee5a04275e03c0d8ecbc6fb37e86ce26eb2294b11` and the distinct dataset release per language.
+
 Task: P0_TEXT_WORKCARDS_FOUNDATION. Local verification completed in the supplied development environment (session date: 2026-10-22).
 
 ## Environment and provenance

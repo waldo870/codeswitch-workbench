@@ -2,9 +2,17 @@
 
 ## Current status
 
-**Live benchmark: NOT_RUN.** No real audio was downloaded or transcribed in this phase. The first target is Common Voice Scripted Speech 27.0 in `zh-TW` and English, but Mozilla Data Collective requires an email and acceptance of its current access terms. The Owner must perform/authorize that step. FLEURS was reviewed as an alternative, but its current dataset revision has no Traditional Chinese Mandarin (`zh-TW`) config; substituting Mandarin-China or Cantonese would change the target cohort. See [open-source research and source/license register](P5_OPEN_SOURCE_RESEARCH.md).
+**Live benchmark: NOT_RUN.** The Owner-provided Common Voice archives were found and the selected audio was prepared locally, but Windows Whisper did not run in this execution environment. The `large-v3.pt` checkpoint and Windows Python executable are present; the worker variables were not configured, and direct Windows-Python startup reported a WSL interop socket failure. No ASR inference was completed. FLEURS was reviewed as an alternative, but its current dataset revision has no Traditional Chinese Mandarin (`zh-TW`) config; substituting Mandarin-China or Cantonese would change the target cohort. See [open-source research and source/license register](P5_OPEN_SOURCE_RESEARCH.md).
 
-The existing Windows Whisper worker is not configured in this execution environment (`CODESWITCH_ASR_PYTHON` and `CODESWITCH_ASR_MODEL_FILE` are absent). The existing `ffmpeg` binary and `wslpath` are present, but no model or audio operation was attempted. No Linux GPU runtime, model, or audio was installed/downloaded.
+## Prepared Common Voice cohorts
+
+- `cv-corpus-27.0-2026-09-11`, Chinese (Taiwan) `zh-TW`, official `test.tsv` split, reference column `sentence`, 10 samples.
+- `sps-corpus-5.0-2026-09-11-en`, English spontaneous speech, official `test` split, reference column `transcription`, 10 samples.
+- Both supplied README files state CC0-1.0 / CC-0. The local sample files and manifest remain under the ignored `local-only/p5-speech/` directory. No corpus files, raw audio, transcripts, or demographic fields are tracked by Git.
+- Selection ranks eligible source IDs by SHA-256 of `codeswitch-p5-small-2026-01:<sourceId>`, then takes the first 10 with valid, present source audio. No transcript was changed. The manifest records source IDs, source and prepared audio hashes, release revision, split and attribution.
+- All 20 prepared WAV files passed local path containment, source/prepared SHA-256 comparison, WAV format inspection, 16 kHz mono PCM16 checks, and the existing 4,000,000-byte / 120-second limits. Nothing was truncated.
+
+The existing Windows Whisper worker variables (`CODESWITCH_ASR_PYTHON` and `CODESWITCH_ASR_MODEL_FILE`) are absent. The existing Windows Python 3.10 executable, `large-v3.pt` checkpoint, `ffmpeg`, and `wslpath` are present. A direct attempt to start the Windows Python executable reported `WSL (9 - ) ERROR: UtilBindVsockAnyPort:309: socket failed 1`; the process did not reach Whisper import or inference. No Linux GPU runtime, model, or corpus was installed/downloaded.
 
 ## Local sample layout
 
@@ -17,13 +25,13 @@ local-only/p5-speech/
   prepared/<source-id>.wav
 ```
 
-The manifest schema is defined by `src/speech/p5-evaluation.ts`; include exactly 10 `zh-TW` and 10 `en` records. Each record needs the source dataset/version/revision, locale, split, original source ID, license/attribution, original file SHA-256, prepared canonical WAV path and SHA-256, and reference transcript. The canonical worker WAV must pass the existing 16 kHz mono PCM16 WAV validation and size/duration limits. For MP3 input, use an already-installed approved converter to create the canonical WAV; keep both hashes. Never commit `local-only/p5-speech`.
+The manifest schema is defined by `src/speech/p5-evaluation.ts`; the current local manifest contains exactly 10 `zh-TW` and 10 `en` records from their respective official test splits. Each record has source dataset/version/revision, locale, split, original source ID, license/attribution, original file SHA-256, prepared canonical WAV path and SHA-256, and unmodified reference transcript. The canonical worker WAV passes the existing 16 kHz mono PCM16 validation and size/duration limits. The supplied MP3 files were converted using the already-installed FFmpeg; both hashes are recorded. Never commit `local-only/p5-speech`.
 
 The default sample selection seed is `codeswitch-p5-small-2026-01`. `deterministicSampleSelection()` sorts stable source IDs by SHA-256 of `seed:sourceId`; record the chosen source IDs in the local manifest and do not reshuffle after inspecting ASR output. The manifest SHA in the report identifies the local manifest; each audio SHA identifies the exact prepared WAV used for inference. The report intentionally omits transcripts and audio.
 
 ## Run
 
-Configure the existing Windows worker using its owner-managed local settings, without printing their values into logs:
+After resolving the WSL-to-Windows Python launch issue, configure the existing Windows worker using its owner-managed local settings, without printing their values into logs:
 
 ```bash
 export CODESWITCH_ASR_PYTHON='<existing Windows Python path visible through WSL>'
@@ -50,4 +58,4 @@ For a transcript/reference discrepancy, a deterministic classifier can emit a **
 
 ## Current results
 
-The committed P5 report records 0 local audio files, 0 ASR attempts, null CER/WER/latency, and `NOT_RUN`. This is a truthful access/runtime blocker, not a failed model and not a passing benchmark. No P3C real bilingual workplace speech or Hailo live result is claimed.
+The current P5 report records 10 zh-TW and 10 English local samples, 0 ASR attempts, 20 not-run cases, null CER/WER/latency, and `NOT_RUN`. The manifest SHA-256 is recorded; per-language cohort revisions are pinned separately. The report contains sample IDs and prepared audio hashes, not transcript text. This is a runtime blocker, not a failed model and not a passing benchmark. No P3C real bilingual workplace speech or Hailo live result is claimed.

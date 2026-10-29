@@ -29,7 +29,7 @@ export interface P5CaseResult {
 }
 export interface P5Report {
   schemaVersion: 1; status: 'LIVE_RESULTS' | 'PARTIAL_LIVE_RESULTS' | 'NOT_RUN'; generatedAt: string; datasetVersion: string;
-  datasetRevision: string | null; datasetSha256: string | null; manifestSha256: string | null; seed: string; runtime: { provider: string | null; modelId: string | null; runtime: string | null; device: string | null };
+  datasetRevision: string | null; datasetsByLanguage: Record<P5Language, Array<{datasetId:string;datasetVersion:string;datasetRevision:string;locale:string;split:string}>>; datasetSha256: string | null; manifestSha256: string | null; seed: string; runtime: { provider: string | null; modelId: string | null; runtime: string | null; device: string | null };
   sampleCounts: { zhTW: number; english: number; total: number }; summary: Record<P5Language, { completed: number; failed: number; timedOut: number; notRun: number; cer: P5CaseResult['cer']; wer: P5CaseResult['wer']; latencyP50Ms: number | null; latencyP95Ms: number | null; modelLoadP50Ms: number | null; modelLoadP95Ms: number | null; inferenceP50Ms: number | null; inferenceP95Ms: number | null }>;
   cases: P5CaseResult[]; limitations: string[];
 }
@@ -123,7 +123,9 @@ export function createP5Report(args: {manifest:P5DatasetManifest;cases:P5CaseRes
     summary[language]={completed:completed.length,failed:selected.filter(c=>c.status==='failed').length,timedOut:selected.filter(c=>c.status==='timeout').length,notRun:selected.filter(c=>c.status==='not_run').length,cer:language==='zh-TW'?valid('cer'):null,wer:language==='en'?valid('wer'):null,latencyP50Ms:l.p50,latencyP95Ms:l.p95,modelLoadP50Ms:m.p50,modelLoadP95Ms:m.p95,inferenceP50Ms:i.p50,inferenceP95Ms:i.p95};
   }
   const attempted=cases.filter(c=>c.status!=='not_run').length;
-  return {schemaVersion:1,status:!attempted?'NOT_RUN':attempted<manifest.samples.length?'PARTIAL_LIVE_RESULTS':'LIVE_RESULTS',generatedAt:args.generatedAt??new Date().toISOString(),datasetVersion:manifest.samples[0]?.datasetVersion??'Common Voice Scripted Speech 27.0 (planned; no local sample manifest)',datasetRevision:manifest.samples[0]?.datasetRevision??null,datasetSha256:null,manifestSha256:args.manifestSha256,seed:manifest.seed,runtime:args.runtime,sampleCounts:{zhTW:manifest.samples.filter(s=>s.language==='zh-TW').length,english:manifest.samples.filter(s=>s.language==='en').length,total:manifest.samples.length},summary,cases,limitations:args.limitations??[]};
+  const datasetsByLanguage=Object.fromEntries((['zh-TW','en'] as const).map(language=>[language,[...new Map(manifest.samples.filter(s=>s.language===language).map(s=>[`${s.datasetId}\0${s.datasetVersion}\0${s.datasetRevision}\0${s.locale}\0${s.split}`,{datasetId:s.datasetId,datasetVersion:s.datasetVersion,datasetRevision:s.datasetRevision,locale:s.locale,split:s.split}])).values()]])) as P5Report['datasetsByLanguage'];
+  const allRevisions=[...new Set(manifest.samples.map(s=>s.datasetRevision))];
+  return {schemaVersion:1,status:!attempted?'NOT_RUN':attempted<manifest.samples.length?'PARTIAL_LIVE_RESULTS':'LIVE_RESULTS',generatedAt:args.generatedAt??new Date().toISOString(),datasetVersion:manifest.samples.length?`P5 per-language datasets (${manifest.samples.length} samples)`:'No local dataset manifest',datasetRevision:allRevisions.length===1?allRevisions[0]!:null,datasetsByLanguage,datasetSha256:null,manifestSha256:args.manifestSha256,seed:manifest.seed,runtime:args.runtime,sampleCounts:{zhTW:manifest.samples.filter(s=>s.language==='zh-TW').length,english:manifest.samples.filter(s=>s.language==='en').length,total:manifest.samples.length},summary,cases,limitations:args.limitations??[]};
 }
 
 export function scoreP5Result(sample:P5Sample,result:SpeechResult):P5CaseResult {
